@@ -1,10 +1,5 @@
 ﻿using Microsoft.Extensions.Configuration;
 using Microsoft.Playwright;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using zCustodiaUi.locators;
 using zCustodiaUi.locators.processing;
 using zCustodiaUi.utils;
@@ -51,7 +46,7 @@ namespace zCustodiaUi.pages.processing
             await util.Write(gen.LocatorMatLabel("Valor Liquidação"), "10", "Write on value of liquidation ");
             await page.Keyboard.PressAsync("Space");
             await util.Click(gen.LocatorSpanText("Processar"), "Click on Process to do low");
-            await util.ValidateTextIsVisibleOnScreen("Dados Processados com Sucesso!", "Validate if success text is visible on screen to user");
+            await util.ValidateTextIsVisibleOnScreen("Dados Processados com Sucesso!", "Validate if success text is visible on screen to user after processed partial liquidation receivable");
             await Task.Delay(300);
             await util.ValidateTextIsVisibleInElement(el.StatusPositionOnTheTable, "Ativo", "Validate if status of Receivable is Ativo after did processing");
             // Do Delete Last movement
@@ -73,9 +68,9 @@ namespace zCustodiaUi.pages.processing
             await util.Write(gen.LocatorMatLabel("Valor Liquidação"), "100000", "Write on value of liquidation ");
             await page.Keyboard.PressAsync("Space");
             await util.Click(gen.LocatorSpanText("Processar"), "Click on Process to do low");
-            await util.ValidateTextIsVisibleOnScreen("Dados Processados com Sucesso!", "Validate if success text is visible on screen to user");
+            await util.ValidateTextIsVisibleOnScreen("Dados Processados com Sucesso!", "Validate if success text is visible on screen to user after processed liquidation receivable");
             await Task.Delay(300);
-            await util.ValidateTextIsVisibleInElement(el.StatusPositionOnTheTable, "Inativo", "Validate if status of Receivable is Ativo after did processing");
+            await util.ValidateTextIsVisibleInElement(el.StatusPositionOnTheTable, "Inativo", "Validate if status of Receivable is Inativo after did processing");
             await util.Click(gen.LocatorMatLabel("Ocorrência"), "Click on Add button to add the receivable");
             await util.Write(gen.Filter, "EXCLUSÃO DO ÚLTIMO MOVIMENTO", "Write on filter field to search Zitec FIDC");
             await util.Click(gen.ReceiveTypeOption("EXCLUSÃO DO ÚLTIMO MOVIMENTO"), "Click on low to select low option");
@@ -98,11 +93,11 @@ namespace zCustodiaUi.pages.processing
             await util.Click(gen.LocatorMatLabel("Ocorrência"), "Click on Add button to add the receivable");
             await util.Write(gen.Filter, "PRORROGAÇÃO DE VENCIMENTO PRAZO TIR", "Write on filter field to search Zitec FIDC");
             await util.Click(gen.ReceiveTypeOption("PRORROGAÇÃO DE VENCIMENTO PRAZO TIR"), "Click on low to select low option");
-            await util.Click("("+gen.Calendar+")[3]", "Click on calendar to expand list days");
+            await util.Click("(" + gen.Calendar + ")[3]", "Click on calendar to expand list days");
             await util.Click(gen.DayValue(tomorrow), "Click on day to select new due date");
             await util.Click(gen.LocatorSpanText("Processar"), "Click on Process to do low");
-            await util.ValidateTextIsVisibleOnScreen("Dados Processados com Sucesso!", "Validate if success text is visible on screen to user");
-           
+            await util.ValidateTextIsVisibleOnScreen("Dados Processados com Sucesso!", "Validate if success text is visible on screen to user after prorrogated tax");
+
         }
     }
 }

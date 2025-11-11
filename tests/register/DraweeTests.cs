@@ -18,7 +18,7 @@ namespace zCustodiaUi.tests.register
     [AllureSeverity(SeverityLevel.critical)]
     [Category("Critícity: High")]
     [Category("Regression Tests")]
-    [AllureSuite("Sacados UI")]
+    [AllureSuite("Drawee UI")]
     public class DraweeTests : TestBase
     {
         private IPage page;
@@ -45,7 +45,7 @@ namespace zCustodiaUi.tests.register
         }
 
         [Test, Order(1)]
-        [AllureName("Deve Registrar novo Sacado")]
+        [AllureName("Should Register New Drawee")]
         public async Task Should_Register_New_Drawee()
         {
             var drawee = new DraweePage(page);

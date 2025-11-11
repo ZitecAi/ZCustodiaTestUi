@@ -18,7 +18,7 @@ namespace zCustodiaUi.tests.processing
     [AllureSeverity(SeverityLevel.critical)]
     [Category("Critícity: High")]
     [Category("Regression Tests")]
-    [AllureSuite("Recebíveis UI")]
+    [AllureSuite("Receivables UI")]
     public class ReceivablesTests : TestBase
     {
         private IPage page;
@@ -47,21 +47,21 @@ namespace zCustodiaUi.tests.processing
         }
 
         [Test, Order(1)]
-        [AllureName("Deve Processar Baixa Recebível")]
+        [AllureName("Should Process Receivable")]
         public async Task Should_Process_Receivable()
         {
             var receivablesPage = new ReceivablesPage(page);
             await receivablesPage.ProcessReceivable();
         }
         [Test, Order(2)]
-        [AllureName("Deve Processar Baixa Parcial Recebível")]
+        [AllureName("Should Process Receivable Partial")]
         public async Task Should_Process_Receivable_Partial()
         {
             var receivablesPage = new ReceivablesPage(page);
             await receivablesPage.ProcessReceivablePartial();
         }
         [Test, Order(3)]
-        [AllureName("Deve Prorrogar data de vencimento de Recebível")]
+        [AllureName("Should Process Receivable Prorrogation")]
         public async Task Should_Process_Receivable_Prorrogation()
         {
             var receivablesPage = new ReceivablesPage(page);

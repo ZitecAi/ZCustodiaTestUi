@@ -18,7 +18,7 @@ namespace zCustodiaUi.tests.importation
     [AllureSeverity(SeverityLevel.critical)]
     [Category("Critícity: High")]
     [Category("Regression Tests")]
-    [AllureSuite("Arquivo de Remessa UI")]
+    [AllureSuite("Shipping File UI")]
     public class ShippingFileTests : TestBase
     {
         private IPage page;
@@ -46,7 +46,7 @@ namespace zCustodiaUi.tests.importation
             await CloseBrowserAsync();
         }
         [Test, Order(1)]
-        [AllureName("Deve Importar um novo Arquivo de Remessa")]
+        [AllureName("Should Import a New Shipping File")]
         public async Task Should_Import_a_New_Shipping_File()
         {
             var shippingFile = new ShippingFilePage(page);

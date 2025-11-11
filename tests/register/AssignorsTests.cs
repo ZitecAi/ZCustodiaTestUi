@@ -18,7 +18,7 @@ namespace zCustodiaUi.tests.register
     [AllureSeverity(SeverityLevel.critical)]
     [Category("Critícity: High")]
     [Category("Regression Tests")]
-    [AllureSuite("Cedentes UI")]
+    [AllureSuite("Assignors UI")]
     public class AssignorsTests : TestBase
     {
         private IPage page;
@@ -47,7 +47,7 @@ namespace zCustodiaUi.tests.register
         }
 
         [Test, Order(1)]
-        [AllureName("CRUD Cedentes")]
+        [AllureName("Should Do Valid CRUD Of Assignors")]
         //[Ignore("Esse teste está em espera para fluxo de exclusão")]
         public async Task Should_Do_Valid_CRUD_Of_Assignors()
         {

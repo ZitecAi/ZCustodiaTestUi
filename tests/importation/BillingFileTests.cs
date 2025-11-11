@@ -18,7 +18,7 @@ namespace zCustodiaUi.tests.importation
     [AllureSeverity(SeverityLevel.critical)]
     [Category("Critícity: High")]
     [Category("Regression Tests")]
-    [AllureSuite("Retorno Cobrança UI")]
+    [AllureSuite("Billing File UI")]
     public class BillingFileTests : TestBase
     {
         private IPage page;
@@ -46,7 +46,7 @@ namespace zCustodiaUi.tests.importation
             await CloseBrowserAsync();
         }
         [Test, Order(1)]
-        [AllureName("Deve Importar um novo arquivo de cobrança")]
+        [AllureName("Should Import a New Billing File")]
         public async Task Should_Import_a_New_Billing_File()
         {
             var billingFile = new BillingFilePage(page);

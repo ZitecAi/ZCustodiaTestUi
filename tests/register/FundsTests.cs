@@ -18,7 +18,7 @@ namespace zCustodiaUi.tests.register
     [AllureSeverity(SeverityLevel.critical)]
     [Category("Critícity: High")]
     [Category("Regression Tests")]
-    [AllureSuite("Fundos UI")]
+    [AllureSuite("Funds UI")]
     public class FundsTests : TestBase
     {
         private IPage page;
@@ -47,7 +47,7 @@ namespace zCustodiaUi.tests.register
         }
 
         [Test, Order(1)]
-        [AllureName("Deve Registrar novo Fundo")]
+        [AllureName("Should Register a New Fund")]
         [Ignore("Esse teste está em espera para fluxo de exclusão")]
         public async Task Should_Register_a_New_Fund()
         {
@@ -55,7 +55,7 @@ namespace zCustodiaUi.tests.register
             await fundsPage.RegisterNewFund();
         }
         [Test, Order(3)]
-        [AllureName("Deve Consultar Fundo")]
+        [AllureName("Should Consult a Fund")]
         public async Task Should_Consult_a_Fund()
         {
             var fundsPage = new FundsPage(page);
@@ -63,7 +63,7 @@ namespace zCustodiaUi.tests.register
         }
         [Test, Order(4)]
         [Ignore("Esse teste está em espera para fluxo de exclusão")]
-        [AllureName("Deve Editar novo Fundo")]
+        [AllureName("Should Update a Fund")]
         public async Task Should_Update_a_Fund()
         {
             var fundsPage = new FundsPage(page);

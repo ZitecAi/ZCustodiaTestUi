@@ -1,9 +1,4 @@
 ﻿using Microsoft.Playwright;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using zCustodiaUi.locators;
 using zCustodiaUi.locators.administrative;
 using zCustodiaUi.locators.modules;
@@ -28,7 +23,7 @@ namespace zCustodiaUi.pages.admnistrative
         public async Task ChooseFundDate(string fund)
         {
             var today = DateTime.Now.Day.ToString();
-            
+
 
             await Task.Delay(3500);
             await util.Click(mod.MainMenu, "Click on main menu");
@@ -47,7 +42,7 @@ namespace zCustodiaUi.pages.admnistrative
             await Task.Delay(200);
             await util.Write(gen.LocatorMatLabel("Observações"), "Alteração de data fundo Zitec FIDC", "write obs on input");
             await util.Click(gen.LocatorSpanText("Enviar"), "Click on send to choose date fund");
-            await util.ValidateTextIsVisibleOnScreen("Registro inserido com sucesso, aguarde o processamento!", "Validate if message success returner is visible on screen to the user to back date of fund");
+            await util.ValidateTextIsVisibleOnScreen("Registro inserido com sucesso, aguarde o processamento!", "Validate if message success returned is visible on screen to the user to back date of fund");
 
         }
 
