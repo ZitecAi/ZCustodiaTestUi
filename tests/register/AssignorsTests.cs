@@ -1,6 +1,7 @@
-﻿using Allure.Commons;
+using Allure.Net.Commons;
+using Allure.NUnit;
+using Allure.NUnit.Attributes;
 using Microsoft.Playwright;
-using NUnit.Allure.Attributes;
 using zCustodiaUi.locators.modules;
 using zCustodiaUi.locators.register;
 using zCustodiaUi.pages.login;
@@ -10,6 +11,7 @@ using zCustodiaUi.utils;
 
 namespace zCustodiaUi.tests.register
 {
+    [AllureNUnit]
     [Parallelizable(ParallelScope.Self)]
     [TestFixture]
     [AllureOwner("Levi")]
@@ -25,6 +27,7 @@ namespace zCustodiaUi.tests.register
         private readonly AssignorsElements el = new AssignorsElements();
 
         [SetUp]
+        [AllureBefore]
         public async Task SetUp()
         {
             page = await OpenBrowserAsync();
@@ -37,6 +40,7 @@ namespace zCustodiaUi.tests.register
             await util.Click(el.AssignorPage, "Click on assignor page to visit page");
         }
         [TearDown]
+        [AllureAfter]
         public async Task TearDown()
         {
             await CloseBrowserAsync();

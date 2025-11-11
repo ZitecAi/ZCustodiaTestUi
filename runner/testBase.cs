@@ -1,9 +1,8 @@
 using Microsoft.Extensions.Configuration;
 using Microsoft.Playwright;
-using NUnit.Allure.Core;
+
 namespace zCustodiaUi.runner
 {
-    [AllureNUnit]
     public class TestBase
     {
         private IPlaywright? playwright;
@@ -12,7 +11,6 @@ namespace zCustodiaUi.runner
 
         protected async Task<IPage> OpenBrowserAsync()
         {
-
             playwright = await Playwright.CreateAsync();
 
             // Detecta CI (Azure DevOps define TF_BUILD=true)

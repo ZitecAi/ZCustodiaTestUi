@@ -1,11 +1,13 @@
-﻿using Allure.Commons;
+using Allure.Net.Commons;
+using Allure.NUnit;
+using Allure.NUnit.Attributes;
 using Microsoft.Playwright;
-using NUnit.Allure.Attributes;
 using zCustodiaUi.pages.login;
 using zCustodiaUi.runner;
 
 namespace zCustodiaUi.tests.login
 {
+    [AllureNUnit]
     [Parallelizable(ParallelScope.Self)]
     [TestFixture]
     [AllureOwner("Levi")]
@@ -18,11 +20,13 @@ namespace zCustodiaUi.tests.login
         private IPage page;
 
         [SetUp]
+        [AllureBefore]
         public async Task Setup()
         {
             page = await OpenBrowserAsync();
         }
         [TearDown]
+        [AllureAfter]
         public async Task TearDown()
         {
             await CloseBrowserAsync();

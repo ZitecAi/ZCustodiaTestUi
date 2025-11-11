@@ -1,49 +1,50 @@
-<Project Sdk="Microsoft.NET.Sdk">
-
+﻿<Project Sdk="Microsoft.NET.Sdk">
 	<PropertyGroup>
 		<TargetFramework>net8.0</TargetFramework>
 		<ImplicitUsings>enable</ImplicitUsings>
 		<Nullable>enable</Nullable>
-
 		<IsPackable>false</IsPackable>
 		<IsTestProject>true</IsTestProject>
 	</PropertyGroup>
 
-
-
 	<ItemGroup>
-		<PackageReference Include="Allure.Net.Commons" Version="2.12.1" />
-		<PackageReference Include="coverlet.collector" Version="6.0.0" />
+		<!-- Allure NUnit oficial -->
+		<PackageReference Include="Allure.NUnit" Version="2.14.1" />
+		<PackageReference Include="Allure.Net.Commons" Version="2.14.1" />
+
+		<!-- NUnit 3 + adapter -->
+		<PackageReference Include="NUnit" Version="3.13.3" />
+		<PackageReference Include="NUnit3TestAdapter" Version="4.5.0" />
+		<PackageReference Include="NUnit.Analyzers" Version="3.9.0" />
+
+		<!-- Test SDK -->
+		<PackageReference Include="Microsoft.NET.Test.Sdk" Version="17.14.1" />
+
+		<!-- Playwright alinhado -->
+		<PackageReference Include="Microsoft.Playwright" Version="1.55.0" />
+		<PackageReference Include="Microsoft.Playwright.NUnit" Version="1.55.0" />
+
+		<!-- Config e cobertura -->
 		<PackageReference Include="Microsoft.Extensions.Configuration" Version="9.0.9" />
 		<PackageReference Include="Microsoft.Extensions.Configuration.Json" Version="9.0.7" />
-		<PackageReference Include="Microsoft.NET.Test.Sdk" Version="17.14.1" />
-		<PackageReference Include="Microsoft.Playwright" Version="1.55.0" />
-		<PackageReference Include="Microsoft.Playwright.NUnit" Version="1.27.1" />
-		<PackageReference Include="NUnit" Version="4.4.0" />
-		<PackageReference Include="NUnit.Allure" Version="1.2.1.1" />
-		<PackageReference Include="NUnit.Analyzers" Version="3.9.0" />
-		<PackageReference Include="NUnit3TestAdapter" Version="5.1.0" />
 		<PackageReference Include="System.Configuration.ConfigurationManager" Version="9.0.9" />
+		<PackageReference Include="coverlet.collector" Version="6.0.0" />
 	</ItemGroup>
 
 	<ItemGroup>
 		<Using Include="Microsoft.Playwright.NUnit" />
 		<Using Include="NUnit.Framework" />
-		<Using Include="System.Text.RegularExpressions" />
-		<Using Include="System.Threading.Tasks" />
 	</ItemGroup>
 
 	<ItemGroup>
 		<None Update="appsettings.json">
 			<CopyToOutputDirectory>Always</CopyToOutputDirectory>
 		</None>
-	</ItemGroup>
-
-	<ItemGroup>
 		<None Update="allureConfig.json">
 			<CopyToOutputDirectory>Always</CopyToOutputDirectory>
 		</None>
 	</ItemGroup>
+
 
 
 

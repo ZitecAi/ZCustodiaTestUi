@@ -1,6 +1,7 @@
-﻿using Allure.Commons;
+using Allure.Net.Commons;
+using Allure.NUnit;
+using Allure.NUnit.Attributes;
 using Microsoft.Playwright;
-using NUnit.Allure.Attributes;
 using zCustodiaUi.locators.Importation;
 using zCustodiaUi.locators.modules;
 using zCustodiaUi.pages.importation;
@@ -10,6 +11,7 @@ using zCustodiaUi.utils;
 
 namespace zCustodiaUi.tests.importation
 {
+    [AllureNUnit]
     [Parallelizable(ParallelScope.Self)]
     [TestFixture]
     [AllureOwner("Levi")]
@@ -25,6 +27,7 @@ namespace zCustodiaUi.tests.importation
 
         Utils util;
         [SetUp]
+        [AllureBefore]
         public async Task SetUp()
         {
             page = await OpenBrowserAsync();
@@ -37,6 +40,7 @@ namespace zCustodiaUi.tests.importation
 
         }
         [TearDown]
+        [AllureAfter]
         public async Task TearDown()
         {
             await CloseBrowserAsync();
