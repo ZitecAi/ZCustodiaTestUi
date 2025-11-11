@@ -19,7 +19,7 @@ namespace zCustodiaUi.tests.administrative
     [AllureSeverity(SeverityLevel.critical)]
     [Category("Critícity: High")]
     [Category("Regression Tests")]
-    [AllureSuite("Fechamento de Fundos UI")]
+    [AllureSuite("Closing Of Funds UI")]
     public class ClosingOfFundsTests : TestBase
     {
         private IPage page;
@@ -49,7 +49,7 @@ namespace zCustodiaUi.tests.administrative
         }
 
         [Test, Order(1)]
-        [AllureName("Deve Realizar o Fechamento de Fundo, Processar e Gerar Relatório")]
+        [AllureName("Should Do Processing And Generating Report Of Fund and Back Date of Fund")]
         public async Task Should_Do_Processing_And_Generating_Report_Of_Fund()
         {
             var fund = new ClosingOfFundsPage(page);

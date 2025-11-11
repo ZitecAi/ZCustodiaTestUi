@@ -13,7 +13,7 @@ namespace zCustodiaUi.utils
             this.page = page;
         }
 
-        [AllureStep("Escrever '{text}' em {locator} — {step}")]
+        [AllureStep("Write: '{text}' — on step: {step}")]
         public async Task Write(string locator, string text, string step)
         {
             try
@@ -27,7 +27,7 @@ namespace zCustodiaUi.utils
                 throw new PlaywrightException($"Don´t Possible Found the element: {locator}, to write on step: {step}. Details {ex.Message}");
             }
         }
-        [AllureStep("Clicae em {locator} — {step}")]
+        [AllureStep("Click - on {step}")]
         public async Task Click(string locator, string step)
         {
             try
@@ -41,7 +41,7 @@ namespace zCustodiaUi.utils
                 throw new PlaywrightException($"Don´t Possible Found the element: {locator}, to Click on step: {step}. Details {ex.Message}");
             }
         }
-
+        [AllureStep("Validate Url - on {step}")]
         public async Task ValidateUrl(string expectedUrl, string step)
         {
             try
@@ -258,7 +258,6 @@ namespace zCustodiaUi.utils
             }
 
         }
-        [AllureStep("Validar Texto '{text}' Visível na tela para usuário — {step}")]
         public async Task ValidateTextIsVisibleOnScreen(string expectedText, string step)
         {
             try
