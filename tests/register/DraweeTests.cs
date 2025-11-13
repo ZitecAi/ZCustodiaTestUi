@@ -37,6 +37,7 @@ namespace zCustodiaUi.tests.register
             await util.Click(mod.RegisterPage, "Open Register module");
             await util.Click(el.DraweePage, "Click on drawee page to visit page");
         }
+
         [TearDown]
         [AllureAfter]
         public async Task TearDown()

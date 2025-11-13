@@ -25,6 +25,7 @@ namespace zCustodiaUi.tests.login
         {
             page = await OpenBrowserAsync();
         }
+
         [TearDown]
         [AllureAfter]
         public async Task TearDown()

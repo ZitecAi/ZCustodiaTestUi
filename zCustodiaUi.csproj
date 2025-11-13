@@ -1,4 +1,4 @@
-﻿<Project Sdk="Microsoft.NET.Sdk">
+<Project Sdk="Microsoft.NET.Sdk">
 	<PropertyGroup>
 		<TargetFramework>net8.0</TargetFramework>
 		<ImplicitUsings>enable</ImplicitUsings>
@@ -37,13 +37,14 @@
 	</ItemGroup>
 
 	<ItemGroup>
-		<None Update="appsettings.json">
-			<CopyToOutputDirectory>Always</CopyToOutputDirectory>
-		</None>
-		<None Update="allureConfig.json">
-			<CopyToOutputDirectory>Always</CopyToOutputDirectory>
-		</None>
+		<None Include="appsettings.json" CopyToOutputDirectory="Always" />
+		<None Include="allureConfig.json" CopyToOutputDirectory="Always" />
 	</ItemGroup>
+
+	<Target Name="CleanAllureResults" BeforeTargets="VSTest">
+		<RemoveDir Directories="$(MSBuildProjectDirectory)/allure-results" ContinueOnError="true" />
+	</Target>
+
 
 
 

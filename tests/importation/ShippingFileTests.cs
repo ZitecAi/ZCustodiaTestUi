@@ -39,12 +39,14 @@ namespace zCustodiaUi.tests.importation
 
             await util.Click(el.ShippingFilePage, "Click on Shipping File page to navigate on the page");
         }
+
         [TearDown]
         [AllureAfter]
         public async Task TearDown()
         {
             await CloseBrowserAsync();
         }
+
         [Test, Order(1)]
         [AllureName("Should Import a New Shipping File")]
         public async Task Should_Import_a_New_Shipping_File()

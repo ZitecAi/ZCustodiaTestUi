@@ -1,13 +1,24 @@
+using Allure.Net.Commons;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Playwright;
+using NUnit.Framework.Interfaces;
+using zCustodiaUi.utils;
 
 namespace zCustodiaUi.runner
 {
     public class TestBase
     {
+        protected IPage page;
         private IPlaywright? playwright;
         private IBrowser? browser;
         private IBrowserContext? context;
+
+        [OneTimeSetUp]
+        [AllureBeforeTest]
+        public void OneTimeSetUp()
+        {
+            ScreenshotHelper.ClearOldScreenshots();
+        }
 
         protected async Task<IPage> OpenBrowserAsync()
         {
@@ -19,7 +30,7 @@ namespace zCustodiaUi.runner
 
             var launchOptions = new BrowserTypeLaunchOptions
             {
-                Headless = false, // Headless no CI, pode ser false local
+                Headless = true, // Headless no CI, pode ser false local
                 //Headless = isCi, 
                 Args = new[] { "--no-sandbox", "--disable-dev-shm-usage" }
             };
@@ -34,7 +45,7 @@ namespace zCustodiaUi.runner
                 IgnoreHTTPSErrors = true
             };
             context = await browser.NewContextAsync(contextOptions);
-            var page = await context.NewPageAsync();
+            page = await context.NewPageAsync();
 
             var config = new ConfigurationManager();
             config.AddJsonFile("appsettings.json", optional: false, reloadOnChange: true);
@@ -45,6 +56,18 @@ namespace zCustodiaUi.runner
 
         protected async Task CloseBrowserAsync()
         {
+            // Captura screenshot em caso de falha
+            if (TestContext.CurrentContext.Result.Outcome.Status == NUnit.Framework.Interfaces.TestStatus.Failed && page != null)
+            {
+                var testName = ScreenshotHelper.GetTestName();
+                await ScreenshotHelper.CaptureAndAttachScreenshotAsync(page, testName, TestStatus.Failed.ToString());
+            }
+            if (TestContext.CurrentContext.Result.Outcome.Status == NUnit.Framework.Interfaces.TestStatus.Passed && page != null)
+            {
+                var testName = ScreenshotHelper.GetTestName();
+                await ScreenshotHelper.CaptureAndAttachScreenshotAsync(page, testName, TestStatus.Passed.ToString());
+            }
+
             if (context != null)
                 await context.CloseAsync();
             if (browser != null)
@@ -57,4 +80,3 @@ namespace zCustodiaUi.runner
 
 
 }
-

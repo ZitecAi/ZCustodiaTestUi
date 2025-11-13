@@ -39,6 +39,7 @@ namespace zCustodiaUi.tests.register
 
             await util.Click(el.AssignorPage, "Click on assignor page to visit page");
         }
+
         [TearDown]
         [AllureAfter]
         public async Task TearDown()

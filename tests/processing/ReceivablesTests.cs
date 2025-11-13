@@ -39,6 +39,7 @@ namespace zCustodiaUi.tests.processing
 
             await util.Click(el.ReceivablesPage, "Click on Receivables page to navigate on the page");
         }
+
         [TearDown]
         [AllureAfter]
         public async Task TearDown()

@@ -1,4 +1,5 @@
-﻿using Microsoft.Playwright;
+﻿using Allure.NUnit.Attributes;
+using Microsoft.Playwright;
 using zCustodiaUi.locators;
 using zCustodiaUi.locators.administrative;
 using zCustodiaUi.utils;
@@ -16,7 +17,7 @@ namespace zCustodiaUi.pages.admnistrative
             this.page = page;
             util = new Utils(page);
         }
-
+        [AllureStep("Close Fund")]
         public async Task CloseFund(string fund)
         {
             var tomorrow = DateTime.Now.AddDays(1).Day.ToString();

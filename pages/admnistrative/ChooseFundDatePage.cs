@@ -1,4 +1,5 @@
-﻿using Microsoft.Playwright;
+﻿using Allure.NUnit.Attributes;
+using Microsoft.Playwright;
 using zCustodiaUi.locators;
 using zCustodiaUi.locators.administrative;
 using zCustodiaUi.locators.modules;
@@ -19,7 +20,7 @@ namespace zCustodiaUi.pages.admnistrative
             this.page = page;
             util = new Utils(page);
         }
-
+        [AllureStep("Back Date of fund")]
         public async Task ChooseFundDate(string fund)
         {
             var today = DateTime.Now.Day.ToString();

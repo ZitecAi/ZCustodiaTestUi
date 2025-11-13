@@ -153,8 +153,8 @@ namespace zCustodiaUi.pages.register
             await util.Click(el.MovementType("Movimentação"), "Click on Movement Type");
             await util.Write(gen.LocatorMatLabel("Descrição"), "Conta para fundo de teste", "fill description of account test");
             await util.Click(el.AddButton, "Click on Add Button to add a new account");
-            await util.Click(gen.RightArrow, "Click on  Arrow to expand group tab");
-            await util.Click(gen.RightArrow, "Click on  Arrow to expand group tab");
+            await util.Click(gen.RightArrow, "Click on Arrow to expand group tab");
+            //await util.Click(gen.RightArrow, "Click on Arrow to expand group tab");
 
 
             //slack
