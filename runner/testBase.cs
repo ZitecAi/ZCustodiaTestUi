@@ -1,4 +1,3 @@
-using Allure.Net.Commons;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Playwright;
 using NUnit.Framework.Interfaces;
@@ -14,7 +13,6 @@ namespace zCustodiaUi.runner
         private IBrowserContext? context;
 
         [OneTimeSetUp]
-        [AllureBeforeTest]
         public void OneTimeSetUp()
         {
             ScreenshotHelper.ClearOldScreenshots();

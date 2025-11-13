@@ -1,10 +1,5 @@
 {
   "allure": {
-    "directory": "allure-results",
-    "links": [
-      "https://example.org/{issue}",
-      "https://example.org/{tms}",
-      "https://example.org/{case}"
-    ]
+    "directory": "../../../allure-results"
   }
 }
