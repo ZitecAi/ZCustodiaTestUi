@@ -40,7 +40,7 @@ namespace zCustodiaUi.pages.register
             await util.Click(gen.DayValue(today), "Set Today day on calendar");
 
             await util.Write(gen.LocatorMatLabel("N° CETIP"), "12345678", "Write CETIP Number");
-            await util.Write(gen.LocatorMatLabel("N° CELIC"), "123456789", "Write CELIC Number");
+            await util.Write(gen.LocatorMatLabel("N° SELIC"), "123456789", "Write CELIC Number");
 
             await util.Click(el.CvmRegisterCalendar, "Open CVM Register Calendar");
             await util.Click(gen.DayValue(today), "Set Today day on calendar");
@@ -133,7 +133,7 @@ namespace zCustodiaUi.pages.register
             await Task.Delay(500);
             await util.ClickMatTabAsync(gen.TabAllForms("Liquidação"), "Click belt to change liquidation form");
 
-            await util.Write(gen.LocatorMatLabel("Percentual Máximo Reembolso de Despesas"), "10", "Set max percent of reimbursement");
+            await util.Write(gen.LocatorMatLabel("Percentual Máximo Reembolso de Despesas %"), "10", "Set max percent of reimbursement");
 
             //Account
             await util.ScrollToElementAndMaintainPosition(gen.TabAllForms("Conta Corrente"), "Scroll to account form");
@@ -153,7 +153,7 @@ namespace zCustodiaUi.pages.register
             await util.Click(el.MovementType("Movimentação"), "Click on Movement Type");
             await util.Write(gen.LocatorMatLabel("Descrição"), "Conta para fundo de teste", "fill description of account test");
             await util.Click(el.AddButton, "Click on Add Button to add a new account");
-            await util.Click(gen.RightArrow, "Click on Arrow to expand group tab");
+            //await util.Click(gen.RightArrow, "Click on Arrow to expand group tab");
             //await util.Click(gen.RightArrow, "Click on Arrow to expand group tab");
 
 

@@ -1,11 +1,10 @@
 using Microsoft.Extensions.Configuration;
 using Microsoft.Playwright;
-using NUnit.Framework.Interfaces;
 using zCustodiaUi.utils;
 
 namespace zCustodiaUi.runner
 {
-    public class TestBase
+    public abstract class TestBase
     {
         protected IPage page;
         private IPlaywright? playwright;
@@ -15,66 +14,94 @@ namespace zCustodiaUi.runner
         [OneTimeSetUp]
         public void OneTimeSetUp()
         {
-            ScreenshotHelper.ClearOldScreenshots();
+            VideoHelper.ClearOldVideos();
         }
 
         protected async Task<IPage> OpenBrowserAsync()
         {
             playwright = await Playwright.CreateAsync();
 
-            // Detecta CI (Azure DevOps define TF_BUILD=true)
-            var isCi = !string.IsNullOrEmpty(Environment.GetEnvironmentVariable("CI"))
-                       || string.Equals(Environment.GetEnvironmentVariable("TF_BUILD"), "True", StringComparison.OrdinalIgnoreCase);
+            var isCi = !string.IsNullOrEmpty(Environment.GetEnvironmentVariable("CI")) ||
+                       string.Equals(Environment.GetEnvironmentVariable("TF_BUILD"), "True", StringComparison.OrdinalIgnoreCase);
 
             var launchOptions = new BrowserTypeLaunchOptions
             {
-                Headless = true, // Headless no CI, pode ser false local
-                //Headless = isCi, 
+                Headless = true,
                 Args = new[] { "--no-sandbox", "--disable-dev-shm-usage" }
             };
 
             browser = await playwright.Chromium.LaunchAsync(launchOptions);
 
-            // >>>>> A MUDANÇA CRUCIAL ESTÁ AQUI <<<<<
-            // Crie opções de contexto para definir o viewport e outras configurações
-            var contextOptions = new BrowserNewContextOptions()
+            var videosDir = Path.Combine(TestContext.CurrentContext.TestDirectory, "videos");
+            Directory.CreateDirectory(videosDir);
+
+            var contextOptions = new BrowserNewContextOptions
             {
-                ViewportSize = new ViewportSize() { Width = 1920, Height = 1080 },
-                IgnoreHTTPSErrors = true
+                ViewportSize = new ViewportSize { Width = 1920, Height = 1080 },
+                IgnoreHTTPSErrors = true,
+                RecordVideoDir = videosDir,
+                RecordVideoSize = new RecordVideoSize { Width = 1366, Height = 768 }
             };
+
             context = await browser.NewContextAsync(contextOptions);
             page = await context.NewPageAsync();
 
             var config = new ConfigurationManager();
             config.AddJsonFile("appsettings.json", optional: false, reloadOnChange: true);
             var linkCustodia = config["Links:Custodia"];
-            await page.GotoAsync(linkCustodia);
+            await page.GotoAsync(linkCustodia!);
+
             return page;
         }
 
         protected async Task CloseBrowserAsync()
         {
-            // Captura screenshot em caso de falha
-            if (TestContext.CurrentContext.Result.Outcome.Status == NUnit.Framework.Interfaces.TestStatus.Failed && page != null)
-            {
-                var testName = ScreenshotHelper.GetTestName();
-                await ScreenshotHelper.CaptureAndAttachScreenshotAsync(page, testName, TestStatus.Failed.ToString());
-            }
-            if (TestContext.CurrentContext.Result.Outcome.Status == NUnit.Framework.Interfaces.TestStatus.Passed && page != null)
-            {
-                var testName = ScreenshotHelper.GetTestName();
-                await ScreenshotHelper.CaptureAndAttachScreenshotAsync(page, testName, TestStatus.Passed.ToString());
-            }
+            var status = TestContext.CurrentContext.Result.Outcome.Status.ToString();
 
-            if (context != null)
-                await context.CloseAsync();
-            if (browser != null)
-                await browser.CloseAsync();
-            playwright?.Dispose();
+            try
+            {
+                if (page != null)
+                {
+                    await VideoUtils.ForceVideoFinalization(page);
+                }
+
+                if (context != null)
+                {
+                    await context.CloseAsync();
+                }
+
+                if (page != null)
+                {
+                    await VideoHelper.AttachVideoAsync(page, status);
+                }
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"Erro ao processar vídeo no teardown: {ex.Message}");
+            }
+            finally
+            {
+                try
+                {
+                    if (browser != null)
+                    {
+                        await browser.CloseAsync();
+                    }
+                }
+                catch (Exception ex)
+                {
+                    Console.WriteLine($"Erro ao fechar browser: {ex.Message}");
+                }
+
+                try
+                {
+                    playwright?.Dispose();
+                }
+                catch (Exception ex)
+                {
+                    Console.WriteLine($"Erro ao dispose playwright: {ex.Message}");
+                }
+            }
         }
-
-
     }
-
-
 }
