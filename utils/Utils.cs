@@ -1,4 +1,5 @@
-﻿using Microsoft.Playwright;
+﻿using Allure.NUnit.Attributes;
+using Microsoft.Playwright;
 using static Microsoft.Playwright.Assertions;
 
 
@@ -12,6 +13,7 @@ namespace zCustodiaUi.utils
             this.page = page;
         }
 
+        [AllureStep("Write: '{text}' — on step: {step}")]
         public async Task Write(string locator, string text, string step)
         {
             try
@@ -25,7 +27,7 @@ namespace zCustodiaUi.utils
                 throw new PlaywrightException($"Don´t Possible Found the element: {locator}, to write on step: {step}. Details {ex.Message}");
             }
         }
-
+        [AllureStep("Click - on step: {step}")]
         public async Task Click(string locator, string step)
         {
             try
@@ -39,7 +41,7 @@ namespace zCustodiaUi.utils
                 throw new PlaywrightException($"Don´t Possible Found the element: {locator}, to Click on step: {step}. Details {ex.Message}");
             }
         }
-
+        [AllureStep("Validate Url - on step: {step}")]
         public async Task ValidateUrl(string expectedUrl, string step)
         {
             try
@@ -55,7 +57,7 @@ namespace zCustodiaUi.utils
                 throw new PlaywrightException($"Don´t possible validate expected Url: '{expectedUrl}' on step: '{step}'. Details: {ex.Message}");
             }
         }
-
+        [AllureStep("Validate Message of Locator returned is visible - on step: {step}")]
         public async Task ValidateReturnedMessageIsVisible(string locator, string step)
         {
             try
@@ -71,7 +73,7 @@ namespace zCustodiaUi.utils
                 throw new PlaywrightException($"Don´t possible validate/found the element:'{locator}' on step: '{step}'. Details: {ex.Message}");
             }
         }
-
+        [AllureStep("Validate text is present on the table - on step: {step}")]
         public async Task ValidateElementPresentOnTheTable(IPage page, string locatorTable, string expectedText, string step)
         {
             try
@@ -109,7 +111,7 @@ namespace zCustodiaUi.utils
                 throw new Exception($" Error to verify the text'{expectedText}' on the table on step: {step}. Details {ex.Message}");
             }
         }
-
+        [AllureStep("Validate report of fund generate - on step: {step}")]
         public async Task ValidateFundReportGenerated(IPage page, string lineSelector, string expectedFundo, string expectedRelatorio, string step)
         {
             try
@@ -130,7 +132,7 @@ namespace zCustodiaUi.utils
         }
 
 
-
+        [AllureStep("Validate Download and Length of File - on step: {step}")]
         public async Task ValidateDownloadAndLength(IPage page, string locatorClickDownload, string step, string downloadsDir = null)
         {
             try
@@ -175,7 +177,7 @@ namespace zCustodiaUi.utils
                 Assert.Fail($"❌ Erro ao validar download no passo '{step}': {ex.Message}");
             }
         }
-
+        [AllureStep("Scrool and maintain position - on step: {step}")]
         public async Task ScrollToElementAndMaintainPosition(string locator, string step)
         {
             try
@@ -200,7 +202,7 @@ namespace zCustodiaUi.utils
                 throw new PlaywrightException($"Don´t Possible Found the element:  {locator} to scroll and maintain position on step: {step}. Details {ex.Message}");
             }
         }
-
+        [AllureStep("Click on Tab to change form - on step: {step}")]
         public async Task ClickMatTabAsync(string tabLocator, string step)
         {
             try
@@ -242,7 +244,7 @@ namespace zCustodiaUi.utils
                 );
             }
         }
-
+        [AllureStep("Validate text is visible - on step: {step}")]
         public async Task ValidateTextIsVisibleInElement(string locator, string expectedText, string step)
         {
             try
@@ -256,6 +258,7 @@ namespace zCustodiaUi.utils
             }
 
         }
+        [AllureStep("Validate text is visible on screen - on step: {step}")]
         public async Task ValidateTextIsVisibleOnScreen(string expectedText, string step)
         {
             try
@@ -269,6 +272,7 @@ namespace zCustodiaUi.utils
             }
 
         }
+        [AllureStep("Validate text is not visible on screen - on step: {step}")]
         public async Task ValidateTextIsNotVisibleOnScreen(string expectedText, string step)
         {
             try
@@ -282,7 +286,7 @@ namespace zCustodiaUi.utils
             }
 
         }
-
+        [AllureStep("Validate if element have value - on step: {step}")]
         public async Task<string> ValidateIfElementHaveValue(string locator, string step)
         {
             try
@@ -304,7 +308,7 @@ namespace zCustodiaUi.utils
 
         }
 
-
+        [AllureStep("Update Date and Sent File - on step: {step}")]
         public async Task<string> UpdateDateAndSentFile(string filePath, string locator, string step)
         {
             try
@@ -360,7 +364,7 @@ namespace zCustodiaUi.utils
             }
         }
 
-
+        [AllureStep("Validate if element have value - on step: {step}")]
         public async Task ValidateElementHaveValue(string locator, string step)
         {
             try

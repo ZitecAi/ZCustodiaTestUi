@@ -125,7 +125,7 @@ namespace zCustodiaUi.pages.register
             await util.Click(gen.AddButton, "Click on Add button to add new Assignor");
             await Task.Delay(1500);
             await util.Click(gen.SaveButton, "Click on Add button to add new Representative");
-            await util.ValidateTextIsVisibleOnScreen("Dados Salvos com Sucesso!", "Validate if success Message is visible on screen");
+            await util.ValidateTextIsVisibleOnScreen("Dados Salvos com Sucesso!", "Validate if success Message is visible on screen after did register a new assignor");
 
             //Consult Assignor
             await page.ReloadAsync();
@@ -145,7 +145,7 @@ namespace zCustodiaUi.pages.register
             await Task.Delay(150);
             await util.Write(gen.LocatorMatLabel("Nome"), "Cedente Teste Zitec EDITADO", "Insert Name EDITED of Assignor to be Registered");
             await util.Click(gen.SaveButton, "Click on Add button to add EDITED Assignor");
-            await util.ValidateTextIsVisibleOnScreen("Dados Salvos com Sucesso!", "Validate if success Message is visible on screen");
+            await util.ValidateTextIsVisibleOnScreen("Dados Salvos com Sucesso!", "Validate if success Message is visible on screen after updated existing assignor");
 
             //Pending -> Delete Assignor
             HttpClient httpClient = new HttpClient();

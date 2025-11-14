@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace zCustodiaUi.locators.modules
+﻿namespace zCustodiaUi.locators.modules
 {
     public class ModulesElements
     {
@@ -16,7 +10,7 @@ namespace zCustodiaUi.locators.modules
         public string CommercialBillPage { get; } = "//a[@href='/home/commercial-bill']";
         public string ReportsPage { get; } = "//a[@href='/home/reports']";
         public string AdmnistrativePage { get; } = "//a[@href='/home/admin']";
-        public string RegisterPage { get; } = "//a[@href='/home/registers']";
+        public string RegisterPage { get; } = "(//a[@href='/home/registers'])[1]";
         public string ProcessingPage { get; } = "//a[@href='/home/processing']";
         public string ImportationPage { get; } = "//a[@href='/home/importation']";
         public string FramingPage { get; } = "//a[@href='/home/enquadramento']";

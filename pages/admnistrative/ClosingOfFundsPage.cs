@@ -1,13 +1,7 @@
-﻿using Microsoft.Playwright;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using Allure.NUnit.Attributes;
+using Microsoft.Playwright;
 using zCustodiaUi.locators;
 using zCustodiaUi.locators.administrative;
-using zCustodiaUi.locators.modules;
-using zCustodiaUi.locators.reports;
 using zCustodiaUi.utils;
 
 namespace zCustodiaUi.pages.admnistrative
@@ -23,7 +17,7 @@ namespace zCustodiaUi.pages.admnistrative
             this.page = page;
             util = new Utils(page);
         }
-
+        [AllureStep("Close Fund")]
         public async Task CloseFund(string fund)
         {
             var tomorrow = DateTime.Now.AddDays(1).Day.ToString();
@@ -42,8 +36,8 @@ namespace zCustodiaUi.pages.admnistrative
             await util.Click(el.Calendar, "Click on Calendar to expand the days available");
             await util.Click(el.DayValue(tomorrow), "Set Tomorrow day on calendar");
             await util.Click(el.ButtonCloseFund, "Click Button closed fund to confirm the process");
-            await util.ValidateTextIsVisibleOnScreen("Registro inserido com sucesso, aguarde o processamento", "Validate if message success returner is visible on screen to the user");
-            
+            await util.ValidateTextIsVisibleOnScreen("Registro inserido com sucesso, aguarde o processamento", "Validate if message success returned is visible on screen to the user after Closed fund");
+
 
         }
 

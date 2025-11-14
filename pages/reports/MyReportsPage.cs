@@ -1,9 +1,5 @@
-﻿using Microsoft.Playwright;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using Allure.NUnit.Attributes;
+using Microsoft.Playwright;
 using zCustodiaUi.locators.modules;
 using zCustodiaUi.locators.reports;
 using zCustodiaUi.utils;
@@ -22,7 +18,7 @@ namespace zCustodiaUi.pages.reports
             this.page = page;
             util = new Utils(page);
         }
-
+        [AllureStep("Generate Report and download")]
         public async Task ValidateGenerateReportsAndDownloadReport(string fund)
         {
             var tomorrow = DateTime.Now.AddDays(1).Day.ToString();
@@ -55,7 +51,7 @@ namespace zCustodiaUi.pages.reports
 
         }
 
-        
+
 
     }
 }

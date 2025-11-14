@@ -1,11 +1,13 @@
-﻿using Allure.Commons;
+using Allure.Net.Commons;
+using Allure.NUnit;
+using Allure.NUnit.Attributes;
 using Microsoft.Playwright;
-using NUnit.Allure.Attributes;
 using zCustodiaUi.pages.login;
 using zCustodiaUi.runner;
 
 namespace zCustodiaUi.tests.login
 {
+    [AllureNUnit]
     [Parallelizable(ParallelScope.Self)]
     [TestFixture]
     [AllureOwner("Levi")]
@@ -18,32 +20,35 @@ namespace zCustodiaUi.tests.login
         private IPage page;
 
         [SetUp]
+        [AllureBefore]
         public async Task Setup()
         {
             page = await OpenBrowserAsync();
         }
+
         [TearDown]
+        [AllureAfter]
         public async Task TearDown()
         {
             await CloseBrowserAsync();
         }
 
         [Test, Order(1)]
-        [AllureName("Deve Realizar login com credenciais válidas")]
+        [AllureName("Should Do Login With Valid Credentials")]
         public async Task Should_Do_Login_With_Valid_Credentials()
         {
             var login = new LoginPage(page);
             await login.DoLogin();
         }
         [Test, Order(2)]
-        [AllureName("Não Deve Realizar login com Email inválidos")]
+        [AllureName("Do Not Should Do Login With Invalid Email")]
         public async Task Do_Not_Should_Do_Login_With_Invalid_Email()
         {
             var login = new LoginPage(page);
             await login.NegativeLogin("invalid email");
         }
         [Test, Order(3)]
-        [AllureName("Não Deve Realizar login com Senha inválida")]
+        [AllureName("Do Not Should Do Login With Invalid Password")]
         public async Task Do_Not_Should_Do_Login_With_Invalid_Password()
         {
             var login = new LoginPage(page);
