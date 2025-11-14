@@ -36,7 +36,6 @@ namespace zCustodiaUi.tests.processing
             await login.DoLogin();
             await util.Click(mod.MainMenu, "Open main menu to extend options");
             await util.Click(mod.ProcessingPage, "Open Receivables module");
-
             await util.Click(el.ReceivablesPage, "Click on Receivables page to navigate on the page");
         }
 

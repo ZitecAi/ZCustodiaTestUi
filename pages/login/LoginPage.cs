@@ -45,14 +45,14 @@ namespace zCustodiaUi.pages.login
                 await utils.Write(el.EmailField, "al@zitecai", "write invalid email user on email Field to do Login");
                 await utils.Write(el.PasswordField, "12345678", "write password user on password Field to do Login");
                 await utils.Click(el.SubmitButton, "Click on submit button to do Login");
-                await utils.ValidateReturnedMessageIsVisible(el.ErrorMessage, "Validate Error message is present, given that i try should login with invalid email");
+                await utils.ValidateTextIsVisibleOnScreen(el.ErrorMessage, "Validate Error message is present, given that i try should login with invalid email");
             }
             else if (testCase == "invalid password")
             {
                 await utils.Write(el.EmailField, "al@zitec.ai", "write email user on email Field to do Login");
                 await utils.Write(el.PasswordField, "invalid", "write invalid password user on password Field to do Login");
                 await utils.Click(el.SubmitButton, "Click on submit button to do Login");
-                await utils.ValidateReturnedMessageIsVisible(el.ErrorMessage, "Validate Error message is present, given that i try should login with invalid password");
+                await utils.ValidateTextIsVisibleOnScreen(el.ErrorMessage, "Validate Error message is present, given that i try should login with invalid password");
             }
         }
 

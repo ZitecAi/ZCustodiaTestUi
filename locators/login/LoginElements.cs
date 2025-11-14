@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace zCustodiaUi.locators.login
+﻿namespace zCustodiaUi.locators.login
 {
     public class LoginElements
     {
@@ -15,7 +9,7 @@ namespace zCustodiaUi.locators.login
         public string DeveloperEnvironment { get; } = "//h6[text()='developer']";
         public string HomologEnvironment { get; } = "//h6[text()='homolog']";
         public string NextButton { get; } = "//span[text()='Avançar']";
-        public string ErrorMessage { get; } = "//div[text()=' Algum erro ocorreu! ']";
+        public string ErrorMessage { get; } = "//div[text()=' Usuário e/ou senha inválidos. ']";
 
     }
 }
