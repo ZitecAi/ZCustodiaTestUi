@@ -9,7 +9,7 @@
         public string DeveloperEnvironment { get; } = "//h6[text()='developer']";
         public string HomologEnvironment { get; } = "//h6[text()='homolog']";
         public string NextButton { get; } = "//span[text()='Avançar']";
-        public string ErrorMessage { get; } = "//div[text()=' Usuário e/ou senha inválidos. ']";
+        public string ErrorMessage { get; } = "Usuário e/ou senha inválidos.";
 
     }
 }

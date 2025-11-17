@@ -59,7 +59,7 @@ namespace zCustodiaUi.pages.processing
             await util.Click(gen.LocatorMatLabel("Fundo"), "Click on New button to create a new receivable");
             await util.Write(gen.Filter, fundName, "Write on filter field to search Zitec FIDC");
             await util.Click(gen.ReceiveTypeOption(fundName), "Click on Zitec FIDC to create select Zitec FIDC fund");
-            await util.Write(gen.LocatorMatLabel("Seu Número"), "BYX0000646496001", "Write on your number field to Filter per your number");
+            await util.Write(gen.LocatorMatLabel("Seu Número"), "5106952059211134519296724", "Write on your number field to Filter per your number");
             await util.Click(gen.LocatorSpanText("Pesquisar"), "Click on search button to search receivable");
             //await util.Click(el.SecondCheckBox, "Click on CheckBox");
             await util.Click(gen.LocatorMatLabel("Ocorrência"), "Click on Add button to add the receivable");
@@ -76,6 +76,7 @@ namespace zCustodiaUi.pages.processing
             await util.Click(gen.ReceiveTypeOption("EXCLUSÃO DO ÚLTIMO MOVIMENTO"), "Click on low to select low option");
             await util.Click(gen.LocatorSpanText("Processar"), "Click on Process to do low");
             await util.ValidateTextIsVisibleOnScreen("Dados Processados com Sucesso!", "Validate if success text is visible on screen to user");
+            Console.WriteLine("Exclusão do Ultimo movimento efetuada com sucesso!!");
         }
         //PENDING PRORROGATION FLOW
         public async Task ProcessProrrogation()

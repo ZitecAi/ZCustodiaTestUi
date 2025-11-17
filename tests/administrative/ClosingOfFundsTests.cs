@@ -43,6 +43,7 @@ namespace zCustodiaUi.tests.administrative
 
         [TearDown]
         [AllureAfter]
+        [Ignore("Friday")]
         public async Task TearDown()
         {
             await CloseBrowserAsync();

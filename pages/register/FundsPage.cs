@@ -247,7 +247,7 @@ namespace zCustodiaUi.pages.register
             await page.Keyboard.PressAsync("Backspace");
             await util.Click(el.AddButton, "Click on add button to add new provider");
             await util.Click(el.SaveButton, "Click on to add a new Fund!");
-            await util.ValidateReturnedMessageIsVisible(el.SuccessMessage, "Validate if success message is present on screen after all Flow finished");
+            await util.ValidateTextIsVisibleOnScreen(el.SuccessMessageRegisterNewFund, "Validate if success message is present on screen after all Flow finished");
 
 
         }
