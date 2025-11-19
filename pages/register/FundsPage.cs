@@ -246,6 +246,7 @@ namespace zCustodiaUi.pages.register
             await util.Write(gen.LocatorMatLabel("Valor Fixo"), "100000", "Insert fixed value in new provider");
             await page.Keyboard.PressAsync("Backspace");
             await util.Click(el.AddButton, "Click on add button to add new provider");
+            await Task.Delay(1000);
             await util.Click(el.SaveButton, "Click on to add a new Fund!");
             await util.ValidateTextIsVisibleOnScreen(el.SuccessMessageRegisterNewFund, "Validate if success message is present on screen after all Flow finished");
 
