@@ -1,7 +1,6 @@
 using Allure.Net.Commons;
 using Allure.NUnit;
 using Allure.NUnit.Attributes;
-using Microsoft.Playwright;
 using zCustodiaUi.locators.modules;
 using zCustodiaUi.locators.register;
 using zCustodiaUi.pages.login;
@@ -21,7 +20,6 @@ namespace zCustodiaUi.tests.register
     [AllureSuite("Funds UI")]
     public class FundsTests : TestBase
     {
-        private IPage page;
         private Utils util;
         private readonly ModulesElements mod = new ModulesElements();
         private readonly FundsElements el = new FundsElements();
@@ -52,7 +50,14 @@ namespace zCustodiaUi.tests.register
         public async Task Should_Register_a_New_Fund()
         {
             var fundsPage = new FundsPage(page);
-            await fundsPage.RegisterNewFund();
+            await fundsPage.RegisterData();
+            await fundsPage.Rules();
+            await fundsPage.Representatives();
+            await fundsPage.Liquidation();
+            await fundsPage.Account();
+            await fundsPage.Slack();
+            await fundsPage.FileValidation();
+            await fundsPage.ServicePrestatives();
         }
         [Test, Order(3)]
         [AllureName("Should Consult a Fund")]

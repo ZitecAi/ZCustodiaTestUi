@@ -1,7 +1,6 @@
 using Allure.Net.Commons;
 using Allure.NUnit;
 using Allure.NUnit.Attributes;
-using Microsoft.Playwright;
 using zCustodiaUi.locators.administrative;
 using zCustodiaUi.locators.modules;
 using zCustodiaUi.pages.admnistrative;
@@ -22,7 +21,6 @@ namespace zCustodiaUi.tests.administrative
     [AllureSuite("Closing Of Funds UI")]
     public class ClosingOfFundsTests : TestBase
     {
-        private IPage page;
         Utils util;
         ClosingOfFundsElements el = new ClosingOfFundsElements();
         ModulesElements mod = new ModulesElements();

@@ -1,3 +1,4 @@
+using Allure.NUnit.Attributes;
 using Microsoft.Playwright;
 using zCustodiaUi.locators;
 using zCustodiaUi.locators.register;
@@ -20,11 +21,13 @@ namespace zCustodiaUi.pages.register
         string fundName = "ZitecQa";
         string cnpjFund = DataGenerator.Generate(DocumentType.Cnpj);
 
-        public async Task RegisterNewFund()
-        {
-            var tomorrow = DateTime.Now.AddDays(1).Day.ToString();
-            var today = DateTime.Now.Day.ToString();
+        public string Today => DateTime.Now.Day.ToString();
+        public string Tomorrow => DateTime.Now.AddDays(1).Day.ToString();
 
+        [AllureStep("Fill Register Data")]
+        public async Task RegisterData()
+        {
+            string today = Today;
 
             //Register Data
             await util.Click(gen.ButtonNew, "Open New Fund form");
@@ -86,8 +89,12 @@ namespace zCustodiaUi.pages.register
 
             await util.Write(gen.LocatorMatLabel("Código Carteira"), "001", "Write Wallet Code");
             await util.Write(gen.LocatorMatLabel("Ordem de Processamento"), "99999", "Write Process Order");
+        }
 
-
+        [AllureStep("Fill Rules")]
+        public async Task Rules()
+        {
+            string today = Today;
             //Rules 
             await util.ScrollToElementAndMaintainPosition(gen.TabAllForms("Regras"), "Scroll to Rules form");
             await Task.Delay(500);
@@ -107,7 +114,11 @@ namespace zCustodiaUi.pages.register
             await util.Click(gen.LocatorMatLabel("Aplica-se a"), "Click on select to expand options of apply to");
             await util.Write(gen.Filter, "Toda carteira", "Write Aquisition Select");
             await util.Click(gen.ReceiveTypeOption("Toda carteira"), "Click on UF option");
+        }
 
+        [AllureStep("Fill Representatives")]
+        public async Task Representatives()
+        {
             //Representatives
             await util.Click(gen.TabAllForms("Representantes"), "Click belt to change form");
 
@@ -127,14 +138,22 @@ namespace zCustodiaUi.pages.register
             await util.Click(el.IssuesDuplicateRadio(true), "Select 'yes' to Issue Duplicate");
 
             await util.Click(el.AddButton, "Click on add to add representative on fund");
+        }
 
+        [AllureStep("Fill Liquidation")]
+        public async Task Liquidation()
+        {
             //Liquidation 
             await util.ScrollToElementAndMaintainPosition(gen.TabAllForms("Liquidação"), "Scroll to liquidation form");
             await Task.Delay(500);
             await util.ClickMatTabAsync(gen.TabAllForms("Liquidação"), "Click belt to change liquidation form");
 
             await util.Write(gen.LocatorMatLabel("Percentual Máximo Reembolso de Despesas %"), "10", "Set max percent of reimbursement");
+        }
 
+        [AllureStep("Fill Account")]
+        public async Task Account()
+        {
             //Account
             await util.ScrollToElementAndMaintainPosition(gen.TabAllForms("Conta Corrente"), "Scroll to account form");
             await util.Click(gen.RightArrow, "Click on  Arrow to expand group tab");
@@ -153,10 +172,11 @@ namespace zCustodiaUi.pages.register
             await util.Click(el.MovementType("Movimentação"), "Click on Movement Type");
             await util.Write(gen.LocatorMatLabel("Descrição"), "Conta para fundo de teste", "fill description of account test");
             await util.Click(el.AddButton, "Click on Add Button to add a new account");
-            //await util.Click(gen.RightArrow, "Click on Arrow to expand group tab");
-            //await util.Click(gen.RightArrow, "Click on Arrow to expand group tab");
+        }
 
-
+        [AllureStep("Fill Slack Data")]
+        public async Task Slack()
+        {
             //slack
             await util.ClickMatTabAsync(gen.TabAllForms("Slack"), "Click belt to change slack form");
             await util.Click(gen.ButtonNew, "Click on button new to insert a new Slack Channel");
@@ -169,7 +189,11 @@ namespace zCustodiaUi.pages.register
             await util.Write(gen.LocatorMatLabel("Nome Canal Lastros:"), "Channel Test", "Insert Name Of Channel Operations");
             await util.Write(gen.LocatorMatLabel("ID Canal Lastros:"), "01", "Insert ID of Channel Operations");
             await util.Click(el.AddButton, "Click on Add Button to add a new account");
+        }
 
+        [AllureStep("Fill File Validation")]
+        public async Task FileValidation()
+        {
             //File Validation
             await util.ClickMatTabAsync(gen.TabAllForms("Validação Arquivo"), "Click belt to change file validation form");
             await Task.Delay(500);
@@ -178,12 +202,18 @@ namespace zCustodiaUi.pages.register
             await util.Write(gen.Filter, "Duplicata", "Write Receive Type");
             await util.Click(gen.ReceiveTypeOption("Duplicata"), "Click Duplicata Type Option");
             await page.Keyboard.PressAsync("Escape");
+        }
 
+
+        [AllureStep("Fill Represetatives")]
+        public async Task ServicePrestatives()
+        {
             //Prestadores d Serviços
             await util.Click(gen.RightArrow, "Click on  Arrow to expand group tab");
             await util.ClickMatTabAsync(gen.TabAllForms("Prestadores de Serviços"), "Click belt to change service prestatives form");
             await util.Click(gen.ButtonNew, "Click on button new to insert a new Service prestative");
             await Task.Delay(500);
+
             //administrator
             await util.Click(gen.LocatorMatLabel("Tipo Prestador"), "Select Type Provider in new provider");
             await util.Write(gen.Filter, "Administrador", "Write Receive Type");
@@ -250,9 +280,8 @@ namespace zCustodiaUi.pages.register
             await util.Click(el.SaveButton, "Click on to add a new Fund!");
             await util.ValidateTextIsVisibleOnScreen(el.SuccessMessageRegisterNewFund, "Validate if success message is present on screen after all Flow finished");
 
-
         }
-        //To Do - Finish the negative fund registration flow service prestatives, Consult and gestion
+
         public async Task RegisterNegativeFund()
         {
             var tomorrow = DateTime.Now.AddDays(1).Day.ToString();
