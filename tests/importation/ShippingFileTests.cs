@@ -1,7 +1,6 @@
 using Allure.Net.Commons;
 using Allure.NUnit;
 using Allure.NUnit.Attributes;
-using Microsoft.Playwright;
 using zCustodiaUi.locators.Importation;
 using zCustodiaUi.locators.modules;
 using zCustodiaUi.pages.importation;
@@ -21,7 +20,6 @@ namespace zCustodiaUi.tests.importation
     [AllureSuite("Shipping File UI")]
     public class ShippingFileTests : TestBase
     {
-        private IPage page;
         ModulesElements mod = new ModulesElements();
         ShippingFileElements el = new ShippingFileElements();
 

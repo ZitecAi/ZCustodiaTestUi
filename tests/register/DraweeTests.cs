@@ -1,7 +1,6 @@
 using Allure.Net.Commons;
 using Allure.NUnit;
 using Allure.NUnit.Attributes;
-using Microsoft.Playwright;
 using zCustodiaUi.locators.modules;
 using zCustodiaUi.locators.register;
 using zCustodiaUi.pages.login;
@@ -21,7 +20,6 @@ namespace zCustodiaUi.tests.register
     [AllureSuite("Drawee UI")]
     public class DraweeTests : TestBase
     {
-        private IPage page;
         private Utils util;
         private readonly ModulesElements mod = new ModulesElements();
         DraweeElements el = new DraweeElements();

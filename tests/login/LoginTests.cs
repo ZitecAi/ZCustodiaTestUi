@@ -1,7 +1,6 @@
 using Allure.Net.Commons;
 using Allure.NUnit;
 using Allure.NUnit.Attributes;
-using Microsoft.Playwright;
 using zCustodiaUi.pages.login;
 using zCustodiaUi.runner;
 
@@ -17,7 +16,6 @@ namespace zCustodiaUi.tests.login
     [AllureSuite("Login UI")]
     public class LoginTests : TestBase
     {
-        private IPage page;
 
         [SetUp]
         [AllureBefore]

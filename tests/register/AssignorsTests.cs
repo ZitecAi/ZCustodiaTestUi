@@ -1,7 +1,6 @@
 using Allure.Net.Commons;
 using Allure.NUnit;
 using Allure.NUnit.Attributes;
-using Microsoft.Playwright;
 using zCustodiaUi.locators.modules;
 using zCustodiaUi.locators.register;
 using zCustodiaUi.pages.login;
@@ -21,7 +20,7 @@ namespace zCustodiaUi.tests.register
     [AllureSuite("Assignors UI")]
     public class AssignorsTests : TestBase
     {
-        private IPage page;
+
         private Utils util;
         private readonly ModulesElements mod = new ModulesElements();
         private readonly AssignorsElements el = new AssignorsElements();
