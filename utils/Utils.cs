@@ -386,7 +386,21 @@ namespace zCustodiaUi.utils
             }
         }
 
+        [AllureStep("Validate if element is enabled - on step: {step}")]
+        public async Task ValidateElementIsDisabled(string locator, string step)
+        {
+            try
+            {
+                var element = page.Locator(locator);
+                await Expect(element).ToBeDisabledAsync();
+            }
+            catch (Exception ex)
+            {
+                throw new PlaywrightException($"Don´t possible validate/found the element on step: {step}. Details {ex.Message}");
+            }
 
 
+
+        }
     }
 }

@@ -57,15 +57,77 @@ namespace zCustodiaUi.tests.register
             await fundsPage.Account();
             await fundsPage.Slack();
             await fundsPage.FileValidation();
-            await fundsPage.ServicePrestatives();
+            await fundsPage.GoToServicePrestatives();
+            await fundsPage.RegisterPrestativeAdministrator();
+            await fundsPage.RegisterPrestativeManager();
+            await fundsPage.RegisterPrestativeConsultant(true);
         }
-        [Test, Order(3)]
+        [Test, Order(2)]
         [AllureName("Should Consult a Fund")]
         public async Task Should_Consult_a_Fund()
         {
             var fundsPage = new FundsPage(page);
             await fundsPage.ConsultFund();
         }
+
+
+        [Test, Order(3)]
+        [AllureName("Shouldn´t Register a New Fund With Epmty Fund Name")]
+        public async Task Shouldnt_Register_a_New_Fund_With_Empty_Fund_Name()
+        {
+            var fundsPage = new FundsPage(page);
+            fundsPage.FundName = string.Empty;
+            await fundsPage.NegativeScenario("Fund name empty");
+        }
+        [Test, Order(4)]
+        [AllureName("Shouldn´t Register a New Fund With Cetip Number empty")]
+        public async Task Shouldnt_Register_a_New_Fund_With_Cetip_Number_Empty()
+        {
+            var fundsPage = new FundsPage(page);
+            fundsPage.CetipNumber = string.Empty;
+            await fundsPage.NegativeScenario("Cetip Number empty");
+        }
+        [Test, Order(5)]
+        [AllureName("Shouldn´t Register a New Fund With Epmty Fund Name")]
+        public async Task Shouldnt_Register_a_New_Fund_With_Selic_Number_Empty()
+        {
+            var fundsPage = new FundsPage(page);
+            fundsPage.SelicNumber = string.Empty;
+            await fundsPage.NegativeScenario("Selic Number empty");
+        }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
         //[Test, Order(4)]
         //[Ignore("Esse teste está em espera para fluxo de exclusão")]
         //[AllureName("Should Update a Fund")]
@@ -74,6 +136,9 @@ namespace zCustodiaUi.tests.register
         //    var fundsPage = new FundsPage(page);
         //    await fundsPage.UpdateFund();
         //}
+
+
+
     }
 }
 
