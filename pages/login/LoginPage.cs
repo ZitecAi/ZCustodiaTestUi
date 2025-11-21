@@ -1,4 +1,5 @@
-﻿using Microsoft.Playwright;
+using Microsoft.Playwright;
+using zCustodiaUi.data.login;
 using zCustodiaUi.locators.login;
 using zCustodiaUi.utils;
 
@@ -8,6 +9,7 @@ namespace zCustodiaUi.pages.login
     {
         Utils utils;
         LoginElements el = new LoginElements();
+        private readonly LoginData data = new LoginData();
         private readonly IPage page;
         public LoginPage(IPage page)
         {
@@ -17,8 +19,8 @@ namespace zCustodiaUi.pages.login
 
         public async Task DoLogin()
         {
-            await utils.Write(el.EmailField, "al@zitec.ai", "write email user on email Field to do Login");
-            await utils.Write(el.PasswordField, "12345678", "write password user on password Field to do Login");
+            await utils.Write(el.EmailField, data.Email, "write email user on email Field to do Login");
+            await utils.Write(el.PasswordField, data.Password, "write password user on password Field to do Login");
             await utils.Click(el.SubmitButton, "Click on submit button to do Login");
             if (page.Url.Contains("dev"))
             {
@@ -42,15 +44,15 @@ namespace zCustodiaUi.pages.login
         {
             if (testCase == "invalid email")
             {
-                await utils.Write(el.EmailField, "al@zitecai", "write invalid email user on email Field to do Login");
-                await utils.Write(el.PasswordField, "12345678", "write password user on password Field to do Login");
+                await utils.Write(el.EmailField, data.InvalidEmail, "write invalid email user on email Field to do Login");
+                await utils.Write(el.PasswordField, data.Password, "write password user on password Field to do Login");
                 await utils.Click(el.SubmitButton, "Click on submit button to do Login");
                 await utils.ValidateTextIsVisibleOnScreen(el.ErrorMessage, "Validate Error message is present, given that i try should login with invalid email");
             }
             else if (testCase == "invalid password")
             {
-                await utils.Write(el.EmailField, "al@zitec.ai", "write email user on email Field to do Login");
-                await utils.Write(el.PasswordField, "invalid", "write invalid password user on password Field to do Login");
+                await utils.Write(el.EmailField, data.Email, "write email user on email Field to do Login");
+                await utils.Write(el.PasswordField, data.InvalidPassword, "write invalid password user on password Field to do Login");
                 await utils.Click(el.SubmitButton, "Click on submit button to do Login");
                 await utils.ValidateTextIsVisibleOnScreen(el.ErrorMessage, "Validate Error message is present, given that i try should login with invalid password");
             }

@@ -1,5 +1,6 @@
-﻿using Allure.NUnit.Attributes;
+using Allure.NUnit.Attributes;
 using Microsoft.Playwright;
+using zCustodiaUi.data.administrative;
 using zCustodiaUi.locators;
 using zCustodiaUi.locators.administrative;
 using zCustodiaUi.utils;
@@ -12,6 +13,7 @@ namespace zCustodiaUi.pages.admnistrative
         Utils util;
         ClosingOfFundsElements el = new ClosingOfFundsElements();
         GenericElements gen = new GenericElements();
+        private readonly ClosingOfFundsData data = new ClosingOfFundsData();
         public ClosingOfFundsPage(IPage page)
         {
             this.page = page;
@@ -22,13 +24,13 @@ namespace zCustodiaUi.pages.admnistrative
         {
             var tomorrow = DateTime.Now.AddDays(1).Day.ToString();
 
-            string fundName = "Zitec FIDC";
+
 
             //await util.Click(el.SearchBar, $"Click on Search bar To Find {fund}");
             await Task.Delay(1000);
             await util.Click(gen.LocatorMatLabel("Fundo"), $"Write on Search bar To Find {fund}");
-            await util.Write(gen.Filter, fundName, "Click on filter input to search for fund");
-            await util.Click("(" + gen.ReceiveTypeOption(fundName) + ")[2]", "Click on fund option");
+            await util.Write(gen.Filter, data.FundName, "Click on filter input to search for fund");
+            await util.Click("(" + gen.ReceiveTypeOption(data.FundName) + ")[2]", "Click on fund option");
             await util.Click(el.ButtonSearch, "Click on fund option");
 
             await Task.Delay(2000);
