@@ -37,62 +37,62 @@ namespace zCustodiaUi.pages.register
             await util.Click(gen.ButtonNew, "Open New Fund form");
             await util.Write(gen.LocatorMatLabel("Fundo"), data.FundName, "Write Fund Name");
             await util.Write(gen.LocatorMatLabel("CNPJ"), data.CnpjFund, "Write CNPJ");
-            await util.Write(gen.LocatorMatLabel("Código ISIN"), data.IsinCode, "Write ISIN Code");
-            await util.Write(gen.LocatorMatLabel("Código ANBID"), "1234567890", "Write ANBID Code");
+            await util.Write(gen.LocatorMatLabel("Cï¿½digo ISIN"), data.IsinCode, "Write ISIN Code");
+            await util.Write(gen.LocatorMatLabel("Cï¿½digo ANBID"), data.AnbidCode, "Write ANBID Code");
 
             await util.Click(gen.LocatorMatLabel("Tipo Fundo"), "Write Type Fund");
-            await util.Write(gen.Filter, "Direitos Creditórios", "Write Type Fund");
-            await util.Click(gen.ReceiveTypeOption("Direitos Creditórios"), "Click on UF option");
+            await util.Write(gen.Filter, data.FundType, "Write Type Fund");
+            await util.Click(gen.ReceiveTypeOption(data.FundType), "Click on UF option");
             await util.Click(el.StartProcessingCalendar, "Open Start Processing Calendar");
             await util.Click(gen.DayValue(today), "Set Today day on calendar");
 
-            await util.Write(gen.LocatorMatLabel("N° CETIP"), data.CetipNumber, "Write CETIP Number");
-            await util.Write(gen.LocatorMatLabel("N° SELIC"), data.SelicNumber, "Write CELIC Number");
+            await util.Write(gen.LocatorMatLabel("Nï¿½ CETIP"), data.CetipNumber, "Write CETIP Number");
+            await util.Write(gen.LocatorMatLabel("Nï¿½ SELIC"), data.SelicNumber, "Write CELIC Number");
 
             await util.Click(el.CvmRegisterCalendar, "Open CVM Register Calendar");
             await util.Click(gen.DayValue(today), "Set Today day on calendar");
 
-            await util.Write(gen.LocatorMatLabel("N° Sequencial CVM"), "2536789811", "Write Sequential Number CVM");
+            await util.Write(gen.LocatorMatLabel("Nï¿½ Sequencial CVM"), data.SequentialCvmNumber, "Write Sequential Number CVM");
 
             await util.ScrollToElementAndMaintainPosition(gen.LocatorMatLabel("Cheque"), "Scroll to element CheckSelect and keep it visible");
             await util.Click(gen.LocatorMatLabel("Lastro"), "Click Ballast Select");
-            await util.Write(gen.Filter, "Clube", "Write Aquisition Select");
-            await util.Click(gen.ReceiveTypeOption("Clube"), "Click on UF option");
+            await util.Write(gen.Filter, data.Ballast, "Write Aquisition Select");
+            await util.Click(gen.ReceiveTypeOption(data.Ballast), "Click on UF option");
             await Task.Delay(100);
 
-            await util.Click(gen.LocatorMatLabel("Código"), "Click Code Select");
-            await util.Write(gen.Filter, "1", "Write Aquisition Select");
-            await util.Click(gen.ReceiveTypeOption("1"), "Click on UF option");
+            await util.Click(gen.LocatorMatLabel("Cï¿½digo"), "Click Code Select");
+            await util.Write(gen.Filter, data.Code, "Write Aquisition Select");
+            await util.Click(gen.ReceiveTypeOption(data.Code), "Click on UF option");
             await Task.Delay(100);
 
             await util.Click(gen.LocatorMatLabel("Cheque"), "Click Check Select");
-            await util.Write(gen.Filter, "CNAB160 - Retorno de Cheque", "Write Aquisition Select");
-            await util.Click(gen.ReceiveTypeOption("CNAB160 - Retorno de Cheque"), "Click on UF option");
+            await util.Write(gen.Filter, data.CheckType, "Write Aquisition Select");
+            await util.Click(gen.ReceiveTypeOption(data.CheckType), "Click on UF option");
             await Task.Delay(100);
 
             // Fill mandatory additional fields
-            await util.ScrollToElementAndMaintainPosition(gen.LocatorMatLabel("Prazo de Recepção da Chave da NFe"), "Scroll to NFe Key Receipt Deadline");
-            await util.Write(gen.LocatorMatLabel("Prazo de Recepção da Chave da NFe"), "5", "Write NFe Key Receipt Deadline");
+            await util.ScrollToElementAndMaintainPosition(gen.LocatorMatLabel("Prazo de Recepï¿½ï¿½o da Chave da NFe"), "Scroll to NFe Key Receipt Deadline");
+            await util.Write(gen.LocatorMatLabel("Prazo de Recepï¿½ï¿½o da Chave da NFe"), data.NFeKeyReceiptDeadline, "Write NFe Key Receipt Deadline");
 
-            await util.Write(gen.LocatorMatLabel("Prazo Recepção do Lastro"), "5", "Write Deadline Reception Ballast");
+            await util.Write(gen.LocatorMatLabel("Prazo Recepï¿½ï¿½o do Lastro"), data.BallastReceiptDeadline, "Write Deadline Reception Ballast");
 
-            await util.ScrollToElementAndMaintainPosition(gen.LocatorMatLabel("Perfil Liquidação Sistema de Ativos"), "Scroll to Profile Active System and maintain position");
+            await util.ScrollToElementAndMaintainPosition(gen.LocatorMatLabel("Perfil Liquidaï¿½ï¿½o Sistema de Ativos"), "Scroll to Profile Active System and maintain position");
 
-            await util.Write(gen.LocatorMatLabel("Prazo PDD"), "0", "Write Deadline PDD");
-            await util.Write(gen.LocatorMatLabel("Num. Sequencial Att Termo Cessão"), "1001", "Write Sequence Number Term Cession");
-            await util.Write(gen.LocatorMatLabel("Num. Sequencial Att Termo Recompra"), "1002", "Write Sequence Number Term Repurchase");
-            await util.Write(gen.LocatorMatLabel("Qtd. Dias Retroagir Importação PL"), "10", "Write Quantity Days Import PL");
-            await util.Write(gen.LocatorMatLabel("Convênio"), "12345", "Write Agreement");
-            await util.Write(gen.LocatorMatLabel("Valor Máximo para o Robô Assinatura"), "10000", "Write Max Value To Assign Robot");
+            await util.Write(gen.LocatorMatLabel("Prazo PDD"), data.PddDeadline, "Write Deadline PDD");
+            await util.Write(gen.LocatorMatLabel("Num. Sequencial Att Termo Cessï¿½o"), data.SequenceNumberTermCession, "Write Sequence Number Term Cession");
+            await util.Write(gen.LocatorMatLabel("Num. Sequencial Att Termo Recompra"), data.SequenceNumberTermRepurchase, "Write Sequence Number Term Repurchase");
+            await util.Write(gen.LocatorMatLabel("Qtd. Dias Retroagir Importaï¿½ï¿½o PL"), data.DaysImportPl, "Write Quantity Days Import PL");
+            await util.Write(gen.LocatorMatLabel("Convï¿½nio"), data.Agreement, "Write Agreement");
+            await util.Write(gen.LocatorMatLabel("Valor Mï¿½ximo para o Robï¿½ Assinatura"), data.MaxValueRobot, "Write Max Value To Assign Robot");
 
-            await util.ScrollToElementAndMaintainPosition(gen.LocatorMatLabel("Tipo Recebível"), "Scroll to Receive Type and maintain position");
+            await util.ScrollToElementAndMaintainPosition(gen.LocatorMatLabel("Tipo Recebï¿½vel"), "Scroll to Receive Type and maintain position");
             await Task.Delay(500);
-            await util.Click(gen.LocatorMatLabel("Tipo Recebível"), "Click Receive Type");
-            await util.Write(gen.Filter, "Duplicata", "Write Receive Type");
-            await util.Click(gen.ReceiveTypeOption("Duplicata"), "Click Receive Type Option");
+            await util.Click(gen.LocatorMatLabel("Tipo Recebï¿½vel"), "Click Receive Type");
+            await util.Write(gen.Filter, data.ReceivableType, "Write Receive Type");
+            await util.Click(gen.ReceiveTypeOption(data.ReceivableType), "Click Receive Type Option");
 
-            await util.Write(gen.LocatorMatLabel("Código Carteira"), "001", "Write Wallet Code");
-            await util.Write(gen.LocatorMatLabel("Ordem de Processamento"), "99999", "Write Process Order");
+            await util.Write(gen.LocatorMatLabel("Cï¿½digo Carteira"), data.WalletCode, "Write Wallet Code");
+            await util.Write(gen.LocatorMatLabel("Ordem de Processamento"), data.ProcessOrder, "Write Process Order");
         }
 
         [AllureStep("Fill Rules")]
@@ -105,19 +105,19 @@ namespace zCustodiaUi.pages.register
             await util.ClickMatTabAsync(gen.TabAllForms("Regras"), "Click belt to change rules form");
 
             await util.Click(gen.LocatorMatLabel("Nome da Regra"), "Click on select to expand options of name rules");
-            await util.Write(gen.Filter, "ACELERA", "Write Aquisition Select");
-            await util.Click(gen.ReceiveTypeOption("ACELERA"), "Click on UF option");
+            await util.Write(gen.Filter, data.RuleName, "Write Aquisition Select");
+            await util.Click(gen.ReceiveTypeOption(data.RuleName), "Click on UF option");
 
             await util.Click(el.RelationshipCalendar, "Click on relationship callendar to expand the callendar");
             await util.Click(gen.DayValue(today), "Click on tomorrow day to set relationship date");
 
-            await util.Click(gen.LocatorMatLabel("Modelo de Precificação"), "Click to expand price model select");
-            await util.Write(gen.Filter, "Por recebível", "Write Aquisition Select");
-            await util.Click(gen.ReceiveTypeOption("Por recebível"), "Click on UF option");
+            await util.Click(gen.LocatorMatLabel("Modelo de Precificaï¿½ï¿½o"), "Click to expand price model select");
+            await util.Write(gen.Filter, data.PricingModel, "Write Aquisition Select");
+            await util.Click(gen.ReceiveTypeOption(data.PricingModel), "Click on UF option");
             await Task.Delay(150);
             await util.Click(gen.LocatorMatLabel("Aplica-se a"), "Click on select to expand options of apply to");
-            await util.Write(gen.Filter, "Toda carteira", "Write Aquisition Select");
-            await util.Click(gen.ReceiveTypeOption("Toda carteira"), "Click on UF option");
+            await util.Write(gen.Filter, data.ApplyTo, "Write Aquisition Select");
+            await util.Click(gen.ReceiveTypeOption(data.ApplyTo), "Click on UF option");
         }
 
         [AllureStep("Fill Representatives")]
@@ -129,12 +129,12 @@ namespace zCustodiaUi.pages.register
             await util.Click(gen.ButtonNew, "Click on button new to add new representative");
 
             await util.Click(gen.LocatorMatLabel("Nome"), "Click on the name representative input");
-            await util.Write(gen.LocatorMatLabel("Nome"), "Representante Teste", "Write the name representative on input");
+            await util.Write(gen.LocatorMatLabel("Nome"), data.RepresentativeName, "Write the name representative on input");
 
-            await util.Write(gen.LocatorMatLabel("Email"), "teste@email.com", "insert email representative on input");
+            await util.Write(gen.LocatorMatLabel("Email"), data.RepresentativeEmail, "insert email representative on input");
 
-            await util.Write(gen.LocatorMatLabel("CPF"), "40956114806", "Write on the CPF representative input");
-            await util.Write(gen.LocatorMatLabel("Telefone"), "11934125767", "Write on the Tel input");
+            await util.Write(gen.LocatorMatLabel("CPF"), data.RepresentativeCPF, "Write on the CPF representative input");
+            await util.Write(gen.LocatorMatLabel("Telefone"), data.RepresentativeTelephone, "Write on the Tel input");
 
             await util.Click(el.AssignRadio(true), "Select 'yes' to assign");
             await util.Click(el.SignsByEndorsementRadio(true), "Select 'yes' to Signs By Endorsement");
@@ -148,11 +148,11 @@ namespace zCustodiaUi.pages.register
         public async Task Liquidation()
         {
             //Liquidation 
-            await util.ScrollToElementAndMaintainPosition(gen.TabAllForms("Liquidação"), "Scroll to liquidation form");
+            await util.ScrollToElementAndMaintainPosition(gen.TabAllForms("Liquidaï¿½ï¿½o"), "Scroll to liquidation form");
             await Task.Delay(500);
-            await util.ClickMatTabAsync(gen.TabAllForms("Liquidação"), "Click belt to change liquidation form");
+            await util.ClickMatTabAsync(gen.TabAllForms("Liquidaï¿½ï¿½o"), "Click belt to change liquidation form");
             await Task.Delay(100);
-            await util.Write(gen.LocatorMatLabel("Percentual Máximo Reembolso de Despesas %"), data.MaxPercent, "Set max percent of reimbursement");
+            await util.Write(gen.LocatorMatLabel("Percentual Mï¿½ximo Reembolso de Despesas %"), data.MaxPercent, "Set max percent of reimbursement");
         }
 
         [AllureStep("Fill Account")]
@@ -167,14 +167,14 @@ namespace zCustodiaUi.pages.register
             await util.Click(gen.ButtonNew, "Click on button new to insert a new Account");
             await Task.Delay(250);
             await util.Click(gen.LocatorMatLabel("Banco"), "Click on BankSelect button new to insert a new Bank");
-            await util.Write(gen.Filter, "439 - ID CTVM", "Write Receive Type");
-            await util.Click(gen.ReceiveTypeOption("439 - ID CTVM"), "Click Receive Type Option");
-            await util.Write(gen.LocatorMatLabel("Número Agência"), data.AgencyNumber, "Write Number Agency");
-            await util.Write(gen.LocatorMatLabel("Conta Corrente"), "46677", "Write Number account");
-            await util.Write(gen.LocatorMatLabel("Dígito"), "3", "Write Code account");
+            await util.Write(gen.Filter, data.Bank, "Write Receive Type");
+            await util.Click(gen.ReceiveTypeOption(data.Bank), "Click Receive Type Option");
+            await util.Write(gen.LocatorMatLabel("Nï¿½mero Agï¿½ncia"), data.AgencyNumber, "Write Number Agency");
+            await util.Write(gen.LocatorMatLabel("Conta Corrente"), data.AccountNumber, "Write Number account");
+            await util.Write(gen.LocatorMatLabel("Dï¿½gito"), data.AccountDigit, "Write Code account");
             await util.Click(el.PatternAccount(true), "Click on 'yes' to account pattern");
-            await util.Click(el.MovementType("Movimentação"), "Click on Movement Type");
-            await util.Write(gen.LocatorMatLabel("Descrição"), data.Description, "fill description of account test");
+            await util.Click(el.MovementType("Movimentaï¿½ï¿½o"), "Click on Movement Type");
+            await util.Write(gen.LocatorMatLabel("Descriï¿½ï¿½o"), data.Description, "fill description of account test");
             await util.Click(el.AddButton, "Click on Add Button to add a new account");
         }
 
@@ -185,13 +185,13 @@ namespace zCustodiaUi.pages.register
             await util.ClickMatTabAsync(gen.TabAllForms("Slack"), "Click belt to change slack form");
             await util.Click(gen.ButtonNew, "Click on button new to insert a new Slack Channel");
 
-            await util.Write(gen.LocatorMatLabel("SlackWebhook Operações:"), "WebHook Test", "Insert name of operations webhook");
-            await util.Write(gen.LocatorMatLabel("Nome Canal Operações:"), "Channel Test", "Insert Name Of Channel Operations");
-            await util.Write(gen.LocatorMatLabel("ID Canal Operações:"), "01", "Insert ID of Channel Operations");
+            await util.Write(gen.LocatorMatLabel("SlackWebhook Operaï¿½ï¿½es:"), data.OperationsWebhook, "Insert name of operations webhook");
+            await util.Write(gen.LocatorMatLabel("Nome Canal Operaï¿½ï¿½es:"), data.OperationsChannelName, "Insert Name Of Channel Operations");
+            await util.Write(gen.LocatorMatLabel("ID Canal Operaï¿½ï¿½es:"), data.OperationsChannelId, "Insert ID of Channel Operations");
 
-            await util.Write(gen.LocatorMatLabel("SlackWebhook Lastros:"), "WebHook Test", "Insert name of operations webhook");
-            await util.Write(gen.LocatorMatLabel("Nome Canal Lastros:"), "Channel Test", "Insert Name Of Channel Operations");
-            await util.Write(gen.LocatorMatLabel("ID Canal Lastros:"), "01", "Insert ID of Channel Operations");
+            await util.Write(gen.LocatorMatLabel("SlackWebhook Lastros:"), data.BallastWebhook, "Insert name of operations webhook");
+            await util.Write(gen.LocatorMatLabel("Nome Canal Lastros:"), data.BallastChannelName, "Insert Name Of Channel Operations");
+            await util.Write(gen.LocatorMatLabel("ID Canal Lastros:"), data.BallastChannelId, "Insert ID of Channel Operations");
             await util.Click(el.AddButton, "Click on Add Button to add a new account");
         }
 
@@ -199,12 +199,12 @@ namespace zCustodiaUi.pages.register
         public async Task FileValidation()
         {
             //File Validation
-            await util.ClickMatTabAsync(gen.TabAllForms("Validação Arquivo"), "Click belt to change file validation form");
+            await util.ClickMatTabAsync(gen.TabAllForms("Validaï¿½ï¿½o Arquivo"), "Click belt to change file validation form");
             await Task.Delay(500);
 
-            await util.Click(gen.LocatorMatLabel("Recebíveis Permitidos ao Fundo"), "Click on button new to Receives allow to fund");
-            await util.Write(gen.Filter, "Duplicata", "Write Receive Type");
-            await util.Click(gen.ReceiveTypeOption("Duplicata"), "Click Duplicata Type Option");
+            await util.Click(gen.LocatorMatLabel("Recebï¿½veis Permitidos ao Fundo"), "Click on button new to Receives allow to fund");
+            await util.Write(gen.Filter, data.ReceivableType, "Write Receive Type");
+            await util.Click(gen.ReceiveTypeOption(data.ReceivableType), "Click Duplicata Type Option");
             await page.Keyboard.PressAsync("Escape");
         }
 
@@ -212,9 +212,9 @@ namespace zCustodiaUi.pages.register
         [AllureStep("Fill Represetatives")]
         public async Task GoToServicePrestatives()
         {
-            //Prestadores d Serviços
+            //Prestadores d Serviï¿½os
             await util.Click(gen.RightArrow, "Click on  Arrow to expand group tab");
-            await util.ClickMatTabAsync(gen.TabAllForms("Prestadores de Serviços"), "Click belt to change service prestatives form");
+            await util.ClickMatTabAsync(gen.TabAllForms("Prestadores de Serviï¿½os"), "Click belt to change service prestatives form");
             await util.Click(gen.ButtonNew, "Click on button new to insert a new Service prestative");
             await Task.Delay(500);
 
@@ -224,20 +224,20 @@ namespace zCustodiaUi.pages.register
 
             //administrator
             await util.Click(gen.LocatorMatLabel("Tipo Prestador"), "Select Type Provider in new provider");
-            await util.Write(gen.Filter, "Administrador", "Write Receive Type");
-            await util.Click(gen.ReceiveTypeOption("Administrador"), "Click Receive Type Option");
+            await util.Write(gen.Filter, data.ProviderTypeAdministrator, "Write Receive Type");
+            await util.Click(gen.ReceiveTypeOption(data.ProviderTypeAdministrator), "Click Receive Type Option");
             await Task.Delay(500);
 
             await util.Click(gen.LocatorMatLabel("Pessoa"), "Select Type Person Type in new provider");
-            await util.Write(gen.Filter, "ORIGINADOR QA", "Write Receive Type");
-            await util.Click(gen.ReceiveTypeOption("ORIGINADOR QA"), "Click Receive Type Option");
+            await util.Write(gen.Filter, data.PersonTypeAdministrator, "Write Receive Type");
+            await util.Click(gen.ReceiveTypeOption(data.PersonTypeAdministrator), "Click Receive Type Option");
             await Task.Delay(500);
 
-            await util.Click(gen.LocatorMatLabel("Tipo de Cobrança"), "Select Charge Type Select in new provider");
-            await util.Write(gen.Filter, "Valor Fixo", "Write Receive Type");
-            await util.Click(gen.ReceiveTypeOption("Valor Fixo"), "Click Receive Type Option");
+            await util.Click(gen.LocatorMatLabel("Tipo de Cobranï¿½a"), "Select Charge Type Select in new provider");
+            await util.Write(gen.Filter, data.ChargeType, "Write Receive Type");
+            await util.Click(gen.ReceiveTypeOption(data.ChargeType), "Click Receive Type Option");
             await Task.Delay(500);
-            await util.Write(gen.LocatorMatLabel("Valor Fixo"), "100000", "Insert fixed value in new provider");
+            await util.Write(gen.LocatorMatLabel("Valor Fixo"), data.FixedValue, "Insert fixed value in new provider");
             await page.Keyboard.PressAsync("Backspace");
             await util.Click(el.AddButton, "Click on add button to add new provider");
             if (lastFlow is true)
@@ -252,20 +252,20 @@ namespace zCustodiaUi.pages.register
             await Task.Delay(500);
 
             await util.Click(gen.LocatorMatLabel("Tipo Prestador"), "Select Type Provider in new provider");
-            await util.Write(gen.Filter, "Gestor", "Write Receive manager Type");
-            await util.Click(gen.ReceiveTypeOption("Gestor"), "Click Receive Type Option");
+            await util.Write(gen.Filter, data.ProviderTypeManager, "Write Receive manager Type");
+            await util.Click(gen.ReceiveTypeOption(data.ProviderTypeManager), "Click Receive Type Option");
             await Task.Delay(500);
 
             await util.Click(gen.LocatorMatLabel("Pessoa"), "Select Type Person Type in new provider");
-            await util.Write(gen.Filter, "zitec", "Write Receive Type");
-            await util.Click(gen.ReceiveTypeOption("zitec"), "Click Receive Type Option");
+            await util.Write(gen.Filter, data.PersonTypeManager, "Write Receive Type");
+            await util.Click(gen.ReceiveTypeOption(data.PersonTypeManager), "Click Receive Type Option");
             await Task.Delay(500);
 
-            await util.Click(gen.LocatorMatLabel("Tipo de Cobrança"), "Select Charge Type Select in new provider");
-            await util.Write(gen.Filter, "Valor Fixo", "Write Receive Type");
-            await util.Click("//div[@role='listbox']" + gen.ReceiveTypeOption("Valor Fixo"), "Click Receive Type Option");
+            await util.Click(gen.LocatorMatLabel("Tipo de Cobranï¿½a"), "Select Charge Type Select in new provider");
+            await util.Write(gen.Filter, data.ChargeType, "Write Receive Type");
+            await util.Click("//div[@role='listbox']" + gen.ReceiveTypeOption(data.ChargeType), "Click Receive Type Option");
             await Task.Delay(500);
-            await util.Write(gen.LocatorMatLabel("Valor Fixo"), "100000", "Insert fixed value in new provider");
+            await util.Write(gen.LocatorMatLabel("Valor Fixo"), data.FixedValue, "Insert fixed value in new provider");
             await page.Keyboard.PressAsync("Backspace");
             await util.Click(el.AddButton, "Click on add button to add new provider");
             if (lastFlow is true)
@@ -280,20 +280,20 @@ namespace zCustodiaUi.pages.register
             await Task.Delay(500);
 
             await util.Click(gen.LocatorMatLabel("Tipo Prestador"), "Select Type Provider in new provider");
-            await util.Write(gen.Filter, "Consultoria", "Write Consultant Receive Type");
-            await util.Click(gen.ReceiveTypeOption("Consultoria"), "Click Receive Type Option");
+            await util.Write(gen.Filter, data.ProviderTypeConsultant, "Write Consultant Receive Type");
+            await util.Click(gen.ReceiveTypeOption(data.ProviderTypeConsultant), "Click Receive Type Option");
             await Task.Delay(500);
 
             await util.Click(gen.LocatorMatLabel("Pessoa"), "Select Type Person Type in new provider");
-            await util.Write(gen.Filter, "GESTORA DE RECURSOS ID - GRID LTDA.", "Write Receive Type");
-            await util.Click(gen.ReceiveTypeOption("GESTORA DE RECURSOS ID - GRID LTDA."), "Click Receive Type Option");
+            await util.Write(gen.Filter, data.PersonTypeConsultant, "Write Receive Type");
+            await util.Click(gen.ReceiveTypeOption(data.PersonTypeConsultant), "Click Receive Type Option");
             await Task.Delay(500);
 
-            await util.Click(gen.LocatorMatLabel("Tipo de Cobrança"), "Select Charge Type Select in new provider");
-            await util.Write(gen.Filter, "Valor Fixo", "Write Receive Type");
-            await util.Click("//div[@role='listbox']" + gen.ReceiveTypeOption("Valor Fixo"), "Click Receive Type Option");
+            await util.Click(gen.LocatorMatLabel("Tipo de Cobranï¿½a"), "Select Charge Type Select in new provider");
+            await util.Write(gen.Filter, data.ChargeType, "Write Receive Type");
+            await util.Click("//div[@role='listbox']" + gen.ReceiveTypeOption(data.ChargeType), "Click Receive Type Option");
             await Task.Delay(500);
-            await util.Write(gen.LocatorMatLabel("Valor Fixo"), "100000", "Insert fixed value in new provider");
+            await util.Write(gen.LocatorMatLabel("Valor Fixo"), data.FixedValue, "Insert fixed value in new provider");
             await page.Keyboard.PressAsync("Backspace");
             await util.Click(el.AddButton, "Click on add button to add new provider");
             if (lastFlow is true)
@@ -374,28 +374,28 @@ namespace zCustodiaUi.pages.register
                     break;
 
                 case "Without Consultant":
-                    //Prestadores d Serviços
+                    //Prestadores d Serviï¿½os
                     await util.Click(gen.RightArrow, "Click on  Arrow to expand group tab");
-                    await util.ClickMatTabAsync(gen.TabAllForms("Prestadores de Serviços"), "Click belt to change service prestatives form");
+                    await util.ClickMatTabAsync(gen.TabAllForms("Prestadores de Serviï¿½os"), "Click belt to change service prestatives form");
                     await util.Click(gen.ButtonNew, "Click on button new to insert a new Service prestative");
                     await Task.Delay(500);
 
                     //administrator
                     await util.Click(gen.LocatorMatLabel("Tipo Prestador"), "Select Type Provider in new provider");
-                    await util.Write(gen.Filter, "Administrador", "Write Receive Type");
-                    await util.Click(gen.ReceiveTypeOption("Administrador"), "Click Receive Type Option");
+                    await util.Write(gen.Filter, data.ProviderTypeAdministrator, "Write Receive Type");
+                    await util.Click(gen.ReceiveTypeOption(data.ProviderTypeAdministrator), "Click Receive Type Option");
                     await Task.Delay(500);
 
                     await util.Click(gen.LocatorMatLabel("Pessoa"), "Select Type Person Type in new provider");
-                    await util.Write(gen.Filter, "ORIGINADOR QA", "Write Receive Type");
-                    await util.Click(gen.ReceiveTypeOption("ORIGINADOR QA"), "Click Receive Type Option");
+                    await util.Write(gen.Filter, data.PersonTypeAdministrator, "Write Receive Type");
+                    await util.Click(gen.ReceiveTypeOption(data.PersonTypeAdministrator), "Click Receive Type Option");
                     await Task.Delay(500);
 
-                    await util.Click(gen.LocatorMatLabel("Tipo de Cobrança"), "Select Charge Type Select in new provider");
-                    await util.Write(gen.Filter, "Valor Fixo", "Write Receive Type");
-                    await util.Click(gen.ReceiveTypeOption("Valor Fixo"), "Click Receive Type Option");
+                    await util.Click(gen.LocatorMatLabel("Tipo de Cobranï¿½a"), "Select Charge Type Select in new provider");
+                    await util.Write(gen.Filter, data.ChargeType, "Write Receive Type");
+                    await util.Click(gen.ReceiveTypeOption(data.ChargeType), "Click Receive Type Option");
                     await Task.Delay(500);
-                    await util.Write(gen.LocatorMatLabel("Valor Fixo"), "100000", "Insert fixed value in new provider");
+                    await util.Write(gen.LocatorMatLabel("Valor Fixo"), data.FixedValue, "Insert fixed value in new provider");
                     await page.Keyboard.PressAsync("Backspace");
                     await util.Click(el.AddButton, "Click on add button to add new provider");
 
@@ -404,24 +404,24 @@ namespace zCustodiaUi.pages.register
                     await Task.Delay(500);
 
                     await util.Click(gen.LocatorMatLabel("Tipo Prestador"), "Select Type Provider in new provider");
-                    await util.Write(gen.Filter, "Gestor", "Write Receive manager Type");
-                    await util.Click(gen.ReceiveTypeOption("Gestor"), "Click Receive Type Option");
+                    await util.Write(gen.Filter, data.ProviderTypeManager, "Write Receive manager Type");
+                    await util.Click(gen.ReceiveTypeOption(data.ProviderTypeManager), "Click Receive Type Option");
                     await Task.Delay(500);
 
                     await util.Click(gen.LocatorMatLabel("Pessoa"), "Select Type Person Type in new provider");
-                    await util.Write(gen.Filter, "zitec", "Write Receive Type");
-                    await util.Click(gen.ReceiveTypeOption("zitec"), "Click Receive Type Option");
+                    await util.Write(gen.Filter, data.PersonTypeManager, "Write Receive Type");
+                    await util.Click(gen.ReceiveTypeOption(data.PersonTypeManager), "Click Receive Type Option");
                     await Task.Delay(500);
 
-                    await util.Click(gen.LocatorMatLabel("Tipo de Cobrança"), "Select Charge Type Select in new provider");
-                    await util.Write(gen.Filter, "Valor Fixo", "Write Receive Type");
-                    await util.Click("//div[@role='listbox']" + gen.ReceiveTypeOption("Valor Fixo"), "Click Receive Type Option");
+                    await util.Click(gen.LocatorMatLabel("Tipo de Cobranï¿½a"), "Select Charge Type Select in new provider");
+                    await util.Write(gen.Filter, data.ChargeType, "Write Receive Type");
+                    await util.Click("//div[@role='listbox']" + gen.ReceiveTypeOption(data.ChargeType), "Click Receive Type Option");
                     await Task.Delay(500);
-                    await util.Write(gen.LocatorMatLabel("Valor Fixo"), "100000", "Insert fixed value in new provider");
+                    await util.Write(gen.LocatorMatLabel("Valor Fixo"), data.FixedValue, "Insert fixed value in new provider");
                     await page.Keyboard.PressAsync("Backspace");
                     await util.Click(el.AddButton, "Click on add button to add new provider");
                     await util.Click(el.SaveButton, "Click on to add a new Fund!");
-                    await util.ValidateTextIsNotVisibleOnScreen("É obrigatório um 'Gestor' como prestador.", "Validate if message mandatory consultant is visible to user");
+                    await util.ValidateTextIsNotVisibleOnScreen("ï¿½ obrigatï¿½rio um 'Gestor' como prestador.", "Validate if message mandatory consultant is visible to user");
                     break;
 
                 case "Without Adm":
@@ -454,7 +454,7 @@ namespace zCustodiaUi.pages.register
             await util.ValidateTextIsVisibleInElement(el.NameFundTable, data.FundName, "Validate if name fund is present on table");
             await util.Click(el.EditButton, "Click on Edit button to edit the Fund");
             //Make changes
-            await util.Write(gen.LocatorMatLabel("Código ISIN"), "000000000000001", "Edit Code isin");
+            await util.Write(gen.LocatorMatLabel("Cï¿½digo ISIN"), data.EditedIsinCode, "Edit Code isin");
             await util.ScrollToElementAndMaintainPosition(el.ApplyChangesButton, "Scroll to Button apply changes");
 
             await util.Click(el.ApplyChangesButton, "Click on to save the Fund!");
