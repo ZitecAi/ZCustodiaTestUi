@@ -157,7 +157,7 @@ namespace zCustodiaUi.pages.register
         }
 
         [AllureStep("Fill Account")]
-        public async Task Account()
+        public async Task Account(bool? isNegative = false)
         {
             //Account
             await util.ScrollToElementAndMaintainPosition(gen.TabAllForms("Conta Corrente"), "Scroll to account form");
@@ -168,7 +168,7 @@ namespace zCustodiaUi.pages.register
             await util.Click(gen.ButtonNew, "Click on button new to insert a new Account");
             await Task.Delay(250);
             await util.Click(gen.LocatorMatLabel("Banco"), "Click on BankSelect button new to insert a new Bank");
-            await util.Write(gen.Filter, data.Bank, "Write Receive Type");
+            await util.Write(gen.Filter, data.Bank, "Write Name Bank");
             await util.Click(gen.ReceiveTypeOption(data.Bank), "Click Receive Type Option");
             await util.Write(gen.LocatorMatLabel("Número Agência"), data.AgencyNumber, "Write Number Agency");
             await util.Write(gen.LocatorMatLabel("Conta Corrente"), data.AccountNumber, "Write Number account");
@@ -176,6 +176,34 @@ namespace zCustodiaUi.pages.register
             await util.Click(el.PatternAccount(true), "Click on 'yes' to account pattern");
             await util.Click(el.MovementType("Movimentação"), "Click on Movement Type");
             await util.Write(gen.LocatorMatLabel("Descrição"), data.Description, "fill description of account test");
+            if (isNegative is true)
+            {
+                return;
+            }
+            await util.Click(el.AddButton, "Click on Add Button to add a new account");
+        }
+        public async Task AccountWithoutType(bool? isNegative = false)
+        {
+            //Account
+            await util.ScrollToElementAndMaintainPosition(gen.TabAllForms("Conta Corrente"), "Scroll to account form");
+            await util.Click(gen.RightArrow, "Click on  Arrow to expand group tab");
+            await Task.Delay(500);
+            await util.ClickMatTabAsync(gen.TabAllForms("Conta Corrente"), "Click belt to change account form");
+
+            await util.Click(gen.ButtonNew, "Click on button new to insert a new Account");
+            await Task.Delay(250);
+            await util.Click(gen.LocatorMatLabel("Banco"), "Click on BankSelect button new to insert a new Bank");
+            await util.Write(gen.Filter, data.Bank, "Write Name Bank");
+            await util.Click(gen.ReceiveTypeOption(data.Bank), "Click Receive Type Option");
+            await util.Write(gen.LocatorMatLabel("Número Agência"), data.AgencyNumber, "Write Number Agency");
+            await util.Write(gen.LocatorMatLabel("Conta Corrente"), data.AccountNumber, "Write Number account");
+            await util.Write(gen.LocatorMatLabel("Dígito"), data.AccountDigit, "Write Code account");
+            await util.Click(el.PatternAccount(true), "Click on 'yes' to account pattern");
+            await util.Write(gen.LocatorMatLabel("Descrição"), data.Description, "fill description of account test");
+            if (isNegative is true)
+            {
+                return;
+            }
             await util.Click(el.AddButton, "Click on Add Button to add a new account");
         }
 
@@ -216,14 +244,16 @@ namespace zCustodiaUi.pages.register
             //Prestadores d Servi�os
             await util.Click(gen.RightArrow, "Click on  Arrow to expand group tab");
             await util.ClickMatTabAsync(gen.TabAllForms("Prestadores de Serviços"), "Click belt to change service prestatives form");
-            await util.Click(gen.ButtonNew, "Click on button new to insert a new Service prestative");
-            await Task.Delay(500);
+
 
         }
         public async Task RegisterPrestativeAdministrator(bool lastFlow = false)
         {
 
             //administrator
+            await Task.Delay(100);
+            await util.Click(gen.ButtonNew, "Click on button new to insert a new Service prestative");
+            await Task.Delay(100);
             await util.Click(gen.LocatorMatLabel("Tipo Prestador"), "Select Type Provider in new provider");
             await util.Write(gen.Filter, data.ProviderTypeAdministrator, "Write Receive Type");
             await util.Click(gen.ReceiveTypeOption(data.ProviderTypeAdministrator), "Click Receive Type Option");
@@ -249,6 +279,7 @@ namespace zCustodiaUi.pages.register
         public async Task RegisterPrestativeManager(bool lastFlow = false)
         {
             //Manager
+            await Task.Delay(100);
             await util.Click(gen.ButtonNew, "Click on button new to insert a new Service prestative");
             await Task.Delay(500);
 
@@ -277,6 +308,7 @@ namespace zCustodiaUi.pages.register
         public async Task RegisterPrestativeConsultant(bool lastFlow = false)
         {
             //Consultant
+            await Task.Delay(100);
             await util.Click(gen.ButtonNew, "Click on button new to insert a new Service prestative");
             await Task.Delay(500);
 
@@ -310,6 +342,13 @@ namespace zCustodiaUi.pages.register
             await util.Click(el.SaveButton, "Click on to add a new Fund!");
             await util.ValidateTextIsVisibleOnScreen(el.SuccessMessageRegisterNewFund, "Validate if success message is present on screen after all Flow finished");
         }
+        public async Task SaveFundNegative(string expectedText)
+        {
+            await Task.Delay(1500);
+            await util.Click(el.SaveButton, "Click on to add a new Fund!");
+            await util.ValidateTextIsVisibleOnScreen(expectedText, "Validate if error message is present on screen after all Flow finished");
+        }
+
         public async Task NegativeScenario(string testCase)
         {
             var tomorrow = DateTime.Now.AddDays(1).Day.ToString();
@@ -331,104 +370,111 @@ namespace zCustodiaUi.pages.register
                     await RegisterPrestativeConsultant();
                     await util.ValidateElementIsDisabled(el.SaveButton, "Validate if Save Button is disabled with empty Fund Name");
                     break;
-                case "Cetip Number empty":
-                    await RegisterData();
-                    await Rules();
-                    await Representatives();
-                    await Liquidation();
-                    await Account();
-                    await Slack();
-                    await FileValidation();
-                    await GoToServicePrestatives();
-                    await RegisterPrestativeAdministrator();
-                    await RegisterPrestativeManager();
-                    await RegisterPrestativeConsultant();
-                    await util.ValidateElementIsDisabled(el.SaveButton, "Validate if Save Button is disabled with empty Fund Name");
-                    break;
-                case "Selic Number empty":
-                    await RegisterData();
-                    await Rules();
-                    await Representatives();
-                    await Liquidation();
-                    await Account();
-                    await Slack();
-                    await FileValidation();
-                    await GoToServicePrestatives();
-                    await RegisterPrestativeAdministrator();
-                    await RegisterPrestativeManager();
-                    await RegisterPrestativeConsultant();
-                    await util.ValidateElementIsDisabled(el.SaveButton, "Validate if Save Button is disabled with empty Fund Name");
-                    break;
                 case "ISIN code empty":
+                    await RegisterData();
+                    await Rules();
+                    await Representatives();
+                    await Liquidation();
+                    await Account();
+                    await Slack();
+                    await FileValidation();
+                    await GoToServicePrestatives();
+                    await RegisterPrestativeAdministrator();
+                    await RegisterPrestativeManager();
+                    await RegisterPrestativeConsultant();
+                    await util.ValidateElementIsDisabled(el.SaveButton, "Validate if Save Button is disabled with empty Fund Name");
                     break;
                 case "CNPJ already exists":
+                    await RegisterData();
+                    await Rules();
+                    await Representatives();
+                    await Liquidation();
+                    await Account();
+                    await Slack();
+                    await FileValidation();
+                    await GoToServicePrestatives();
+                    await RegisterPrestativeAdministrator();
+                    await RegisterPrestativeManager();
+                    await RegisterPrestativeConsultant();
+                    await SaveFundNegative("Fundo já existente para o CNPJ '54638076000176'.");
                     break;
                 case "CNPJ empty":
+                    await RegisterData();
+                    await Rules();
+                    await Representatives();
+                    await Liquidation();
+                    await Account();
+                    await Slack();
+                    await FileValidation();
+                    await GoToServicePrestatives();
+                    await RegisterPrestativeAdministrator();
+                    await RegisterPrestativeManager();
+                    await RegisterPrestativeConsultant();
+                    await util.ValidateElementIsDisabled(el.SaveButton, "Validate if Save Button is disabled with empty Fund Name");
                     break;
                 case "Max Percent empty":
+                    await RegisterData();
+                    await Rules();
+                    await Representatives();
+                    await Liquidation();
+                    await Account();
+                    await Slack();
+                    await FileValidation();
+                    await GoToServicePrestatives();
+                    await RegisterPrestativeAdministrator();
+                    await RegisterPrestativeManager();
+                    await RegisterPrestativeConsultant();
+                    await util.ValidateElementIsDisabled(el.SaveButton, "Validate if Save Button is disabled with empty Fund Name");
                     break;
                 case "Agency Number empty":
+                    await RegisterData();
+                    await Rules();
+                    await Representatives();
+                    await Liquidation();
+                    await Account(true);
+                    await util.ValidateElementIsDisabled(el.AddButton, "Validate if Add Button is disabled with empty Fund Name");
                     break;
                 case "Description account empty":
+                    await RegisterData();
+                    await Rules();
+                    await Representatives();
+                    await Liquidation();
+                    await Account(true);
+                    await util.ValidateElementIsDisabled(el.AddButton, "Validate if Add Button is disabled with empty Fund Name");
                     break;
-                case "No Type Account":
+                case "Without Type Account":
+                    await RegisterData();
+                    await Rules();
+                    await Representatives();
+                    await Liquidation();
+                    await AccountWithoutType(true);
+                    await util.ValidateElementIsDisabled(el.AddButton, "Validate if add Button is disabled with empty Fund Name");
                     break;
-
                 case "Without Consultant":
-                    //Prestadores de Serviços
-                    await util.Click(gen.RightArrow, "Click on  Arrow to expand group tab");
-                    await util.ClickMatTabAsync(gen.TabAllForms("Prestadores de Serviços"), "Click belt to change service prestatives form");
-                    await util.Click(gen.ButtonNew, "Click on button new to insert a new Service prestative");
-                    await Task.Delay(500);
-
-                    //administrator
-                    await util.Click(gen.LocatorMatLabel("Tipo Prestador"), "Select Type Provider in new provider");
-                    await util.Write(gen.Filter, data.ProviderTypeAdministrator, "Write Receive Type");
-                    await util.Click(gen.ReceiveTypeOption(data.ProviderTypeAdministrator), "Click Receive Type Option");
-                    await Task.Delay(500);
-
-                    await util.Click(gen.LocatorMatLabel("Pessoa"), "Select Type Person Type in new provider");
-                    await util.Write(gen.Filter, data.PersonTypeAdministrator, "Write Receive Type");
-                    await util.Click(gen.ReceiveTypeOption(data.PersonTypeAdministrator), "Click Receive Type Option");
-                    await Task.Delay(500);
-
-                    await util.Click(gen.LocatorMatLabel("Tipo de Cobrança"), "Select Charge Type Select in new provider");
-                    await util.Write(gen.Filter, data.ChargeType, "Write Receive Type");
-                    await util.Click(gen.ReceiveTypeOption(data.ChargeType), "Click Receive Type Option");
-                    await Task.Delay(500);
-                    await util.Write(gen.LocatorMatLabel("Valor Fixo"), data.FixedValue, "Insert fixed value in new provider");
-                    await page.Keyboard.PressAsync("Backspace");
-                    await util.Click(el.AddButton, "Click on add button to add new provider");
-
-                    //Manager
-                    await util.Click(gen.ButtonNew, "Click on button new to insert a new Service prestative");
-                    await Task.Delay(500);
-
-                    await util.Click(gen.LocatorMatLabel("Tipo Prestador"), "Select Type Provider in new provider");
-                    await util.Write(gen.Filter, data.ProviderTypeManager, "Write Receive manager Type");
-                    await util.Click(gen.ReceiveTypeOption(data.ProviderTypeManager), "Click Receive Type Option");
-                    await Task.Delay(500);
-
-                    await util.Click(gen.LocatorMatLabel("Pessoa"), "Select Type Person Type in new provider");
-                    await util.Write(gen.Filter, data.PersonTypeManager, "Write Receive Type");
-                    await util.Click(gen.ReceiveTypeOption(data.PersonTypeManager), "Click Receive Type Option");
-                    await Task.Delay(500);
-
-                    await util.Click(gen.LocatorMatLabel("Tipo de Cobrança"), "Select Charge Type Select in new provider");
-                    await util.Write(gen.Filter, data.ChargeType, "Write Receive Type");
-                    await util.Click("//div[@role='listbox']" + gen.ReceiveTypeOption(data.ChargeType), "Click Receive Type Option");
-                    await Task.Delay(500);
-                    await util.Write(gen.LocatorMatLabel("Valor Fixo"), data.FixedValue, "Insert fixed value in new provider");
-                    await page.Keyboard.PressAsync("Backspace");
-                    await util.Click(el.AddButton, "Click on add button to add new provider");
-                    await util.Click(el.SaveButton, "Click on to add a new Fund!");
-                    await util.ValidateTextIsNotVisibleOnScreen("É obrigatório um 'Gestor' como prestador.", "Validate if message mandatory consultant is visible to user");
-                    break;
-
-                case "Without Adm":
+                    await RegisterData();
+                    await Rules();
+                    await Representatives();
+                    await Liquidation();
+                    await Account();
+                    await Slack();
+                    await FileValidation();
+                    await GoToServicePrestatives();
+                    await RegisterPrestativeAdministrator();
+                    await RegisterPrestativeManager();
+                    await SaveFundNegative("É obrigatório um 'Consultor' como prestador.");
                     break;
                 case "Without Manager":
-
+                    await RegisterData();
+                    await Rules();
+                    await Representatives();
+                    await Liquidation();
+                    await Account();
+                    await Slack();
+                    await FileValidation();
+                    await GoToServicePrestatives();
+                    await RegisterPrestativeAdministrator();
+                    await RegisterPrestativeConsultant();
+                    await SaveFundNegative("É obrigatório um 'Gestor' como prestador.");
                     break;
 
             }
