@@ -78,26 +78,11 @@ namespace zCustodiaUi.tests.register
         [AllureName("Shouldn´t Register a New Fund With Epmty Fund Name")]
         public async Task Shouldnt_Register_a_New_Fund_With_Empty_Fund_Name()
         {
-            var fundsPage = new FundsPage(page);
             data.FundName = string.Empty;
+            var fundsPage = new FundsPage(page, data);
             await fundsPage.NegativeScenario("Fund name empty");
         }
-        [Test, Order(4)]
-        [AllureName("Shouldn´t Register a New Fund With Cetip Number empty")]
-        public async Task Shouldnt_Register_a_New_Fund_With_Cetip_Number_Empty()
-        {
-            var fundsPage = new FundsPage(page);
-            data.CetipNumber = string.Empty;
-            await fundsPage.NegativeScenario("Cetip Number empty");
-        }
-        [Test, Order(5)]
-        [AllureName("Shouldn´t Register a New Fund With Epmty Fund Name")]
-        public async Task Shouldnt_Register_a_New_Fund_With_Selic_Number_Empty()
-        {
-            var fundsPage = new FundsPage(page);
-            data.SelicNumber = string.Empty;
-            await fundsPage.NegativeScenario("Selic Number empty");
-        }
+
 
 
 

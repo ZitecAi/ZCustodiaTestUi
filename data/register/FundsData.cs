@@ -1,8 +1,3 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using zCustodiaUi.utils;
 
 namespace zCustodiaUi.data.register
@@ -18,10 +13,10 @@ namespace zCustodiaUi.data.register
         public string MaxPercent { get; set; } = "10";
         public string AgencyNumber { get; set; } = "1";
         public string Description { get; set; } = "Conta para fundo de teste";
-        
+
         // Additional properties for all Write calls
         public string AnbidCode { get; set; } = "1234567890";
-        public string FundType { get; set; } = "Direitos Creditários";
+        public string FundType { get; set; } = "Direitos Creditórios";
         public string SequentialCvmNumber { get; set; } = "2536789811";
         public string Ballast { get; set; } = "Clube";
         public string Code { get; set; } = "1";

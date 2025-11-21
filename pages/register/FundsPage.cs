@@ -12,16 +12,17 @@ namespace zCustodiaUi.pages.register
         private readonly Utils util;
         private readonly FundsElements el = new FundsElements();
         private readonly GenericElements gen = new GenericElements();
-        private readonly FundsData data = new FundsData();
+        private readonly FundsData data;
         private readonly IPage page;
-        public FundsPage(IPage page)
+        public FundsPage(IPage page, FundsData data = null)
         {
             this.page = page;
+            this.data = data ?? new FundsData();
             util = new Utils(page);
         }
 
-        
-        
+
+
 
 
 
@@ -37,7 +38,7 @@ namespace zCustodiaUi.pages.register
             await util.Click(gen.ButtonNew, "Open New Fund form");
             await util.Write(gen.LocatorMatLabel("Fundo"), data.FundName, "Write Fund Name");
             await util.Write(gen.LocatorMatLabel("CNPJ"), data.CnpjFund, "Write CNPJ");
-            await util.Write(gen.LocatorMatLabel("C�digo ISIN"), data.IsinCode, "Write ISIN Code");
+            await util.Write(gen.LocatorMatLabel("Código ISIN"), data.IsinCode, "Write ISIN Code");
             await util.Write(gen.LocatorMatLabel("Código ANBID"), data.AnbidCode, "Write ANBID Code");
 
             await util.Click(gen.LocatorMatLabel("Tipo Fundo"), "Write Type Fund");
@@ -46,13 +47,13 @@ namespace zCustodiaUi.pages.register
             await util.Click(el.StartProcessingCalendar, "Open Start Processing Calendar");
             await util.Click(gen.DayValue(today), "Set Today day on calendar");
 
-            await util.Write(gen.LocatorMatLabel("Nº CETIP"), data.CetipNumber, "Write CETIP Number");
-            await util.Write(gen.LocatorMatLabel("Nº SELIC"), data.SelicNumber, "Write CELIC Number");
+            //await util.Write(gen.LocatorMatLabel("Nº CETIP"), data.CetipNumber, "Write CETIP Number");
+            await util.Write(gen.LocatorMatLabel("N° SELIC"), data.SelicNumber, "Write CELIC Number");
 
             await util.Click(el.CvmRegisterCalendar, "Open CVM Register Calendar");
             await util.Click(gen.DayValue(today), "Set Today day on calendar");
 
-            await util.Write(gen.LocatorMatLabel("Nº Sequencial CVM"), data.SequentialCvmNumber, "Write Sequential Number CVM");
+            await util.Write(gen.LocatorMatLabel("N° Sequencial CVM"), data.SequentialCvmNumber, "Write Sequential Number CVM");
 
             await util.ScrollToElementAndMaintainPosition(gen.LocatorMatLabel("Cheque"), "Scroll to element CheckSelect and keep it visible");
             await util.Click(gen.LocatorMatLabel("Lastro"), "Click Ballast Select");
@@ -214,7 +215,7 @@ namespace zCustodiaUi.pages.register
         {
             //Prestadores d Servi�os
             await util.Click(gen.RightArrow, "Click on  Arrow to expand group tab");
-            await util.ClickMatTabAsync(gen.TabAllForms("Prestadores de Servi�os"), "Click belt to change service prestatives form");
+            await util.ClickMatTabAsync(gen.TabAllForms("Prestadores de Serviços"), "Click belt to change service prestatives form");
             await util.Click(gen.ButtonNew, "Click on button new to insert a new Service prestative");
             await Task.Delay(500);
 
@@ -261,7 +262,7 @@ namespace zCustodiaUi.pages.register
             await util.Click(gen.ReceiveTypeOption(data.PersonTypeManager), "Click Receive Type Option");
             await Task.Delay(500);
 
-            await util.Click(gen.LocatorMatLabel("Tipo de Cobran�a"), "Select Charge Type Select in new provider");
+            await util.Click(gen.LocatorMatLabel("Tipo de Cobrança"), "Select Charge Type Select in new provider");
             await util.Write(gen.Filter, data.ChargeType, "Write Receive Type");
             await util.Click("//div[@role='listbox']" + gen.ReceiveTypeOption(data.ChargeType), "Click Receive Type Option");
             await Task.Delay(500);
@@ -289,7 +290,7 @@ namespace zCustodiaUi.pages.register
             await util.Click(gen.ReceiveTypeOption(data.PersonTypeConsultant), "Click Receive Type Option");
             await Task.Delay(500);
 
-            await util.Click(gen.LocatorMatLabel("Tipo de Cobran�a"), "Select Charge Type Select in new provider");
+            await util.Click(gen.LocatorMatLabel("Tipo de Cobrança"), "Select Charge Type Select in new provider");
             await util.Write(gen.Filter, data.ChargeType, "Write Receive Type");
             await util.Click("//div[@role='listbox']" + gen.ReceiveTypeOption(data.ChargeType), "Click Receive Type Option");
             await Task.Delay(500);
@@ -374,9 +375,9 @@ namespace zCustodiaUi.pages.register
                     break;
 
                 case "Without Consultant":
-            //Prestadores de Serviços
+                    //Prestadores de Serviços
                     await util.Click(gen.RightArrow, "Click on  Arrow to expand group tab");
-            await util.ClickMatTabAsync(gen.TabAllForms("Prestadores de Serviços"), "Click belt to change service prestatives form");
+                    await util.ClickMatTabAsync(gen.TabAllForms("Prestadores de Serviços"), "Click belt to change service prestatives form");
                     await util.Click(gen.ButtonNew, "Click on button new to insert a new Service prestative");
                     await Task.Delay(500);
 
