@@ -1,5 +1,6 @@
 using Allure.NUnit.Attributes;
 using Microsoft.Playwright;
+using zCustodiaUi.data.register;
 using zCustodiaUi.locators;
 using zCustodiaUi.locators.register;
 using zCustodiaUi.utils;
@@ -11,6 +12,7 @@ namespace zCustodiaUi.pages.register
         private readonly Utils util;
         private readonly FundsElements el = new FundsElements();
         private readonly GenericElements gen = new GenericElements();
+        private readonly FundsData data = new FundsData();
         private readonly IPage page;
         public FundsPage(IPage page)
         {
@@ -18,14 +20,8 @@ namespace zCustodiaUi.pages.register
             util = new Utils(page);
         }
 
-        public string FundName { get; set; } = "ZitecQa";
-        public string CnpjFund { get; set; } = DataGenerator.Generate(DocumentType.Cnpj);
-        public string CetipNumber { get; set; } = "12345678";
-        public string SelicNumber { get; set; } = "123456789";
-        public string IsinCode { get; set; } = "000000000000130";
-        public string MaxPercent { get; set; } = "10";
-        public string AgencyNumber { get; set; } = "1";
-        public string Description { get; set; } = "Conta para fundo de teste";
+        
+        
 
 
 
@@ -39,9 +35,9 @@ namespace zCustodiaUi.pages.register
 
             //Register Data
             await util.Click(gen.ButtonNew, "Open New Fund form");
-            await util.Write(gen.LocatorMatLabel("Fundo"), this.FundName, "Write Fund Name");
-            await util.Write(gen.LocatorMatLabel("CNPJ"), this.CnpjFund, "Write CNPJ");
-            await util.Write(gen.LocatorMatLabel("Código ISIN"), this.IsinCode, "Write ISIN Code");
+            await util.Write(gen.LocatorMatLabel("Fundo"), data.FundName, "Write Fund Name");
+            await util.Write(gen.LocatorMatLabel("CNPJ"), data.CnpjFund, "Write CNPJ");
+            await util.Write(gen.LocatorMatLabel("Código ISIN"), data.IsinCode, "Write ISIN Code");
             await util.Write(gen.LocatorMatLabel("Código ANBID"), "1234567890", "Write ANBID Code");
 
             await util.Click(gen.LocatorMatLabel("Tipo Fundo"), "Write Type Fund");
@@ -50,8 +46,8 @@ namespace zCustodiaUi.pages.register
             await util.Click(el.StartProcessingCalendar, "Open Start Processing Calendar");
             await util.Click(gen.DayValue(today), "Set Today day on calendar");
 
-            await util.Write(gen.LocatorMatLabel("N° CETIP"), this.CetipNumber, "Write CETIP Number");
-            await util.Write(gen.LocatorMatLabel("N° SELIC"), this.SelicNumber, "Write CELIC Number");
+            await util.Write(gen.LocatorMatLabel("N° CETIP"), data.CetipNumber, "Write CETIP Number");
+            await util.Write(gen.LocatorMatLabel("N° SELIC"), data.SelicNumber, "Write CELIC Number");
 
             await util.Click(el.CvmRegisterCalendar, "Open CVM Register Calendar");
             await util.Click(gen.DayValue(today), "Set Today day on calendar");
@@ -156,7 +152,7 @@ namespace zCustodiaUi.pages.register
             await Task.Delay(500);
             await util.ClickMatTabAsync(gen.TabAllForms("Liquidação"), "Click belt to change liquidation form");
             await Task.Delay(100);
-            await util.Write(gen.LocatorMatLabel("Percentual Máximo Reembolso de Despesas %"), this.MaxPercent, "Set max percent of reimbursement");
+            await util.Write(gen.LocatorMatLabel("Percentual Máximo Reembolso de Despesas %"), data.MaxPercent, "Set max percent of reimbursement");
         }
 
         [AllureStep("Fill Account")]
@@ -173,12 +169,12 @@ namespace zCustodiaUi.pages.register
             await util.Click(gen.LocatorMatLabel("Banco"), "Click on BankSelect button new to insert a new Bank");
             await util.Write(gen.Filter, "439 - ID CTVM", "Write Receive Type");
             await util.Click(gen.ReceiveTypeOption("439 - ID CTVM"), "Click Receive Type Option");
-            await util.Write(gen.LocatorMatLabel("Número Agência"), this.AgencyNumber, "Write Number Agency");
+            await util.Write(gen.LocatorMatLabel("Número Agência"), data.AgencyNumber, "Write Number Agency");
             await util.Write(gen.LocatorMatLabel("Conta Corrente"), "46677", "Write Number account");
             await util.Write(gen.LocatorMatLabel("Dígito"), "3", "Write Code account");
             await util.Click(el.PatternAccount(true), "Click on 'yes' to account pattern");
             await util.Click(el.MovementType("Movimentação"), "Click on Movement Type");
-            await util.Write(gen.LocatorMatLabel("Descrição"), Description, "fill description of account test");
+            await util.Write(gen.LocatorMatLabel("Descrição"), data.Description, "fill description of account test");
             await util.Click(el.AddButton, "Click on Add Button to add a new account");
         }
 
@@ -445,17 +441,17 @@ namespace zCustodiaUi.pages.register
         {
 
 
-            await util.Write(el.SearchBar, FundName, "Write on filter input to find the fund created");
+            await util.Write(el.SearchBar, data.FundName, "Write on filter input to find the fund created");
             await Task.Delay(1000);
-            await util.ValidateElementPresentOnTheTable(page, el.FundTable, FundName, "Validate if Text is present on table to consult a existing fund");
+            await util.ValidateElementPresentOnTheTable(page, el.FundTable, data.FundName, "Validate if Text is present on table to consult a existing fund");
         }
 
         public async Task UpdateFund()
         {
 
-            await util.Write(el.SearchBar, FundName, "Write on filter input to find the fund created");
+            await util.Write(el.SearchBar, data.FundName, "Write on filter input to find the fund created");
             await Task.Delay(600);
-            await util.ValidateTextIsVisibleInElement(el.NameFundTable, FundName, "Validate if name fund is present on table");
+            await util.ValidateTextIsVisibleInElement(el.NameFundTable, data.FundName, "Validate if name fund is present on table");
             await util.Click(el.EditButton, "Click on Edit button to edit the Fund");
             //Make changes
             await util.Write(gen.LocatorMatLabel("Código ISIN"), "000000000000001", "Edit Code isin");

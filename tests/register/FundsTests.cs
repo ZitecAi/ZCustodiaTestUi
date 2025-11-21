@@ -1,6 +1,7 @@
 using Allure.Net.Commons;
 using Allure.NUnit;
 using Allure.NUnit.Attributes;
+using zCustodiaUi.data.register;
 using zCustodiaUi.locators.modules;
 using zCustodiaUi.locators.register;
 using zCustodiaUi.pages.login;
@@ -23,6 +24,8 @@ namespace zCustodiaUi.tests.register
         private Utils util;
         private readonly ModulesElements mod = new ModulesElements();
         private readonly FundsElements el = new FundsElements();
+        private readonly FundsData data = new FundsData();
+
 
         [SetUp]
         [AllureBefore]
@@ -76,7 +79,7 @@ namespace zCustodiaUi.tests.register
         public async Task Shouldnt_Register_a_New_Fund_With_Empty_Fund_Name()
         {
             var fundsPage = new FundsPage(page);
-            fundsPage.FundName = string.Empty;
+            data.FundName = string.Empty;
             await fundsPage.NegativeScenario("Fund name empty");
         }
         [Test, Order(4)]
@@ -84,7 +87,7 @@ namespace zCustodiaUi.tests.register
         public async Task Shouldnt_Register_a_New_Fund_With_Cetip_Number_Empty()
         {
             var fundsPage = new FundsPage(page);
-            fundsPage.CetipNumber = string.Empty;
+            data.CetipNumber = string.Empty;
             await fundsPage.NegativeScenario("Cetip Number empty");
         }
         [Test, Order(5)]
@@ -92,7 +95,7 @@ namespace zCustodiaUi.tests.register
         public async Task Shouldnt_Register_a_New_Fund_With_Selic_Number_Empty()
         {
             var fundsPage = new FundsPage(page);
-            fundsPage.SelicNumber = string.Empty;
+            data.SelicNumber = string.Empty;
             await fundsPage.NegativeScenario("Selic Number empty");
         }
 
