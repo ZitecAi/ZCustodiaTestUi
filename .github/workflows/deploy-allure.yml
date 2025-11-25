@@ -32,7 +32,7 @@ jobs:
       run: dotnet restore
       
     - name: Install Playwright browsers
-      run: dotnet tool install --global Microsoft.Playwright.CLI && playwright install chromium
+      run: dotnet add package Microsoft.Playwright  && playwright install chromium && dotnet build
       
     - name: Clean previous Allure results
       run: rm -rf allure-results || true
