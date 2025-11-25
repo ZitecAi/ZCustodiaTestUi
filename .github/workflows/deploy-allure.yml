@@ -14,12 +14,12 @@ jobs:
     steps:
     - name: Checkout repository
       uses: actions/checkout@v4
-      
+
     - name: Setup .NET
       uses: actions/setup-dotnet@v4
       with:
         dotnet-version: '8.0.x'
-        
+
     - name: Cache NuGet packages
       uses: actions/cache@v4
       with:
@@ -27,31 +27,35 @@ jobs:
         key: ${{ runner.os }}-nuget-${{ hashFiles('**/*.csproj') }}
         restore-keys: |
           ${{ runner.os }}-nuget-
-          
+
     - name: Restore dependencies
       run: dotnet restore
-      
+
     - name: Install Playwright browsers
-      run: dotnet add package Microsoft.Playwright  && playwright install chromium && dotnet build
-      
+      run: |
+        dotnet tool install --global Microsoft.Playwright.CLI
+        echo "$HOME/.dotnet/tools" >> $GITHUB_PATH
+        playwright install chromium --with-deps
+        dotnet build
+
     - name: Clean previous Allure results
       run: rm -rf allure-results || true
-      
+
     - name: Run tests
       run: |
         if [ -d "allure-results" ]; then
           rm -rf allure-results
         fi
         dotnet test --logger "console;verbosity=detailed"
-        
+
     - name: Setup Node.js for Allure
       uses: actions/setup-node@v4
       with:
         node-version: '18'
-        
+
     - name: Install Allure Commandline
       run: npm install -g allure-commandline
-      
+
     - name: Generate Allure Report
       run: |
         if [ -d "allure-results" ]; then
@@ -60,7 +64,7 @@ jobs:
           echo "No allure-results directory found"
           exit 1
         fi
-        
+
     - name: Deploy to GitHub Pages
       uses: peaceiris/actions-gh-pages@v4
       if: github.ref == 'refs/heads/main' || github.ref == 'refs/heads/master'
