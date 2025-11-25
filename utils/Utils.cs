@@ -27,6 +27,7 @@ namespace zCustodiaUi.utils
                 throw new PlaywrightException($"Don´t Possible Found the element: {locator}, to write on step: {step}. Details {ex.Message}");
             }
         }
+
         [AllureStep("Click - on step: {step}")]
         public async Task Click(string locator, string step)
         {
