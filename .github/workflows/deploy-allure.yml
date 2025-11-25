@@ -41,6 +41,7 @@ jobs:
       run: rm -rf allure-results || true
       
     - name: Run tests
+      continue-on-error: true
       run: |
         if [ -d "allure-results" ]; then
           rm -rf allure-results
@@ -66,7 +67,7 @@ jobs:
         
     - name: Deploy to GitHub Pages
       uses: peaceiris/actions-gh-pages@v4
-      if: github.ref == 'refs/heads/main' || github.ref == 'refs/heads/master'
+      if: github.ref == 'refs/heads/main'
       with:
         github_token: ${{ secrets.GITHUB_TOKEN }}
         publish_dir: ./allure-report
