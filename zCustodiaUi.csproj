@@ -10,9 +10,13 @@
 	  <Content Remove="C:\Users\LeviAlves\.nuget\packages\allure.net.commons\2.14.1\contentFiles\any\netstandard2.0\allureConfig.Template.json" />
 	</ItemGroup>
 	<ItemGroup>
+	  <None Remove="allureConfig.json" />
 	  <None Remove="appsettings.json" />
 	</ItemGroup>
 	<ItemGroup>
+	  <Content Include="allureConfig.json">
+	    <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+	  </Content>
 	  <Content Include="appsettings.json">
 	    <CopyToOutputDirectory>Always</CopyToOutputDirectory>
 	  </Content>
