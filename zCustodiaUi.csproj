@@ -1,4 +1,4 @@
-<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="Microsoft.NET.Sdk">
 	<PropertyGroup>
 		<TargetFramework>net8.0</TargetFramework>
 		<ImplicitUsings>enable</ImplicitUsings>
@@ -6,6 +6,25 @@
 		<IsPackable>false</IsPackable>
 		<IsTestProject>true</IsTestProject>
 	</PropertyGroup>
+	<ItemGroup>
+	  <Content Remove="C:\Users\LeviAlves\.nuget\packages\allure.net.commons\2.14.1\contentFiles\any\netstandard2.0\allureConfig.Template.json" />
+	</ItemGroup>
+	<ItemGroup>
+	  <None Remove="appsettings.json" />
+	</ItemGroup>
+	<ItemGroup>
+	  <Content Include="appsettings.json">
+	    <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+	  </Content>
+	</ItemGroup>
+
+	<ItemGroup>
+		<Content Include="data/files/**">
+			<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+		</Content>
+	</ItemGroup>
+
+
 
 	<ItemGroup>
 		<!-- Allure NUnit oficial -->
@@ -34,11 +53,6 @@
 	<ItemGroup>
 		<Using Include="Microsoft.Playwright.NUnit" />
 		<Using Include="NUnit.Framework" />
-	</ItemGroup>
-
-	<ItemGroup>
-		<None Include="appsettings.json" CopyToOutputDirectory="Always" />
-		<None Include="allureConfig.json" CopyToOutputDirectory="Always" />
 	</ItemGroup>
 
 	<Target Name="CleanAllureResults" BeforeTargets="VSTest">
