@@ -1,0 +1,2 @@
+File FundoQA_20251127_07e887eb.txt Sent successfull.
+Caminho de vídeo inválido: /home/runner/work/ZCustodiaTestUi/ZCustodiaTestUi/bin/Debug/net8.0/videos/afb2973a3af07b7a9271ff7678ba9a53.webm

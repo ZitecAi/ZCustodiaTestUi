@@ -1,0 +1,3 @@
+The element: (//td//app-table-cell//div//span)[1] have value! value is: 58530569
+{"message":"Cedente deletado com sucesso."}
+Caminho de vídeo inválido: /home/runner/work/ZCustodiaTestUi/ZCustodiaTestUi/bin/Debug/net8.0/videos/25d3520ab02157791378e8ddf1c0bed8.webm
