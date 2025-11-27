@@ -372,3 +372,5 @@ zCustodiaUi/obj/
 
 allure-results/
 allure-report/
+
+appsettings.Development.json
