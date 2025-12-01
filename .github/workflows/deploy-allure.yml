@@ -46,8 +46,8 @@ jobs:
     - name: Run tests
       continue-on-error: true
       env:
-        CUSTODIA_EMAIL: ${{ secrets.ZCUSTODIA_EMAIL }}
-        CUSTODIA_PASS: ${{ secrets.ZCUSTODIA_PASS }}
+        ZCUSTODIA_EMAIL: ${{ secrets.ZCUSTODIA_EMAIL }}
+        ZCUSTODIA_PASS: ${{ secrets.ZCUSTODIA_PASS }}
       run: |
         if [ -d "allure-results" ]; then
           rm -rf allure-results
