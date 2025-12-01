@@ -9,14 +9,26 @@ namespace zCustodiaUi.data.login
         {
             var config = new ConfigurationManager();
             config.AddJsonFile("appsettings.Development.json", optional: true, reloadOnChange: true);
-            var email = config["Credentials:Email"] ?? Environment.GetEnvironmentVariable("CUSTODIA_EMAIL");
-            var senha = config["Credentials:Password"] ?? Environment.GetEnvironmentVariable("CUSTODIA_PASS");
+
+            var emailEnv = Environment.GetEnvironmentVariable("ZCUSTODIA_EMAIL");
+            var passEnv = Environment.GetEnvironmentVariable("ZCUSTODIA_PASS");
+            var emailConfig = config["Credentials:Email"];
+            var passConfig = config["Credentials:Password"];
+
+            var email = emailConfig ?? emailEnv;
+            var senha = passConfig ?? passEnv;
 
             return isEmail ? $"{email}" : $"{senha}";
         }
 
-        public string Email { get; set; } = Config(true);
-        public string Password { get; set; } = Config(false);
+        public string Email { get; set; }
+        public string Password { get; set; }
+
+        public LoginData()
+        {
+            Email = Config(true);
+            Password = Config(false);
+        }
         public string InvalidEmail { get; set; } = "al@zitecai";
         public string InvalidPassword { get; set; } = "invalid";
     }
