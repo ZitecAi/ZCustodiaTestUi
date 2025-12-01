@@ -21,11 +21,6 @@ namespace zCustodiaUi.pages.register
             util = new Utils(page);
         }
 
-
-
-
-
-
         public string Today => DateTime.Now.Day.ToString();
         public string Tomorrow => DateTime.Now.AddDays(1).Day.ToString();
 
@@ -290,7 +285,7 @@ namespace zCustodiaUi.pages.register
 
             await util.Click(gen.LocatorMatLabel("Pessoa"), "Select Type Person Type in new provider");
             await util.Write(gen.Filter, data.PersonTypeManager, "Write Receive Type");
-            await util.Click(gen.ReceiveTypeOption(data.PersonTypeManager), "Click Receive Type Option");
+            await util.Click("(" + gen.ReceiveTypeOption(data.PersonTypeManager) + ")[2]", "Click Receive Type Option");
             await Task.Delay(500);
 
             await util.Click(gen.LocatorMatLabel("Tipo de Cobrança"), "Select Charge Type Select in new provider");
@@ -333,7 +328,6 @@ namespace zCustodiaUi.pages.register
             {
                 await SaveFund();
             }
-
         }
 
         public async Task SaveFund()

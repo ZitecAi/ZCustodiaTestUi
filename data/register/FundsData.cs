@@ -53,7 +53,7 @@ namespace zCustodiaUi.data.register
         public string ChargeType { get; set; } = "Valor Fixo";
         public string FixedValue { get; set; } = "100000";
         public string ProviderTypeManager { get; set; } = "Gestor";
-        public string PersonTypeManager { get; set; } = "zitec";
+        public string PersonTypeManager { get; set; } = "ORIGINADOR QA";
         public string ProviderTypeConsultant { get; set; } = "Consultoria";
         public string PersonTypeConsultant { get; set; } = "GESTORA DE RECURSOS ID - GRID LTDA.";
         public string EditedIsinCode { get; set; } = "000000000000001";
