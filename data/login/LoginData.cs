@@ -8,7 +8,7 @@ namespace zCustodiaUi.data.login
         public static string Config(bool isEmail)
         {
             var config = new ConfigurationManager();
-            config.AddJsonFile("appsettings.Development.json", optional: false, reloadOnChange: true);
+            config.AddJsonFile("appsettings.Development.json", optional: true, reloadOnChange: true);
             var email = config["Credentials:Email"] ?? Environment.GetEnvironmentVariable("CUSTODIA_EMAIL");
             var senha = config["Credentials:Password"] ?? Environment.GetEnvironmentVariable("CUSTODIA_PASS");
 
