@@ -356,7 +356,7 @@ namespace zCustodiaUi.utils
 
                 await fileInput.SetInputFilesAsync(newPathFile);
                 Console.WriteLine($"File {nameNewFile} Sent successfull.");
-                File.Delete(newPathFile);
+                //File.Delete(newPathFile);
 
                 return nameNewFile;
             }
