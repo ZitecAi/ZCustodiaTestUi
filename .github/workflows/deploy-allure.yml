@@ -1,11 +1,9 @@
 name: Deploy Allure Report to GitHub Pages
 
+# Gatilho alterado para ouvir o evento do outro repositório
 on:
-  push:
-    branches: [ main ]
-  pull_request:
-    branches: [ main ]
-  workflow_dispatch:
+  repository_dispatch:
+    types: [run-tests-after-deploy]
 
 permissions:
   contents: read   # GITHUB_TOKEN só leitura, pois a org limita
@@ -15,6 +13,18 @@ jobs:
     runs-on: ubuntu-latest
     
     steps:
+
+        # --- NOVO PASSO ADICIONADO ---
+    - name: Exibir informações do deploy
+      run: |
+        echo "Pipeline de testes disparada pelo repositório da aplicação!"
+        echo "Autor do deploy: ${{ github.event.client_payload.author }}"
+        echo "Branch de origem: ${{ github.event.client_payload.branch }}"
+        # Você pode salvar essas informações em um arquivo ou variável de ambiente
+        # para usar posteriormente na geração do relatório Allure
+        echo "AUTOR_DO_DEPLOY=${{ github.event.client_payload.author }}" >> $GITHUB_ENV
+        echo "BRANCH_DE_ORIGEM=${{ github.event.client_payload.branch }}" >> $GITHUB_ENV
+
     - name: Checkout repository
       uses: actions/checkout@v4
       
@@ -73,9 +83,9 @@ jobs:
         
     - name: Deploy to GitHub Pages
       uses: peaceiris/actions-gh-pages@v4
-      if: github.ref == 'refs/heads/main'
+      # A linha de condição foi removida, pois o fluxo agora é sob demanda.
       with:
-        personal_token: ${{ secrets.ACTIONS_DEPLOY_TOKEN }}  # ← PAT do usuário
+        personal_token: ${{ secrets.ACTIONS_DEPLOY_TOKEN }}
         publish_dir: ./allure-report
         keep_files: false
         force_orphan: true
