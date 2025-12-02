@@ -1,5 +1,7 @@
 # zCustodiaUi - Testes Automatizados Web
 
+**Relatório Allure**: https://zitecai.github.io/ZCustodiaTestUi/
+
 ## 📋 Visão Geral
 
 O **zCustodiaUi** é um framework robusto de testes automatizados E2E (End-to-End) desenvolvido em C# com .NET 8, utilizando Playwright para automação web e NUnit como framework de testes. O projeto foi arquitetado seguindo as melhores práticas de Design Patterns e Clean Architecture para garantir manutenibilidade, escalabilidade e confiabilidade nos testes da aplicação web Custodia.
