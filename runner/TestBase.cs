@@ -30,7 +30,6 @@ namespace zCustodiaUi.runner
                 Headless = true,
                 Args = new[] { "--no-sandbox", "--disable-dev-shm-usage" }
             };
-
             browser = await playwright.Chromium.LaunchAsync(launchOptions);
 
             var videosDir = Path.Combine(TestContext.CurrentContext.TestDirectory, "videos");
