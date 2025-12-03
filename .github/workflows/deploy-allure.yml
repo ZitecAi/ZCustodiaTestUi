@@ -90,41 +90,29 @@ jobs:
         keep_files: false
         force_orphan: true
 
-    - task: PowerShell@2
-    condition: always()
-    env:
-      SITE_URL: $(SITE_URL)
-      SMTP_SERVER: $(SMTP_SERVER)
-      SMTP_PORT: $(SMTP_PORT)
-      SMTP_USER: $(SMTP_USER)
-      SMTP_PASS: $(SMTP_PASS)
-      MAIL_FROM: $(MAIL_FROM)
-      MAIL_TO: $(MAIL_TO)
-      TEST_EXIT: $(TEST_EXIT)
-      BUILD_DEFINITIONNAME: $(Build.DefinitionName)
-      BUILD_BUILDID: $(Build.BuildId)
-      BUILD_BUILDNUMBER: $(Build.BuildNumber)
-    inputs:
-      targetType: inline
-      script: |
-        $siteUrl = $env:SITE_URL
-        $pipeline = $env:BUILD_DEFINITIONNAME
-        $buildId  = $env:BUILD_BUILDID
-        $buildNum = $env:BUILD_BUILDNUMBER
-        $testExit = $env:TEST_EXIT
-
-        if ($testExit -ne "0") { $status = "COM FALHAS" } else { $status = "SUCESSO" }
-        $subject = "Relatorio Allure (Staging) Do autor: $AUTOR_DO_DEPLOY da branch: $BRANCH_DE_ORIGEM do zCustodia - $status"
-
-        $body = "Pipeline: $pipeline`nExecucao: $buildNum (ID $buildId)`nStatus dos testes: $status (exit $testExit)`nRelatorio: $siteUrl"
-
-        $recipients = $env:MAIL_TO -split '[,;]' | ForEach-Object { $_.Trim() } | Where-Object { $_ }
-
-        if ($env:SMTP_USER -and $env:SMTP_PASS) {
-        $sec  = ConvertTo-SecureString $env:SMTP_PASS -AsPlainText -Force
-        $cred = New-Object System.Management.Automation.PSCredential($env:SMTP_USER, $sec)
-        Send-MailMessage -From $env:MAIL_FROM -To $recipients -Subject $subject -Body $body -SmtpServer $env:SMTP_SERVER -Port ([int]$env:SMTP_PORT) -UseSsl -Credential $cred -Encoding UTF8
-        } else {
-        Send-MailMessage -From $env:MAIL_FROM -To $recipients -Subject $subject -Body $body -SmtpServer $env:SMTP_SERVER -Port ([int]$env:SMTP_PORT) -Encoding UTF8
-        }
-    displayName: 'Send email with report link'
+    - name: Send email with report link
+      # Este passo sempre será executado, mesmo que os testes falhem.
+      if: always()
+      uses: dawidd6/action-send-mail@v3
+      with:
+        # Configure as credenciais do seu servidor SMTP usando secrets
+        server_address: ${{ secrets.SMTP_SERVER }}
+        server_port: ${{ secrets.SMTP_PORT }}
+        username: ${{ secrets.SMTP_USER }}
+        password: ${{ secrets.SMTP_PASS }}
+        subject: "Relatorio Allure (Staging) Do autor: ${{ env.AUTOR_DO_DEPLOY }} da branch: ${{ env.BRANCH_DE_ORIGEM }} do zCustodia - ${{ job.status }}"
+        to: ${{ secrets.MAIL_TO }}
+        from: ${{ secrets.MAIL_FROM }}
+        # Corpo do e-mail em formato HTML para ficar mais bonito
+        html_body: |
+          <p>Olá!</p>
+          <p>A pipeline de testes foi executada com o status: <strong>${{ job.status }}</strong>.</p>
+          <ul>
+            <li>Autor do deploy: <strong>${{ env.AUTOR_DO_DEPLOY }}</strong></li>
+            <li>Branch de origem: <strong>${{ env.BRANCH_DE_ORIGEM }}</strong></li>
+            <li>ID da Workflow: <strong>${{ github.run_id }}</strong></li>
+          </ul>
+          <p>Você pode acessar o relatório completo no link abaixo:</p>
+          <p><a href="${{ secrets.SITE_URL }}">Ver Relatório Allure</a></p>
+          <br>
+          <p>Atenciosamente,<br>GitHub Actions Bot</p>
