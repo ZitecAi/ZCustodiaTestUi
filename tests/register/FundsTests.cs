@@ -115,7 +115,7 @@ namespace zCustodiaUi.tests.register
         }
         [Test, Order(8)]
         [AllureName("Should´t Register a New Fund With Agency Number empty")]
-        public async Task Shouldnt_Register_a_New_Fund_With_Max_Number_Agency_Empty()
+        public async Task Shouldnt_Register_a_New_Fund_With_Number_Agency_Empty()
         {
             var testData = new FundsData { AgencyNumber = string.Empty };
             var fundsPage = new FundsPage(page, testData);

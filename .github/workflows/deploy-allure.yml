@@ -89,3 +89,42 @@ jobs:
         publish_dir: ./allure-report
         keep_files: false
         force_orphan: true
+
+    - task: PowerShell@2
+    condition: always()
+    env:
+      SITE_URL: $(SITE_URL)
+      SMTP_SERVER: $(SMTP_SERVER)
+      SMTP_PORT: $(SMTP_PORT)
+      SMTP_USER: $(SMTP_USER)
+      SMTP_PASS: $(SMTP_PASS)
+      MAIL_FROM: $(MAIL_FROM)
+      MAIL_TO: $(MAIL_TO)
+      TEST_EXIT: $(TEST_EXIT)
+      BUILD_DEFINITIONNAME: $(Build.DefinitionName)
+      BUILD_BUILDID: $(Build.BuildId)
+      BUILD_BUILDNUMBER: $(Build.BuildNumber)
+    inputs:
+      targetType: inline
+      script: |
+        $siteUrl = $env:SITE_URL
+        $pipeline = $env:BUILD_DEFINITIONNAME
+        $buildId  = $env:BUILD_BUILDID
+        $buildNum = $env:BUILD_BUILDNUMBER
+        $testExit = $env:TEST_EXIT
+
+        if ($testExit -ne "0") { $status = "COM FALHAS" } else { $status = "SUCESSO" }
+        $subject = "Relatorio Allure (Staging) Do autor: $AUTOR_DO_DEPLOY da branch: $BRANCH_DE_ORIGEM do zCustodia - $status"
+
+        $body = "Pipeline: $pipeline`nExecucao: $buildNum (ID $buildId)`nStatus dos testes: $status (exit $testExit)`nRelatorio: $siteUrl"
+
+        $recipients = $env:MAIL_TO -split '[,;]' | ForEach-Object { $_.Trim() } | Where-Object { $_ }
+
+        if ($env:SMTP_USER -and $env:SMTP_PASS) {
+        $sec  = ConvertTo-SecureString $env:SMTP_PASS -AsPlainText -Force
+        $cred = New-Object System.Management.Automation.PSCredential($env:SMTP_USER, $sec)
+        Send-MailMessage -From $env:MAIL_FROM -To $recipients -Subject $subject -Body $body -SmtpServer $env:SMTP_SERVER -Port ([int]$env:SMTP_PORT) -UseSsl -Credential $cred -Encoding UTF8
+        } else {
+        Send-MailMessage -From $env:MAIL_FROM -To $recipients -Subject $subject -Body $body -SmtpServer $env:SMTP_SERVER -Port ([int]$env:SMTP_PORT) -Encoding UTF8
+        }
+    displayName: 'Send email with report link'
