@@ -159,7 +159,7 @@ namespace zCustodiaUi.pages.register
             await util.Click(gen.RightArrow, "Click on  Arrow to expand group tab");
             await Task.Delay(500);
             await util.ClickMatTabAsync(gen.TabAllForms("Conta Corrente"), "Click belt to change account form");
-
+            await Task.Delay(250);
             await util.Click(gen.ButtonNew, "Click on button new to insert a new Account");
             await Task.Delay(250);
             await util.Click(gen.LocatorMatLabel("Banco"), "Click on BankSelect button new to insert a new Bank");
