@@ -18,30 +18,73 @@ namespace zCustodiaUi.utils
         {
             try
             {
-                var elemento = page.Locator(locator);
-                await elemento.WaitForAsync();
-                await elemento.FillAsync(text);
+                var element = page.Locator(locator);
+                await Expect(element).ToBeVisibleAsync();
+                await Expect(element).ToBeEnabledAsync();
+                await WaitForAngularStable(page);
+                await page.WaitForLoadStateAsync(LoadState.NetworkIdle);
+                // Alguns inputs do Angular Material precisam de "focus" antes
+                await element.FocusAsync();
+                await element.FillAsync(text);
             }
             catch (Exception ex)
             {
-                throw new PlaywrightException($"Don´t Possible Found the element: {locator}, to write on step: {step}. Details {ex.Message}");
+                throw new PlaywrightException(
+                    $"Error writing text on '{locator}' at step {step}. Details: {ex.Message}"
+                );
             }
         }
+
 
         [AllureStep("Click - on step: {step}")]
         public async Task Click(string locator, string step)
         {
             try
             {
-                var elemento = page.Locator(locator);
-                await elemento.WaitForAsync(new LocatorWaitForOptions { Timeout = 60000 });
-                await elemento.ClickAsync();
+                var element = page.Locator(locator);
+
+                // Aguarda elemento existir e estar visível
+                await Expect(element).ToBeVisibleAsync();
+                // Aguarda que esteja clicável (Angular material às vezes bloqueia)
+                await Expect(element).ToBeEnabledAsync();
+                // Evita interferência de Angular
+                await WaitForAngularStable(page);
+                // Aguarda rede ociosa após mudanças
+                await page.WaitForLoadStateAsync(LoadState.NetworkIdle);
+                // Aguarda sumir overlay do Angular Material
+                //await page.WaitForFunctionAsync(
+                //    "() => !document.querySelector('.cdk-overlay-backdrop')"
+                //);
+
+                await element.ClickAsync(new LocatorClickOptions
+                {
+                    Timeout = 60000
+                });
             }
             catch (Exception ex)
             {
-                throw new PlaywrightException($"Don´t Possible Found the element: {locator}, to Click on step: {step}. Details {ex.Message}");
+                throw new PlaywrightException(
+                    $"Error clicking '{locator}' on step {step}. Details: {ex.Message}"
+                );
             }
         }
+
+        protected async Task WaitForAngularStable(IPage page)
+        {
+            await page.EvaluateAsync(@"() => {
+        return new Promise(resolve => {
+            if (window.getAllAngularTestabilities) {
+                const testability = window.getAllAngularTestabilities()[0];
+                testability.whenStable(resolve);
+            } else {
+                resolve();
+            }
+        });
+    }");
+        }
+
+
+
         [AllureStep("Validate Url - on step: {step}")]
         public async Task ValidateUrl(string expectedUrl, string step)
         {

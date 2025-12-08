@@ -23,10 +23,10 @@
 
         public string BallastSelect { get; } = "#select-layoutLastro";
         public string BallastClube { get; } = "//span[text()=' Clube ']";
-        public string CodeSelect { get; } = "#mat-select-value-15";
+        public string CodeSelect { get; } = "#select-codigoLayout";
         public string Code1 { get; } = "//span[text()=' 1 ']";
 
-        public string CheckSelect { get; } = "#mat-select-value-17";
+        public string CheckSelect { get; } = "#select-layoutCheque";
         public string CheckCNAB160 { get; } = "//span[text()=' CNAB160 - Retorno de Cheque ']";
 
         //Permissions and Qualifications

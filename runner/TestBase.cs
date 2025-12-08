@@ -11,25 +11,27 @@ namespace zCustodiaUi.runner
         private IBrowser? browser;
         private IBrowserContext? context;
 
-
         [OneTimeSetUp]
         public void OneTimeSetUp()
         {
             VideoHelper.ClearOldVideos();
         }
-
         protected async Task<IPage> OpenBrowserAsync()
         {
             playwright = await Playwright.CreateAsync();
 
-            var isCi = !string.IsNullOrEmpty(Environment.GetEnvironmentVariable("CI")) ||
-                       string.Equals(Environment.GetEnvironmentVariable("TF_BUILD"), "True", StringComparison.OrdinalIgnoreCase);
-
             var launchOptions = new BrowserTypeLaunchOptions
             {
-                Headless = true,
-                Args = new[] { "--no-sandbox", "--disable-dev-shm-usage" }
+                Headless = false,
+                Args = new[]
+                {
+                    "--no-sandbox",
+                    "--disable-dev-shm-usage",
+                    "--disable-gpu",
+                    "--disable-setuid-sandbox"
+                }
             };
+
             browser = await playwright.Chromium.LaunchAsync(launchOptions);
 
             var videosDir = Path.Combine(TestContext.CurrentContext.TestDirectory, "videos");
@@ -45,15 +47,28 @@ namespace zCustodiaUi.runner
 
             context = await browser.NewContextAsync(contextOptions);
             page = await context.NewPageAsync();
-
+            page.SetDefaultTimeout(60000);
+            page.SetDefaultNavigationTimeout(60000);
+            page.Console += (_, msg) =>
+            {
+                if (msg.Type == "error")
+                    TestContext.Out.WriteLine($"⚠ Console Error Ignored: {msg.Text}");
+            };
             var config = new ConfigurationManager();
             config.AddJsonFile("appsettings.json", optional: false, reloadOnChange: true);
             var linkCustodia = config["Links:Custodia"];
-            await page.GotoAsync(linkCustodia!);
+
+            await page.GotoAsync(linkCustodia!, new PageGotoOptions
+            {
+                Timeout = 60000,
+                WaitUntil = WaitUntilState.NetworkIdle
+            });
+            await page.WaitForLoadStateAsync(LoadState.NetworkIdle);
+            await WaitForAngularStable(page);
+            await WaitForOverlayToDisappear(page);
 
             return page;
         }
-
         protected async Task CloseBrowserAsync()
         {
             var status = TestContext.CurrentContext.Result.Outcome.Status.ToString();
@@ -102,6 +117,44 @@ namespace zCustodiaUi.runner
                     Console.WriteLine($"Erro ao dispose playwright: {ex.Message}");
                 }
             }
+        }
+
+        // =============================
+        // ANGULAR WAIT HELPERS
+        // =============================
+
+        /// <summary>
+        /// Aguarda o Angular terminar microtasks, HTTP e detecção de mudanças.
+        /// </summary>
+        protected async Task WaitForAngularStable(IPage page)
+        {
+            try
+            {
+                await page.EvaluateAsync(@"() => {
+                    return new Promise(resolve => {
+                        if (window.getAllAngularTestabilities) {
+                            const testability = window.getAllAngularTestabilities()[0];
+                            testability.whenStable(resolve);
+                        } else {
+                            resolve();
+                        }
+                    });
+                });");
+            }
+            catch
+            {
+                // Caso não seja Angular, não quebra
+            }
+        }
+
+        /// <summary>
+        /// Evita Angular Material bloquear cliques com overlays invisíveis.
+        /// </summary>
+        protected async Task WaitForOverlayToDisappear(IPage page)
+        {
+            await page.WaitForFunctionAsync(
+                "() => !document.querySelector('.cdk-overlay-backdrop')"
+            );
         }
     }
 }
