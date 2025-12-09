@@ -22,7 +22,7 @@ namespace zCustodiaUi.runner
 
             var launchOptions = new BrowserTypeLaunchOptions
             {
-                Headless = false,
+                Headless = true,
                 Args = new[]
                 {
                     "--no-sandbox",
