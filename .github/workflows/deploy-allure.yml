@@ -90,29 +90,29 @@ jobs:
         keep_files: false
         force_orphan: true
 
-    - name: Send email with report link
+    #- name: Send email with report link
       # Este passo sempre será executado, mesmo que os testes falhem.
-      if: always()
-      uses: dawidd6/action-send-mail@v3
-      with:
+      #if: always()
+      #uses: dawidd6/action-send-mail@v3
+      #with:
         # Configure as credenciais do seu servidor SMTP usando secrets
-        server_address: ${{ secrets.SMTP_SERVER }}
-        server_port: ${{ secrets.SMTP_PORT }}
-        username: ${{ secrets.SMTP_USER }}
-        password: ${{ secrets.SMTP_PASS }}
-        subject: "Relatorio Allure (Staging) Do autor: ${{ env.AUTOR_DO_DEPLOY }} da branch: ${{ env.BRANCH_DE_ORIGEM }} do zCustodia - ${{ job.status }}"
-        to: ${{ secrets.MAIL_TO }}
-        from: ${{ secrets.MAIL_FROM }}
+        #server_address: ${{ secrets.SMTP_SERVER }}
+        #server_port: ${{ secrets.SMTP_PORT }}
+        #username: ${{ secrets.SMTP_USER }}
+        #password: ${{ secrets.SMTP_PASS }}
+        #subject: "Relatorio Allure (Staging) Do autor: ${{ env.AUTOR_DO_DEPLOY }} da branch: ${{ env.BRANCH_DE_ORIGEM }} do zCustodia - ${{ job.status }}"
+        #to: ${{ secrets.MAIL_TO }}
+        #from: ${{ secrets.MAIL_FROM }}
         # Corpo do e-mail em formato HTML para ficar mais bonito
-        html_body: |
-          <p>Olá!</p>
-          <p>A pipeline de testes foi executada com o status: <strong>${{ job.status }}</strong>.</p>
-          <ul>
-            <li>Autor do deploy: <strong>${{ env.AUTOR_DO_DEPLOY }}</strong></li>
-            <li>Branch de origem: <strong>${{ env.BRANCH_DE_ORIGEM }}</strong></li>
-            <li>ID da Workflow: <strong>${{ github.run_id }}</strong></li>
-          </ul>
-          <p>Você pode acessar o relatório completo no link abaixo:</p>
-          <p><a href="${{ secrets.SITE_URL }}">Ver Relatório Allure</a></p>
-          <br>
-          <p>Atenciosamente,<br>GitHub Actions Bot</p>
+        #html_body: |
+          #<p>Olá!</p>
+          #<p>A pipeline de testes foi executada com o status: <strong>${{ job.status }}</strong>.</p>
+          #<ul>
+            #<li>Autor do deploy: <strong>${{ env.AUTOR_DO_DEPLOY }}</strong></li>
+            #<li>Branch de origem: <strong>${{ env.BRANCH_DE_ORIGEM }}</strong></li>
+            #<li>ID da Workflow: <strong>${{ github.run_id }}</strong></li>
+          #</ul>
+          #<p>Você pode acessar o relatório completo no link abaixo:</p>
+          #<p><a href="${{ secrets.SITE_URL }}">Ver Relatório Allure</a></p>
+          #<br>
+          #<p>Atenciosamente,<br>GitHub Actions Bot</p>
