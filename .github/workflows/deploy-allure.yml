@@ -89,6 +89,7 @@ jobs:
         publish_dir: ./allure-report
         keep_files: false
         force_orphan: true
+        commit_message: "Deploy Allure Report from branch ${{ env.BRANCH_DE_ORIGEM }} by ${{ env.AUTOR_DO_DEPLOY }}"
 
     #- name: Send email with report link
       # Este passo sempre será executado, mesmo que os testes falhem.
