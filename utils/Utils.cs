@@ -90,11 +90,8 @@ namespace zCustodiaUi.utils
         {
             try
             {
-                await _page.WaitForURLAsync(expectedUrl);
-                if (expectedUrl == "https://custodia.idsf.com.br/home/dashboard")
-                {
-                    await Expect(_page).ToHaveURLAsync(expectedUrl);
-                }
+                await _page.WaitForURLAsync(expectedUrl, new PageWaitForURLOptions { Timeout = 60000 });
+                await Expect(_page).ToHaveURLAsync(expectedUrl);
             }
             catch (Exception ex)
             {
