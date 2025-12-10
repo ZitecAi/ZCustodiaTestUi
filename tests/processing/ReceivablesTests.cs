@@ -20,21 +20,21 @@ namespace zCustodiaUi.tests.processing
     [AllureSuite("Receivables UI")]
     public class ReceivablesTests : TestBase
     {
-        private Utils util;
-        private readonly ModulesElements mod = new ModulesElements();
-        ReceivablesElements el = new ReceivablesElements();
+        private Utils _util;
+        private readonly ModulesElements _mod = new ModulesElements();
+        ReceivablesElements _el = new ReceivablesElements();
 
         [SetUp]
         [AllureBefore]
         public async Task SetUp()
         {
-            page = await OpenBrowserAsync();
-            util = new Utils(page);
-            var login = new LoginPage(page);
+            _page = await OpenBrowserAsync();
+            _util = new Utils(_page);
+            var login = new LoginPage(_page);
             await login.DoLogin();
-            await util.Click(mod.MainMenu, "Open main menu to extend options");
-            await util.Click(mod.ProcessingPage, "Open Receivables module");
-            await util.Click(el.ReceivablesPage, "Click on Receivables page to navigate on the page");
+            await _util.Click(_mod.MainMenu, "Open main menu to extend options");
+            await _util.Click(_mod.ProcessingPage, "Open Receivables module");
+            await _util.Click(_el.ReceivablesPage, "Click on Receivables page to navigate on the page");
         }
 
         [TearDown]
@@ -48,21 +48,21 @@ namespace zCustodiaUi.tests.processing
         [AllureName("Should Process Receivable")]
         public async Task Should_Process_Receivable()
         {
-            var receivablesPage = new ReceivablesPage(page);
+            var receivablesPage = new ReceivablesPage(_page);
             await receivablesPage.ProcessReceivable();
         }
         [Test, Order(2)]
         [AllureName("Should Process Receivable Partial")]
         public async Task Should_Process_Receivable_Partial()
         {
-            var receivablesPage = new ReceivablesPage(page);
+            var receivablesPage = new ReceivablesPage(_page);
             await receivablesPage.ProcessReceivablePartial();
         }
         [Test, Order(3)]
         [AllureName("Should Process Receivable Prorrogation")]
         public async Task Should_Process_Receivable_Prorrogation()
         {
-            var receivablesPage = new ReceivablesPage(page);
+            var receivablesPage = new ReceivablesPage(_page);
             await receivablesPage.ProcessProrrogation();
         }
 

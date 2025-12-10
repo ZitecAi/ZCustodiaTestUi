@@ -28,9 +28,9 @@ namespace zCustodiaUi.tests.importation
         [AllureBefore]
         public async Task SetUp()
         {
-            page = await OpenBrowserAsync();
-            var login = new LoginPage(page);
-            util = new Utils(page);
+            _page = await OpenBrowserAsync();
+            var login = new LoginPage(_page);
+            util = new Utils(_page);
             await login.DoLogin();
             await util.Click(mod.MainMenu, "Click on Main menu to extend page Options");
             await util.Click(mod.ImportationPage, "Click on Importation Page to navigate on options page");
@@ -49,7 +49,7 @@ namespace zCustodiaUi.tests.importation
         [AllureName("Should Import a New Shipping File")]
         public async Task Should_Import_a_New_Shipping_File()
         {
-            var shippingFile = new ShippingFilePage(page);
+            var shippingFile = new ShippingFilePage(_page);
             await shippingFile.SendShippingFile();
         }
 

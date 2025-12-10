@@ -9,15 +9,15 @@ namespace zCustodiaUi.pages.admnistrative
 {
     public class ClosingOfFundsPage
     {
-        private readonly IPage page;
-        Utils util;
-        ClosingOfFundsElements el = new ClosingOfFundsElements();
-        GenericElements gen = new GenericElements();
-        private readonly ClosingOfFundsData data = new ClosingOfFundsData();
-        public ClosingOfFundsPage(IPage page)
+        private readonly IPage _page;
+        Utils _util;
+        ClosingOfFundsElements _el = new ClosingOfFundsElements();
+        GenericElements _gen = new GenericElements();
+        private readonly ClosingOfFundsData _data = new ClosingOfFundsData();
+        public ClosingOfFundsPage(IPage _page)
         {
-            this.page = page;
-            util = new Utils(page);
+            this._page = _page;
+            _util = new Utils(_page);
         }
         [AllureStep("Close Fund")]
         public async Task CloseFund(string fund)
@@ -26,19 +26,19 @@ namespace zCustodiaUi.pages.admnistrative
 
 
 
-            //await util.Click(el.SearchBar, $"Click on Search bar To Find {fund}");
+            //await _util.Click(_el.SearchBar, $"Click on Search bar To Find {fund}");
             await Task.Delay(1000);
-            await util.Click(gen.LocatorMatLabel("Fundo"), $"Write on Search bar To Find {fund}");
-            await util.Write(gen.Filter, data.FundName, "Click on filter input to search for fund");
-            await util.Click("(" + gen.ReceiveTypeOption(data.FundName) + ")[2]", "Click on fund option");
-            await util.Click(el.ButtonSearch, "Click on fund option");
+            await _util.Click(_gen.LocatorMatLabel("Fundo"), $"Write on Search bar To Find {fund}");
+            await _util.Write(_gen.Filter, _data.FundName, "Click on filter input to search for fund");
+            await _util.Click("(" + _gen.ReceiveTypeOption(_data.FundName) + ")[2]", "Click on fund option");
+            await _util.Click(_el.ButtonSearch, "Click on fund option");
 
             await Task.Delay(2000);
-            await util.Click(el.FirstCheckbox, "Click on First CheckBox to mark the fund to be closed");
-            await util.Click(el.Calendar, "Click on Calendar to expand the days available");
-            await util.Click(el.DayValue(tomorrow), "Set Tomorrow day on calendar");
-            await util.Click(el.ButtonCloseFund, "Click Button closed fund to confirm the process");
-            await util.ValidateTextIsVisibleOnScreen("Registro inserido com sucesso, aguarde o processamento", "Validate if message success returned is visible on screen to the user after Closed fund");
+            await _util.Click(_el.FirstCheckbox, "Click on First CheckBox to mark the fund to be closed");
+            await _util.Click(_el.Calendar, "Click on Calendar to expand the days available");
+            await _util.Click(_el.DayValue(tomorrow), "Set Tomorrow day on calendar");
+            await _util.Click(_el.ButtonCloseFund, "Click Button closed fund to confirm the process");
+            await _util.ValidateTextIsVisibleOnScreen("Registro inserido com sucesso, aguarde o processamento", "Validate if message success returned is visible on screen to the user after Closed fund");
 
 
         }

@@ -21,22 +21,22 @@ namespace zCustodiaUi.tests.register
     public class AssignorsTests : TestBase
     {
 
-        private Utils util;
-        private readonly ModulesElements mod = new ModulesElements();
-        private readonly AssignorsElements el = new AssignorsElements();
+        private Utils _util;
+        private readonly ModulesElements _mod = new ModulesElements();
+        private readonly AssignorsElements _el = new AssignorsElements();
 
         [SetUp]
         [AllureBefore]
         public async Task SetUp()
         {
-            page = await OpenBrowserAsync();
-            util = new Utils(page);
-            var login = new LoginPage(page);
+            _page = await OpenBrowserAsync();
+            _util = new Utils(_page);
+            var login = new LoginPage(_page);
             await login.DoLogin();
-            await util.Click(mod.MainMenu, "Open main menu to extend options");
-            await util.Click(mod.RegisterPage, "Open Register module");
+            await _util.Click(_mod.MainMenu, "Open main menu to extend options");
+            await _util.Click(_mod.RegisterPage, "Open Register module");
 
-            await util.Click(el.AssignorPage, "Click on assignor page to visit page");
+            await _util.Click(_el.AssignorPage, "Click on assignor page to visit page");
         }
 
         [TearDown]
@@ -51,7 +51,7 @@ namespace zCustodiaUi.tests.register
         //[Ignore("Esse teste está em espera para fluxo de exclusão")]
         public async Task Should_Do_Valid_CRUD_Of_Assignors()
         {
-            var assignorsPage = new AssignorsPage(page);
+            var assignorsPage = new AssignorsPage(_page);
             await assignorsPage.CRUD_Assignors();
         }
 
