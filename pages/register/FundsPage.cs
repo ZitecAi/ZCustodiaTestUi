@@ -234,11 +234,11 @@ namespace zCustodiaUi.pages.register
 
 
         [AllureStep("Fill Represetatives")]
-        public async Task GoToServicePrestatives()
+        public async Task GoToForm(string formName)
         {
             //Prestadores d Servi�os
             //await _util.Click(_gen.RightArrow, "Click on  Arrow to expand group tab");
-            await _util.ClickMatTabAsync(_gen.TabAllForms("Prestadores de Serviços"), "Click belt to change service prestatives form");
+            await _util.ClickMatTabAsync(_gen.TabAllForms(formName), "Click belt to change service prestatives form");
 
 
         }
@@ -358,7 +358,7 @@ namespace zCustodiaUi.pages.register
                     await Account();
                     await Slack();
                     await FileValidation();
-                    await GoToServicePrestatives();
+                    await GoToForm("Prestadores de Serviços");
                     await RegisterPrestativeAdministrator();
                     await RegisterPrestativeManager();
                     await RegisterPrestativeConsultant();
@@ -372,7 +372,7 @@ namespace zCustodiaUi.pages.register
                     await Account();
                     await Slack();
                     await FileValidation();
-                    await GoToServicePrestatives();
+                    await GoToForm("Prestadores de Serviços");
                     await RegisterPrestativeAdministrator();
                     await RegisterPrestativeManager();
                     await RegisterPrestativeConsultant();
@@ -386,7 +386,7 @@ namespace zCustodiaUi.pages.register
                     await Account();
                     await Slack();
                     await FileValidation();
-                    await GoToServicePrestatives();
+                    await GoToForm("Prestadores de Serviços");
                     await RegisterPrestativeAdministrator();
                     await RegisterPrestativeManager();
                     await RegisterPrestativeConsultant();
@@ -400,7 +400,7 @@ namespace zCustodiaUi.pages.register
                     await Account();
                     await Slack();
                     await FileValidation();
-                    await GoToServicePrestatives();
+                    await GoToForm("Prestadores de Serviços");
                     await RegisterPrestativeAdministrator();
                     await RegisterPrestativeManager();
                     await RegisterPrestativeConsultant();
@@ -414,7 +414,7 @@ namespace zCustodiaUi.pages.register
                     await Account();
                     await Slack();
                     await FileValidation();
-                    await GoToServicePrestatives();
+                    await GoToForm("Prestadores de Serviços");
                     await RegisterPrestativeAdministrator();
                     await RegisterPrestativeManager();
                     await RegisterPrestativeConsultant();
@@ -452,7 +452,7 @@ namespace zCustodiaUi.pages.register
                     await Account();
                     await Slack();
                     await FileValidation();
-                    await GoToServicePrestatives();
+                    await GoToForm("Prestadores de Serviços");
                     await RegisterPrestativeAdministrator();
                     await RegisterPrestativeManager();
                     await SaveFundNegative("É obrigatório um 'Consultor' como prestador.");
@@ -465,7 +465,7 @@ namespace zCustodiaUi.pages.register
                     await Account();
                     await Slack();
                     await FileValidation();
-                    await GoToServicePrestatives();
+                    await GoToForm("Prestadores de Serviços");
                     await RegisterPrestativeAdministrator();
                     await RegisterPrestativeConsultant();
                     await SaveFundNegative("É obrigatório um 'Gestor' como prestador.");
