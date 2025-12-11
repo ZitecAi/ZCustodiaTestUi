@@ -59,7 +59,7 @@ namespace zCustodiaUi.tests.register
             await fundsPage.Account();
             await fundsPage.Slack();
             await fundsPage.FileValidation();
-            await fundsPage.GoToServicePrestatives();
+            await fundsPage.GoToForm("Prestadores de Serviços");
             await fundsPage.RegisterPrestativeAdministrator();
             await fundsPage.RegisterPrestativeManager();
             await fundsPage.RegisterPrestativeConsultant(true);
