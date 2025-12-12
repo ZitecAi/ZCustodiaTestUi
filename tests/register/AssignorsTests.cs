@@ -1,3 +1,5 @@
+// AssignorsTests
+
 using Allure.Net.Commons;
 using Allure.NUnit;
 using Allure.NUnit.Attributes;
@@ -47,13 +49,28 @@ namespace zCustodiaUi.tests.register
         }
 
         [Test, Order(1)]
-        [AllureName("Should Do Valid CRUD Of Assignors")]
-        //[Ignore("Esse teste está em espera para fluxo de exclusão")]
-        public async Task Should_Do_Valid_CRUD_Of_Assignors()
+        [AllureName("Should Register Assignors")]
+        public async Task Should_Register_Assignor()
         {
             var assignorsPage = new AssignorsPage(_page);
-            await assignorsPage.CRUD_Assignors();
+            await assignorsPage.RegisterAssignor();
         }
+
+        [Test, Order(2)]
+        [AllureName("Should Update Assignor")]
+        public async Task Should_Update_Assignor()
+        {
+            var assignorsPage = new AssignorsPage(_page);
+            await assignorsPage.UpdateAssignor();
+        }
+        [Test, Order(3)]
+        [AllureName("Should Consult and Delete Assignor")]
+        public async Task Should_Consult_And_Delete_Assignor()
+        {
+            var assignorsPage = new AssignorsPage(_page);
+            await assignorsPage.ConsultAssignorAndDelete();
+        }
+
 
 
 

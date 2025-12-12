@@ -236,11 +236,7 @@ namespace zCustodiaUi.pages.register
         [AllureStep("Fill Represetatives")]
         public async Task GoToForm(string formName)
         {
-            //Prestadores d Servi�os
-            //await _util.Click(_gen.RightArrow, "Click on  Arrow to expand group tab");
             await _util.ClickMatTabAsync(_gen.TabAllForms(formName), "Click belt to change service prestatives form");
-
-
         }
         public async Task RegisterPrestativeAdministrator(bool lastFlow = false)
         {
@@ -503,7 +499,4 @@ namespace zCustodiaUi.pages.register
         }
 
     }
-
-
-
 }

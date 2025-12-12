@@ -1,3 +1,6 @@
+//Assignors PAge
+
+using Allure.NUnit.Attributes;
 using Microsoft.Playwright;
 using zCustodiaUi.data.register;
 using zCustodiaUi.locators;
@@ -19,12 +22,62 @@ namespace zCustodiaUi.pages.register
             _util = new Utils(_page);
         }
 
-        public async Task CRUD_Assignors()
+
+        [AllureStep("Consult Assignor")]
+        public async Task ConsultAssignorAndDelete()
         {
+            await _util.Click(_gen.FilterButton, "Click on Filter Button to filter Assignor to be consulted");
+            await Task.Delay(500);
+            await _util.Click(_gen.LocatorMatLabel("Fundo"), "Click on Filter Select to filter Assignor to be consulted");
+            await _util.Write(_gen.Filter, _data.FundAssignor, "Insert Find Assignor to be consulted");
+            await _util.Click(_gen.ReceiveTypeOption(_data.FundAssignor), $"Click on {_data.FundAssignor} option");
+            await _util.Write(_gen.LocatorMatLabel("Nome Cedente"), _data.NameAssignor + " EDITADO", "Insert Name Assignor to be consulted");
+            await _util.Click(_el.ApplyFilterButton, "Click on Apply Filter Button to show results");
             await Task.Delay(1000);
+            var idAssignor = await _util.ValidateIfElementHaveValue(_el.IdPosition, "Validate If ID of assignor is present on screen");
+            if (idAssignor == null)
+            {
+                return;
+            }
+            await DeleteAssignorByApi(idAssignor);
+        }
+        [AllureStep("Update Assignor")]
+        public async Task UpdateAssignor()
+        {
+            //Update Assignor
+            await _util.Click(_gen.FilterButton, "Click on Filter Button to filter Assignor to be consulted");
+            await Task.Delay(500);
+            await _util.Click(_gen.LocatorMatLabel("Fundo"), "Click on Filter Select to filter Assignor to be consulted");
+            await _util.Write(_gen.Filter, _data.FundAssignor, "Insert Find Assignor to be consulted");
+            await _util.Click(_gen.ReceiveTypeOption(_data.FundAssignor), $"Click on {_data.FundAssignor} option");
+            await _util.Write(_gen.LocatorMatLabel("Nome Cedente"), _data.NameAssignor, "Insert Name Assignor to be consulted");
+            await _util.Click(_el.ApplyFilterButton, "Click on Apply Filter Button to show results");
+            await Task.Delay(1000);
+            await _util.Click(_gen.EditButton, "Click on Edit button to update Assignor");
+            await Task.Delay(150);
+            await _util.Write(_gen.LocatorMatLabel("Nome"), _data.NameAssignor + " EDITADO", "Insert Name EDITED of Assignor to be Registered");
+            await _util.Click(_gen.SaveButton, "Click on Add button to add EDITED Assignor");
+            await _util.ValidateTextIsVisibleOnScreen("Dados Salvos com Sucesso!", "Validate if success Message is visible on screen after updated existing assignor");
+        }
+        [AllureStep("Delete Assignor By Api")]
+        public async Task DeleteAssignorByApi(string idAssignor)
+        {
+            HttpClient httpClient = new HttpClient();
+            httpClient.DefaultRequestHeaders.Add("Token", "DHQzckJ0TGWHiFxaVuUlmrBLWXwuejrtSAT0Mf47gvclZ5GKY543iYKNeLfqlzngXH0YcKGLe4qyv0avru3xeVGBp9yUQKKKlSyJ");
+            var request = await httpClient.DeleteAsync($"https://custodiabackend-prod.idsf.com.br/api/Cedente/QATESTE/{idAssignor}");
+            string response = await request.Content.ReadAsStringAsync();
+            Console.WriteLine(response);
+        }
+        [AllureStep("Click on New Button and Register By Form")]
+        public async Task ClickOnNewButtonAndRegisterByForm()
+        {
             await _util.Click(_gen.LocatorSpanText(" Novo "), "Click on new assignor button to start register");
             await _util.Click(_el.FormAssignors, "Click on Form Assignors button to start register");
             await Task.Delay(500);
+        }
+        [AllureStep("Fill General Data")]
+        public async Task FillGeneralData()
+        {
             //General Data
             await _util.Click(_gen.LocatorMatLabel("Fundo"), "Click on fund select");
             await _util.Write(_gen.Filter, _data.FundAssignor, "Click on filter input to search for fund");
@@ -34,7 +87,6 @@ namespace zCustodiaUi.pages.register
             await _util.Write(_gen.LocatorMatLabel("CNPJ"), _data.CnpjAssignor, "Insert CNPJ of Assignor to be Registered");
             await _util.Write(_gen.LocatorMatLabel("Inscrição Estadual"), _data.StateRegistration, "Insert State Registration of Assignor to be Registered");
             await _util.Write(_gen.LocatorMatLabel("Inscrição Municipal"), _data.MunicipalRegistration, "Insert Municipal Registration of Assignor to be Registered");
-            //await Task.Delay(150);
 
             await _util.Click(_gen.LocatorMatLabel("Ramo de Atividade"), "Click on Activity Select");
             await _util.Write(_gen.Filter, _data.Activity, "Insert Activity of Assignor to be Registered");
@@ -86,13 +138,12 @@ namespace zCustodiaUi.pages.register
             await _util.ScrollToElementAndMaintainPosition(_gen.LocatorMatLabel("Chave Pix"), "Scrool on Is Chave Pix Select");
             await _util.Click(_gen.LocatorMatLabel("Coobrigação"), "Click on Is Coobrigation Select");
             await _util.Write(_gen.Filter, _data.Coobrigation, "Insert Is Coobrigation to be Registered");
-            await Task.Delay(1000);
+            await Task.Delay(500);
             await _util.Click(_gen.ReceiveTypeOption(_data.Coobrigation), "Click on Is Coobrigation option");
-
-            //Data Account
-
-            await _util.ClickMatTabAsync(_gen.TabAllForms("Dados da Conta"), "Click on Data Account tab to fill data");
-            await Task.Delay(600);
+        }
+        [AllureStep("Fill Account Data")]
+        public async Task FillAccountData()
+        {
             await _util.Click(_gen.ButtonNew, "Click in New to insert a New Account");
             await Task.Delay(150);
             await _util.Click(_gen.LocatorMatLabel("Banco"), "Insert Bank Number to be Registered");
@@ -105,10 +156,10 @@ namespace zCustodiaUi.pages.register
             await _util.Write(_gen.LocatorMatLabel("Descrição"), _data.AccountDescription, "Click on Account Type Select");
             await _util.Click(_el.Pattern(true), "Click on Active Account");
             await _util.Click(_gen.AddButton, "Click on Add Button to add new account");
-
-            //Representative
-            await _util.ClickMatTabAsync(_gen.TabAllForms("Representante"), "Click on Representative tab to fill data");
-            //await Task.Delay(600);
+        }
+        [AllureStep("Fill Representatives Data")]
+        public async Task FillRepresentatives()
+        {
             await _util.Click(_gen.ButtonNew, "Click in New to insert a New Account");
             await _util.Write(_gen.LocatorMatLabel("Nome"), _data.RepresentativeName, "Insert Name of Representative to be Registered");
             await _util.Write(_gen.LocatorMatLabel("E-mail"), _data.RepresentativeEmail, "Insert E-mail of Representative to be Registered");
@@ -119,43 +170,31 @@ namespace zCustodiaUi.pages.register
             await _util.Click(_el.AssignByEndorsement(true), "Click on 'yes' to Assign By Endorsement");
             await _util.Click(_el.IssueDouble(true), "Click on 'yes' to Issue Double");
             await _util.Click(_gen.AddButton, "Click on Add button to add new Assignor");
-            //await Task.Delay(1500);
-            await _util.Click(_gen.SaveButton, "Click on Add button to add new Representative");
-            await _util.ValidateTextIsVisibleOnScreen("Dados Salvos com Sucesso!", "Validate if success Message is visible on screen after did register a new assignor");
-
-            //Consult Assignor
-            await _page.ReloadAsync();
-            await _util.Click(_gen.FilterButton, "Click on Filter Button to filter Assignor to be consulted");
-            await Task.Delay(500);
-            await _util.Click(_gen.LocatorMatLabel("Fundo"), "Click on Filter Select to filter Assignor to be consulted");
-            await _util.Write(_gen.Filter, _data.FundAssignor, "Insert Find Assignor to be consulted");
-            await _util.Click(_gen.ReceiveTypeOption(_data.FundAssignor), $"Click on {_data.FundAssignor} option");
-            await _util.Write(_gen.LocatorMatLabel("Nome Cedente"), _data.NameAssignor, "Insert Name Assignor to be consulted");
-            await _util.Write(_gen.LocatorMatLabel("CNPJ"), _data.CnpjAssignor, "Insert CNPJ Assignor to be consulted");
-            await _util.Click(_el.ApplyFilterButton, "Click on Apply Filter Button to show results");
-            await Task.Delay(1000);
-            string id = await _util.ValidateIfElementHaveValue(_el.IdPosition, "Validate If ID of assignor is present on screen");
-
-            //Update Assignor
-            await _util.Click(_gen.EditButton, "Click on Edit button to update Assignor");
-            await Task.Delay(150);
-            await _util.Write(_gen.LocatorMatLabel("Nome"), _data.EditedName, "Insert Name EDITED of Assignor to be Registered");
-            await _util.Click(_gen.SaveButton, "Click on Add button to add EDITED Assignor");
-            await _util.ValidateTextIsVisibleOnScreen("Dados Salvos com Sucesso!", "Validate if success Message is visible on screen after updated existing assignor");
-
-            //Pending -> Delete Assignor
-            HttpClient httpClient = new HttpClient();
-
-            httpClient.DefaultRequestHeaders.Add("Token", "DHQzckJ0TGWHiFxaVuUlmrBLWXwuejrtSAT0Mf47gvclZ5GKY543iYKNeLfqlzngXH0YcKGLe4qyv0avru3xeVGBp9yUQKKKlSyJ");
-
-            var request = await httpClient.DeleteAsync($"https://custodiabackend-prod.idsf.com.br/api/Cedente/QATESTE/{id}");
-
-            string response = await request.Content.ReadAsStringAsync();
-            Console.WriteLine(response);
 
         }
+        [AllureStep("Go To Form: {formName}")]
+        public async Task GoToForm(string formName)
+        {
+            await _util.ClickMatTabAsync(_gen.TabAllForms(formName), $"Click on {formName} tab to fill data");
+        }
+        [AllureStep("Click on Save Button")]
+        public async Task ClickOnSaveButton()
+        {
+            await _util.Click(_gen.SaveButton, "Click on Save button");
+        }
 
+        public async Task RegisterAssignor()
+        {
+            await ClickOnNewButtonAndRegisterByForm();
+            await FillGeneralData();
+            await GoToForm("Dados da Conta");
+            await FillAccountData();
+            await GoToForm("Representante");
+            await FillRepresentatives();
+            await ClickOnSaveButton();
+            await _util.ValidateTextIsVisibleOnScreen("Dados Salvos com Sucesso!", "Validate if success Message is visible on screen after did register a new assignor");
 
+        }
 
     }
 }

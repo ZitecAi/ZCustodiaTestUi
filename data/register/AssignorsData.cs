@@ -1,15 +1,13 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using zCustodiaUi.utils;
 
 namespace zCustodiaUi.data.register
 {
     public class AssignorsData
     {
-        public string NameAssignor { get; set; } = "Cedente Teste Zitec";
+
+        public static string uniqueNumber = new Random().Next(1000, 9999).ToString();
+
+        public string NameAssignor { get; set; } = $"Cedente Teste Zitec {uniqueNumber}";
         public string FundAssignor { get; set; } = "Zitec FIDC";
         public string CnpjAssignor { get; set; } = DataGenerator.Generate(DocumentType.Cnpj);
         public string StateRegistration { get; set; } = "123456789";
