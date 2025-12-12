@@ -1,0 +1,12 @@
+⚠ Console Error Ignored: ERROR TypeError: Cannot read properties of undefined (reading 'value')
+    at Object.next (https://custodia-staging.idsf.com.br/5132.23f1fddef4cfb5e5.js:1:13308)
+    at Z.next (https://custodia-staging.idsf.com.br/main.6548ade63d61dfcb.js:1:678529)
+    at be._next (https://custodia-staging.idsf.com.br/main.6548ade63d61dfcb.js:1:678213)
+    at be.next (https://custodia-staging.idsf.com.br/main.6548ade63d61dfcb.js:1:677906)
+    at https://custodia-staging.idsf.com.br/main.6548ade63d61dfcb.js:1:690057
+    at c._next (https://custodia-staging.idsf.com.br/main.6548ade63d61dfcb.js:1:688365)
+    at c.next (https://custodia-staging.idsf.com.br/main.6548ade63d61dfcb.js:1:677906)
+    at Z.next (https://custodia-staging.idsf.com.br/main.6548ade63d61dfcb.js:1:678529)
+    at be._next (https://custodia-staging.idsf.com.br/main.6548ade63d61dfcb.js:1:678213)
+    at be.next (https://custodia-staging.idsf.com.br/main.6548ade63d61dfcb.js:1:677906)
+Vídeo anexado: zCustodiaUi_tests_processing_ReceivablesTests_Should_Process_Receivable_Prorrogation_Passed_20251212_132624.webm (859496 bytes)
