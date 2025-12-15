@@ -16,9 +16,10 @@ namespace zCustodiaUi.pages.register
         private readonly GenericElements _gen = new GenericElements();
         private readonly AssignorsElements _el = new AssignorsElements();
         private readonly AssignorsData _data = new AssignorsData();
-        public AssignorsPage(IPage _page)
+        public AssignorsPage(IPage _page, AssignorsData data = null)
         {
             this._page = _page;
+            _data = data ?? new AssignorsData();
             _util = new Utils(_page);
         }
 
@@ -76,7 +77,7 @@ namespace zCustodiaUi.pages.register
             await Task.Delay(500);
         }
         [AllureStep("Fill General Data")]
-        public async Task FillGeneralData()
+        public async Task FillGeneralData(bool personTypeCpf = false)
         {
             //General Data
             await _util.Click(_gen.LocatorMatLabel("Fundo"), "Click on fund select");
@@ -84,7 +85,15 @@ namespace zCustodiaUi.pages.register
             await _util.Click(_gen.ReceiveTypeOption(_data.FundAssignor), "Click on fund option");
             await Task.Delay(100);
             await _util.Write(_gen.LocatorMatLabel("Nome"), _data.NameAssignor, "Insert Name of Assignor to be Registered");
-            await _util.Write(_gen.LocatorMatLabel("CNPJ"), _data.CnpjAssignor, "Insert CNPJ of Assignor to be Registered");
+            if (personTypeCpf is true)
+            {
+                await _util.Click(_gen.RadioButtonOption("CPF"), "Click on CPF radio button");
+                await _util.Write(_gen.LocatorMatLabel("CPF"), _data.CpfAssignor, "Insert CPF of Assignor to be Registered");
+            }
+            else
+            {
+                await _util.Write(_gen.LocatorMatLabel("CNPJ"), _data.CnpjAssignor, "Insert CNPJ of Assignor to be Registered");
+            }
             await _util.Write(_gen.LocatorMatLabel("Inscrição Estadual"), _data.StateRegistration, "Insert State Registration of Assignor to be Registered");
             await _util.Write(_gen.LocatorMatLabel("Inscrição Municipal"), _data.MunicipalRegistration, "Insert Municipal Registration of Assignor to be Registered");
 
@@ -183,6 +192,7 @@ namespace zCustodiaUi.pages.register
             await _util.Click(_gen.SaveButton, "Click on Save button");
         }
 
+
         public async Task RegisterAssignor()
         {
             await ClickOnNewButtonAndRegisterByForm();
@@ -195,6 +205,80 @@ namespace zCustodiaUi.pages.register
             await _util.ValidateTextIsVisibleOnScreen("Dados Salvos com Sucesso!", "Validate if success Message is visible on screen after did register a new assignor");
 
         }
+        public async Task EmptyNameAssignor()
+        {
+            await ClickOnNewButtonAndRegisterByForm();
+            await FillGeneralData();
+            await GoToForm("Dados da Conta");
+            await FillAccountData();
+            await GoToForm("Representante");
+            await FillRepresentatives();
+            await _util.ValidateElementIsDisabled(_gen.SaveButton, "Validate if Save Button is disabled when Name Assignor is empty");
+        }
+        public async Task CNPJ13CharsAssignor()
+        {
+            await ClickOnNewButtonAndRegisterByForm();
+            await FillGeneralData();
+            await GoToForm("Dados da Conta");
+            await FillAccountData();
+            await GoToForm("Representante");
+            await FillRepresentatives();
+            await _util.ValidateElementIsDisabled(_gen.SaveButton, "Validate if Save Button is disabled when Name Assignor is empty");
+        }
+        public async Task CPF10CharsAssignor()
+        {
+            await ClickOnNewButtonAndRegisterByForm();
+            await FillGeneralData(true);
+            await GoToForm("Dados da Conta");
+            await FillAccountData();
+            await GoToForm("Representante");
+            await FillRepresentatives();
+            await _util.ValidateElementIsDisabled(_gen.SaveButton, "Validate if Save Button is disabled when Name Assignor is empty");
+        }
+        public async Task CNPJAlreadyRegistered()
+        {
+            await ClickOnNewButtonAndRegisterByForm();
+            await FillGeneralData();
+            await GoToForm("Dados da Conta");
+            await FillAccountData();
+            await GoToForm("Representante");
+            await FillRepresentatives();
+            await ClickOnSaveButton();
+            //Wait for error message to be fixed
+            //await _util.ValidateTextIsVisibleOnScreen("", "Validate if error Message is visible on screen after tried register with existing CNPJ");
+        }
+        public async Task InvalidEmailWhitoutAt()
+        {
+            await ClickOnNewButtonAndRegisterByForm();
+            await FillGeneralData();
+            await GoToForm("Dados da Conta");
+            await FillAccountData();
+            await GoToForm("Representante");
+            await FillRepresentatives();
+            await _util.ValidateElementIsDisabled(_gen.SaveButton, "Validate if Save Button is disabled when Email Assignor miss at");
+        }
+        public async Task InvalidEmailWhitoutDomain()
+        {
+            await ClickOnNewButtonAndRegisterByForm();
+            await FillGeneralData();
+            await GoToForm("Dados da Conta");
+            await FillAccountData();
+            await GoToForm("Representante");
+            await FillRepresentatives();
+            await _util.ValidateElementIsDisabled(_gen.SaveButton, "Validate if Save Button is disabled when Email Assignor miss at");
+        }
+        public async Task MinSignaturesApprovalIs0()
+        {
+            await ClickOnNewButtonAndRegisterByForm();
+            await FillGeneralData();
+            await GoToForm("Dados da Conta");
+            await FillAccountData();
+            await GoToForm("Representante");
+            await FillRepresentatives();
+            await _util.ValidateElementIsDisabled(_gen.SaveButton, "Validate if Save Button is disabled when Email Assignor miss at");
+        }
+
+
 
     }
 }

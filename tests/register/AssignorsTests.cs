@@ -3,6 +3,7 @@
 using Allure.Net.Commons;
 using Allure.NUnit;
 using Allure.NUnit.Attributes;
+using zCustodiaUi.data.register;
 using zCustodiaUi.locators.modules;
 using zCustodiaUi.locators.register;
 using zCustodiaUi.pages.login;
@@ -55,7 +56,6 @@ namespace zCustodiaUi.tests.register
             var assignorsPage = new AssignorsPage(_page);
             await assignorsPage.RegisterAssignor();
         }
-
         [Test, Order(2)]
         [AllureName("Should Update Assignor")]
         public async Task Should_Update_Assignor()
@@ -69,6 +69,65 @@ namespace zCustodiaUi.tests.register
         {
             var assignorsPage = new AssignorsPage(_page);
             await assignorsPage.ConsultAssignorAndDelete();
+        }
+        [Test, Order(4)]
+        [AllureName("Shouldn´t Register Assignor with empty Name")]
+        public async Task Shouldnt_Register_Assignor_With_empty_Name()
+        {
+            var dataTest = new AssignorsData { NameAssignor = string.Empty };
+            var assignorsPage = new AssignorsPage(_page, dataTest);
+            await assignorsPage.EmptyNameAssignor();
+        }
+        [Test, Order(5)]
+        [AllureName("Shouldn´t Register Assignor with CNPJ 10 Chars")]
+        public async Task Shouldnt_Register_Assignor_With_CPF_10_Chars()
+        {
+            var dataTest = new AssignorsData { CpfAssignor = "4095611480" };
+            var assignorsPage = new AssignorsPage(_page, dataTest);
+            await assignorsPage.CPF10CharsAssignor();
+        }
+        [Test, Order(6)]
+        [AllureName("Shouldn´t Register Assignor with CNPJ 13 Chars")]
+        public async Task Shouldnt_Register_Assignor_With_CNPJ_13_Chars()
+        {
+            var dataTest = new AssignorsData { CnpjAssignor = "5272117500019" };
+            var assignorsPage = new AssignorsPage(_page, dataTest);
+            await assignorsPage.CNPJ13CharsAssignor();
+        }
+        [Test, Order(7)]
+        [AllureName("Shouldn´t Register Assignor with CNPJ already Registered")]
+        [Ignore("Waiting for error message to be fixed")]
+        public async Task Shouldnt_Register_Assignor_With_CNPJ_already_registered()
+        {
+            var dataTest = new AssignorsData { CnpjAssignor = "24537861000171" };
+            var assignorsPage = new AssignorsPage(_page, dataTest);
+            await assignorsPage.CNPJAlreadyRegistered();
+        }
+        [Test, Order(8)]
+        [AllureName("Shouldn´t Register Assignor with Invalid Email Whitout 'at'")]
+        public async Task Shouldnt_Register_Assignor_With_Invalid_Email()
+        {
+            var dataTest = new AssignorsData { Email = "alvesleviicloud.com" };
+            var assignorsPage = new AssignorsPage(_page, dataTest);
+            await assignorsPage.InvalidEmailWhitoutAt();
+        }
+        [Test, Order(9)]
+        [AllureName("Shouldn´t Register Assignor with Invalid Email Whitout domain")]
+        [Ignore("Waiting for validation front-end")]
+        public async Task Shouldnt_Register_Assignor_With_Invalid_Email_No_domain()
+        {
+            var dataTest = new AssignorsData { Email = "alveslevi@icloud" };
+            var assignorsPage = new AssignorsPage(_page, dataTest);
+            await assignorsPage.InvalidEmailWhitoutDomain();
+        }
+        [Test, Order(10)]
+        [AllureName("Shouldn´t Register Assignor with Invalid Email Whitout domain")]
+        [Ignore("Waiting for validation")]
+        public async Task Shouldnt_Register_Assignor_With_Num_Min_Sign_Approval_is_0()
+        {
+            var dataTest = new AssignorsData { MinSignaturesApproval = "0" };
+            var assignorsPage = new AssignorsPage(_page, dataTest);
+            await assignorsPage.MinSignaturesApprovalIs0();
         }
 
 
