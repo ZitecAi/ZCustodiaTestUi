@@ -21,7 +21,7 @@ namespace zCustodiaUi.tests.login
         [AllureBefore]
         public async Task Setup()
         {
-            page = await OpenBrowserAsync();
+            _page = await OpenBrowserAsync();
         }
 
         [TearDown]
@@ -35,21 +35,21 @@ namespace zCustodiaUi.tests.login
         [AllureName("Should Do Login With Valid Credentials")]
         public async Task Should_Do_Login_With_Valid_Credentials()
         {
-            var login = new LoginPage(page);
+            var login = new LoginPage(_page);
             await login.DoLogin();
         }
         [Test, Order(2)]
         [AllureName("Do Not Should Do Login With Invalid Email")]
         public async Task Do_Not_Should_Do_Login_With_Invalid_Email()
         {
-            var login = new LoginPage(page);
+            var login = new LoginPage(_page);
             await login.NegativeLogin("invalid email");
         }
         [Test, Order(3)]
         [AllureName("Do Not Should Do Login With Invalid Password")]
         public async Task Do_Not_Should_Do_Login_With_Invalid_Password()
         {
-            var login = new LoginPage(page);
+            var login = new LoginPage(_page);
             await login.NegativeLogin("invalid password");
         }
 

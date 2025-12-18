@@ -21,22 +21,22 @@ namespace zCustodiaUi.tests.register
     [AllureSuite("Funds UI")]
     public class FundsTests : TestBase
     {
-        private Utils util;
-        private readonly ModulesElements mod = new ModulesElements();
-        private readonly FundsElements el = new FundsElements();
+        private Utils _util;
+        private readonly ModulesElements _mod = new ModulesElements();
+        private readonly FundsElements _el = new FundsElements();
 
 
         [SetUp]
         [AllureBefore]
         public async Task SetUp()
         {
-            page = await OpenBrowserAsync();
-            util = new Utils(page);
-            var login = new LoginPage(page);
+            _page = await OpenBrowserAsync();
+            _util = new Utils(_page);
+            var login = new LoginPage(_page);
             await login.DoLogin();
-            await util.Click(mod.MainMenu, "Open main menu to extend options");
-            await util.Click(mod.RegisterPage, "Open Register module");
-            await util.Click(el.FundsPage, "Open Funds page");
+            await _util.Click(_mod.MainMenu, "Open main menu to extend options");
+            await _util.Click(_mod.RegisterPage, "Open Register module");
+            await _util.Click(_el.FundsPage, "Open Funds page");
         }
 
         [TearDown]
@@ -51,7 +51,7 @@ namespace zCustodiaUi.tests.register
         //[Ignore("Esse teste está em espera para fluxo de exclusão")]
         public async Task Should_Register_a_New_Fund()
         {
-            var fundsPage = new FundsPage(page);
+            var fundsPage = new FundsPage(_page);
             await fundsPage.RegisterData();
             await fundsPage.Rules();
             await fundsPage.Representatives();
@@ -59,7 +59,7 @@ namespace zCustodiaUi.tests.register
             await fundsPage.Account();
             await fundsPage.Slack();
             await fundsPage.FileValidation();
-            await fundsPage.GoToServicePrestatives();
+            await fundsPage.GoToForm("Prestadores de Serviços");
             await fundsPage.RegisterPrestativeAdministrator();
             await fundsPage.RegisterPrestativeManager();
             await fundsPage.RegisterPrestativeConsultant(true);
@@ -69,7 +69,7 @@ namespace zCustodiaUi.tests.register
         [AllureName("Should Consult a Fund")]
         public async Task Should_Consult_a_Fund()
         {
-            var fundsPage = new FundsPage(page);
+            var fundsPage = new FundsPage(_page);
             await fundsPage.ConsultFund();
         }
 
@@ -78,7 +78,7 @@ namespace zCustodiaUi.tests.register
         public async Task Shouldnt_Register_a_New_Fund_With_Empty_Fund_Name()
         {
             var testData = new FundsData { FundName = string.Empty };
-            var fundsPage = new FundsPage(page, testData);
+            var fundsPage = new FundsPage(_page, testData);
             await fundsPage.NegativeScenario("Fund name empty");
         }
         [Test, Order(4)]
@@ -86,7 +86,7 @@ namespace zCustodiaUi.tests.register
         public async Task Shouldnt_Register_a_New_Fund_With_ISIN_code_empty()
         {
             var testData = new FundsData { IsinCode = string.Empty };
-            var fundsPage = new FundsPage(page, testData);
+            var fundsPage = new FundsPage(_page, testData);
             await fundsPage.NegativeScenario("ISIN code empty");
         }
         [Test, Order(5)]
@@ -94,7 +94,7 @@ namespace zCustodiaUi.tests.register
         public async Task Shouldnt_Register_a_New_Fund_With_Exist_CNPJ()
         {
             var testData = new FundsData { CnpjFund = "54.638.076/0001-76" };
-            var fundsPage = new FundsPage(page, testData);
+            var fundsPage = new FundsPage(_page, testData);
             await fundsPage.NegativeScenario("CNPJ already exists");
         }
         [Test, Order(6)]
@@ -102,7 +102,7 @@ namespace zCustodiaUi.tests.register
         public async Task Shouldnt_Register_a_New_Fund_With_Empty_CNPJ()
         {
             var testData = new FundsData { CnpjFund = string.Empty };
-            var fundsPage = new FundsPage(page, testData);
+            var fundsPage = new FundsPage(_page, testData);
             await fundsPage.NegativeScenario("CNPJ empty");
         }
         [Test, Order(7)]
@@ -110,7 +110,7 @@ namespace zCustodiaUi.tests.register
         public async Task Shouldnt_Register_a_New_Fund_With_Max_Percent_Empty()
         {
             var testData = new FundsData { MaxPercent = string.Empty };
-            var fundsPage = new FundsPage(page, testData);
+            var fundsPage = new FundsPage(_page, testData);
             await fundsPage.NegativeScenario("Max Percent empty");
         }
         [Test, Order(8)]
@@ -118,7 +118,7 @@ namespace zCustodiaUi.tests.register
         public async Task Shouldnt_Register_a_New_Fund_With_Number_Agency_Empty()
         {
             var testData = new FundsData { AgencyNumber = string.Empty };
-            var fundsPage = new FundsPage(page, testData);
+            var fundsPage = new FundsPage(_page, testData);
             await fundsPage.NegativeScenario("Agency Number empty");
         }
         [Test, Order(9)]
@@ -126,28 +126,28 @@ namespace zCustodiaUi.tests.register
         public async Task Shouldnt_Register_a_New_Fund_With_Description_Account_Empty()
         {
             var testData = new FundsData { Description = string.Empty };
-            var fundsPage = new FundsPage(page, testData);
+            var fundsPage = new FundsPage(_page, testData);
             await fundsPage.NegativeScenario("Description account empty");
         }
         [Test, Order(10)]
         [AllureName("Should´t Register a New Fund Without type account ")]
         public async Task Shouldnt_Register_a_New_Fund_Without_Type_Account()
         {
-            var fundsPage = new FundsPage(page);
+            var fundsPage = new FundsPage(_page);
             await fundsPage.NegativeScenario("Without Type Account");
         }
         [Test, Order(11)]
         [AllureName("Should´t Register a New Fund Without Consultant ")]
         public async Task Shouldnt_Register_a_New_Fund_Without_Consultant()
         {
-            var fundsPage = new FundsPage(page);
+            var fundsPage = new FundsPage(_page);
             await fundsPage.NegativeScenario("Without Consultant");
         }
         [Test, Order(12)]
         [AllureName("Should´t Register a New Fund Without Manager ")]
         public async Task Shouldnt_Register_a_New_Fund_Without_Managers()
         {
-            var fundsPage = new FundsPage(page);
+            var fundsPage = new FundsPage(_page);
             await fundsPage.NegativeScenario("Without Manager");
         }
 

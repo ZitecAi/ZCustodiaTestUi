@@ -29,9 +29,9 @@ namespace zCustodiaUi.tests.administrative
         [AllureBefore]
         public async Task SetUp()
         {
-            page = await OpenBrowserAsync();
-            var login = new LoginPage(page);
-            util = new Utils(page);
+            _page = await OpenBrowserAsync();
+            var login = new LoginPage(_page);
+            util = new Utils(_page);
             await login.DoLogin();
             await util.Click(mod.MainMenu, "Click on Main menu to extend page Options");
             await util.Click(mod.AdmnistrativePage, "Click on Administrative Page to navigate on options page");
@@ -51,13 +51,13 @@ namespace zCustodiaUi.tests.administrative
         //[Ignore("This test is currently under maintenance. Because don´t generate Report")]
         public async Task Should_Do_Processing_And_Generating_Report_Of_Fund()
         {
-            var fund = new ClosingOfFundsPage(page);
+            var fund = new ClosingOfFundsPage(_page);
             await fund.CloseFund(fundName);
 
-            var myReports = new MyReportsPage(page);
+            var myReports = new MyReportsPage(_page);
             await myReports.ValidateGenerateReportsAndDownloadReport(fundName);
 
-            var chooseDateFund = new ChooseFundDatePage(page);
+            var chooseDateFund = new ChooseFundDatePage(_page);
             await chooseDateFund.ChooseFundDate(fundName);
 
         }
