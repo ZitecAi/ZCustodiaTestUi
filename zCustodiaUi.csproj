@@ -24,6 +24,9 @@
 	  <Content Include="appsettings.json">
 	    <CopyToOutputDirectory>Always</CopyToOutputDirectory>
 	  </Content>
+	  <Content Include="models\files\54638076000176_52721175000191_N.zip" />
+	  <Content Include="models\files\CNABz - Copia.txt" />
+	  <Content Include="models\files\CNABz.txt" />
 	</ItemGroup>
 
 	<ItemGroup>
@@ -61,6 +64,10 @@
 	<ItemGroup>
 		<Using Include="Microsoft.Playwright.NUnit" />
 		<Using Include="NUnit.Framework" />
+	</ItemGroup>
+
+	<ItemGroup>
+	  <Folder Include="workflows\" />
 	</ItemGroup>
 
 	<Target Name="CleanAllureResults" BeforeTargets="VSTest">
