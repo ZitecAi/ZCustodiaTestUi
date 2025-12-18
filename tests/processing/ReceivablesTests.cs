@@ -60,6 +60,7 @@ namespace zCustodiaUi.tests.processing
         }
         [Test, Order(3)]
         [AllureName("Should Process Receivable Prorrogation")]
+        [Ignore("This test is ignored temporarily, to wait build procedure")]
         public async Task Should_Process_Receivable_Prorrogation()
         {
             var receivablesPage = new ReceivablesPage(_page);

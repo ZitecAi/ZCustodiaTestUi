@@ -37,7 +37,7 @@ namespace zCustodiaUi.pages.processing
             await _util.Click(_gen.LocatorMatLabel("Fundo"), "Click on New button to create a new receivable");
             await _util.Write(_gen.Filter, _data.FundName, "Write on filter field to search Zitec FIDC");
             await _util.Click(_gen.ReceiveTypeOption(_data.FundName), "Click on Zitec FIDC to create select Zitec FIDC fund");
-            await _util.Write(_gen.LocatorMatLabel("Seu Número"), _data.YourNumberPartial, "Write on your number field to Filter per your number");
+            await _util.Write(_gen.LocatorMatLabel("Seu Número"), _data.IdPartialWriteOff, "Write on your number field to Filter per your number");
             await _util.Click(_gen.LocatorSpanText("Pesquisar"), "Click on search button to search receivable");
             //await _util.Click(_el.SecondCheckBox, "Click on CheckBox");
             await Task.Delay(300);
@@ -60,7 +60,7 @@ namespace zCustodiaUi.pages.processing
             await _util.Click(_gen.LocatorMatLabel("Fundo"), "Click on New button to create a new receivable");
             await _util.Write(_gen.Filter, _data.FundName, "Write on filter field to search Zitec FIDC");
             await _util.Click(_gen.ReceiveTypeOption(_data.FundName), "Click on Zitec FIDC to create select Zitec FIDC fund");
-            await _util.Write(_gen.LocatorMatLabel("Seu Número"), _data.YourNumber, "Write on your number field to Filter per your number");
+            await _util.Write(_gen.LocatorMatLabel("Seu Número"), _data.IdWriteOff, "Write on your number field to Filter per your number");
             await _util.Click(_gen.LocatorSpanText("Pesquisar"), "Click on search button to search receivable");
             //await _util.Click(_el.SecondCheckBox, "Click on CheckBox");
             await _util.Click(_gen.LocatorMatLabel("Ocorrência"), "Click on Add button to add the receivable");
@@ -89,7 +89,7 @@ namespace zCustodiaUi.pages.processing
             await _util.Click(_gen.LocatorMatLabel("Fundo"), "Click on New button to create a new receivable");
             await _util.Write(_gen.Filter, _data.FundName, "Write on filter field to search Zitec FIDC");
             await _util.Click(_gen.ReceiveTypeOption(_data.FundName), "Click on Zitec FIDC to create select Zitec FIDC fund");
-            await _util.Write(_gen.LocatorMatLabel("Seu Número"), _data.YourNumberProrrogation, "Write on your number field to Filter per your number");
+            await _util.Write(_gen.LocatorMatLabel("Seu Número"), _data.IdProrrogation, "Write on your number field to Filter per your number");
             await _util.Click(_gen.LocatorSpanText("Pesquisar"), "Click on search button to search receivable");
             //await _util.Click(_el.SecondCheckBox, "Click on CheckBox");
             await _util.Click(_gen.LocatorMatLabel("Ocorrência"), "Click on Add button to add the receivable");
