@@ -35,16 +35,12 @@ namespace zCustodiaUi.pages.importation
         {
             var today = DateTime.Now.Day.ToString();
             await _util.Click(_gen.ImportButton, "Click on Import button to import a new shipping file");
-            await Task.Delay(2000);
             await _util.Click("(" + _gen.LocatorMatLabel("Fundo") + ")[2]", "Click on Fund Select to expand a Funds list");
             await _util.Write(_gen.Filter, _data.FundName, "Write name fund on filter input to search for fund");
             await _util.Click(_gen.ReceiveTypeOption(_data.FundName), "Click on fund option");
-            await Task.Delay(150);
             nameNewFile = await _util.UpdateDateAndSentFile(GetPath() + _data.FileName, _gen.AttachFileInput, "Attaching a new shipping file");
-            await Task.Delay(150);
             await _util.Click(_el.ProcessButton, "Click on process button");
             await _util.ValidateTextIsVisibleOnScreen("Arquivo importado com sucesso!", "Validate if success text is visible on screen to user after sended file");
-            await Task.Delay(20000);
             await _util.Click(_gen.LocatorMatLabel("Fundo"), "Click on fund selector to search fund");
             await _util.Write(_gen.Filter, _data.FundName, "Write name fund on filter input to search for fund");
             await _util.Click(_gen.ReceiveTypeOption(_data.FundName), "Click on fund option");
@@ -56,7 +52,6 @@ namespace zCustodiaUi.pages.importation
             await _util.Click(_gen.LocatorSpanText(" Sim "), "Click on 'yes' to confirm Delete file");
             await _util.ValidateTextIsVisibleOnScreen("Arquivo deletado com sucesso!", "Validate if success text is visible on screen to user after did deleted file");
             await _page.ReloadAsync();
-            await Task.Delay(1500);
             await _util.Click(_gen.LocatorMatLabel("Fundo"), "Click on Fund Select to expand a Funds list");
             await _util.Write(_gen.Filter, _data.FundName, "Write name fund on filter input to search for fund");
             await _util.Click(_gen.ReceiveTypeOption(_data.FundName), "Click on fund option");

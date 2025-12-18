@@ -33,8 +33,7 @@ namespace zCustodiaUi.pages.admnistrative
             await _util.Click("(" + _gen.ReceiveTypeOption(_data.FundName) + ")[2]", "Click on fund option");
             await _util.Click(_el.ButtonSearch, "Click on fund option");
 
-            await Task.Delay(2000);
-            await _util.Click(_el.FirstCheckbox, "Click on First CheckBox to mark the fund to be closed");
+            await _util.Click(_el.FirstCheckbox(_data.FundName), "Click on First CheckBox to mark the fund to be closed");
             await _util.Click(_el.Calendar, "Click on Calendar to expand the days available");
             await _util.Click(_el.DayValue(tomorrow), "Set Tomorrow day on calendar");
             await _util.Click(_el.ButtonCloseFund, "Click Button closed fund to confirm the process");
