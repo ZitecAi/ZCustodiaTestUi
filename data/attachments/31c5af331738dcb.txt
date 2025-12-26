@@ -1,0 +1,2 @@
+ Text found: Sacado Test 8640
+Caminho de vídeo inválido: /home/runner/work/ZCustodiaTestUi/ZCustodiaTestUi/bin/Debug/net8.0/videos/0ae47ebd73fe14e74e316ec2d307b9c3.webm

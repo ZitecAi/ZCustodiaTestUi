@@ -1,0 +1,31 @@
+File FundoQA_20251226_6de799f0.txt Sent successfull.
+The element: (//span[contains(text(),'FundoQA_20251226_6de799f0.txt')]/ancestor::tr//td)[2]//span have value! value is: 0
+ Text found: 	
+0
+	
+54.638.076/0001-76
+	
+FundoQA_20251226_6de799f0.txt
+	
+26/12/2025
+	
+adm@idsf.com.br
+	
+	
+download
+task_alt
+code_blocks
+picture_as_pdf
+delete
+⚠ Console Error Ignored: ERROR TypeError: Cannot read properties of undefined (reading 'pipe')
+    at i.downloadFile (https://custodia-staging.idsf.com.br/6304.a3d4bea4270a30fb.js:1:15351)
+    at https://custodia-staging.idsf.com.br/6304.a3d4bea4270a30fb.js:1:13087
+    at xM (https://custodia-staging.idsf.com.br/main.f532e4368c6a1524.js:1:983885)
+    at Object.a [as next] (https://custodia-staging.idsf.com.br/main.f532e4368c6a1524.js:1:984057)
+    at Z.next (https://custodia-staging.idsf.com.br/main.f532e4368c6a1524.js:1:679473)
+    at be._next (https://custodia-staging.idsf.com.br/main.f532e4368c6a1524.js:1:679157)
+    at be.next (https://custodia-staging.idsf.com.br/main.f532e4368c6a1524.js:1:678850)
+    at https://custodia-staging.idsf.com.br/main.f532e4368c6a1524.js:1:676813
+    at c (https://custodia-staging.idsf.com.br/main.f532e4368c6a1524.js:1:701640)
+    at aw.next (https://custodia-staging.idsf.com.br/main.f532e4368c6a1524.js:1:676652)
+Vídeo anexado: zCustodiaUi_tests_importation_BillingFileTests_Should_Import_a_New_Billing_File_Passed_20251226_195929.webm (1392918 bytes)
