@@ -43,18 +43,10 @@ namespace zCustodiaUi.utils
             {
                 var element = _page.Locator(locator);
 
-                // Aguarda elemento existir e estar visível
                 await Expect(element).ToBeVisibleAsync();
-                // Aguarda que esteja clicável (Angular material às vezes bloqueia)
                 await Expect(element).ToBeEnabledAsync();
-                // Evita interferência de Angular
                 await WaitForAngularStable(_page);
-                // Aguarda rede ociosa após mudanças
                 await _page.WaitForLoadStateAsync(LoadState.NetworkIdle);
-                // Aguarda sumir overlay do Angular Material
-                //await _page.WaitForFunctionAsync(
-                //    "() => !document.querySelector('.cdk-overlay-backdrop')"
-                //);
 
                 await element.ClickAsync(new LocatorClickOptions
                 {

@@ -1,5 +1,3 @@
-//Assignors PAge
-
 using Allure.NUnit.Attributes;
 using Microsoft.Playwright;
 using zCustodiaUi.data.register;
@@ -15,14 +13,14 @@ namespace zCustodiaUi.pages.register
         private readonly Utils _util;
         private readonly GenericElements _gen = new GenericElements();
         private readonly AssignorsElements _el = new AssignorsElements();
-        private readonly AssignorsData _data = new AssignorsData();
+        private readonly AssignorsData _data;
+
         public AssignorsPage(IPage _page, AssignorsData data = null)
         {
             this._page = _page;
             _data = data ?? new AssignorsData();
             _util = new Utils(_page);
         }
-
 
         [AllureStep("Consult Assignor")]
         public async Task ConsultAssignorAndDelete()
@@ -42,10 +40,10 @@ namespace zCustodiaUi.pages.register
             }
             await DeleteAssignorByApi(idAssignor);
         }
+
         [AllureStep("Update Assignor")]
         public async Task UpdateAssignor()
         {
-            //Update Assignor
             await _util.Click(_gen.FilterButton, "Click on Filter Button to filter Assignor to be consulted");
             await Task.Delay(500);
             await _util.Click(_gen.LocatorMatLabel("Fundo"), "Click on Filter Select to filter Assignor to be consulted");
@@ -60,6 +58,7 @@ namespace zCustodiaUi.pages.register
             await _util.Click(_gen.SaveButton, "Click on Add button to add EDITED Assignor");
             await _util.ValidateTextIsVisibleOnScreen("Dados Salvos com Sucesso!", "Validate if success Message is visible on screen after updated existing assignor");
         }
+
         [AllureStep("Delete Assignor By Api")]
         public async Task DeleteAssignorByApi(string idAssignor)
         {
@@ -69,6 +68,7 @@ namespace zCustodiaUi.pages.register
             string response = await request.Content.ReadAsStringAsync();
             Console.WriteLine(response);
         }
+
         [AllureStep("Click on New Button and Register By Form")]
         public async Task ClickOnNewButtonAndRegisterByForm()
         {
@@ -76,15 +76,16 @@ namespace zCustodiaUi.pages.register
             await _util.Click(_el.FormAssignors, "Click on Form Assignors button to start register");
             await Task.Delay(500);
         }
+
         [AllureStep("Fill General Data")]
         public async Task FillGeneralData(bool personTypeCpf = false)
         {
-            //General Data
             await _util.Click(_gen.LocatorMatLabel("Fundo"), "Click on fund select");
             await _util.Write(_gen.Filter, _data.FundAssignor, "Click on filter input to search for fund");
             await _util.Click(_gen.ReceiveTypeOption(_data.FundAssignor), "Click on fund option");
             await Task.Delay(100);
             await _util.Write(_gen.LocatorMatLabel("Nome"), _data.NameAssignor, "Insert Name of Assignor to be Registered");
+            
             if (personTypeCpf is true)
             {
                 await _util.Click(_gen.RadioButtonOption("CPF"), "Click on CPF radio button");
@@ -94,6 +95,7 @@ namespace zCustodiaUi.pages.register
             {
                 await _util.Write(_gen.LocatorMatLabel("CNPJ"), _data.CnpjAssignor, "Insert CNPJ of Assignor to be Registered");
             }
+            
             await _util.Write(_gen.LocatorMatLabel("Inscrição Estadual"), _data.StateRegistration, "Insert State Registration of Assignor to be Registered");
             await _util.Write(_gen.LocatorMatLabel("Inscrição Municipal"), _data.MunicipalRegistration, "Insert Municipal Registration of Assignor to be Registered");
 
@@ -120,7 +122,6 @@ namespace zCustodiaUi.pages.register
             await _page.Keyboard.PressAsync("Space");
             await _util.Click(_el.Authorization(true), "Click on Authorization Radio Button to be Registered");
 
-            //Location
             await _util.ScrollToElementAndMaintainPosition(_gen.LocatorMatLabel("CEP"), "Scroll to CEP");
 
             await _util.Write(_gen.LocatorMatLabel("CEP"), _data.PostalCode, "Insert Postal Code to be Registered");
@@ -137,7 +138,6 @@ namespace zCustodiaUi.pages.register
 
             await _util.Write(_el.TelInput, _data.Telephone, "Insert Telephone to be Registered");
 
-            //Tax Data 
             await _util.Write(_gen.LocatorMatLabel("Conglomerado Econômico"), _data.EconomicConglomerate, "Insert Economic Conglomerate to be Registered");
             await _util.Write(_gen.LocatorMatLabel("Número mínimo de assinaturas para aprovação"), _data.MinSignaturesApproval, "Insert Assignor Percentage to be Approved to be Registered");
             await _util.Write(_gen.LocatorMatLabel("Limite de Crédito"), _data.CreditLimit, "Insert Credit Limit to be Registered");
@@ -150,6 +150,7 @@ namespace zCustodiaUi.pages.register
             await Task.Delay(500);
             await _util.Click(_gen.ReceiveTypeOption(_data.Coobrigation), "Click on Is Coobrigation option");
         }
+
         [AllureStep("Fill Account Data")]
         public async Task FillAccountData()
         {
@@ -164,8 +165,14 @@ namespace zCustodiaUi.pages.register
             await _util.Write("(" + _gen.LocatorMatLabel("Dígito") + ")[2]", _data.AccountDigit, "Insert Account Digit to be Registered");
             await _util.Write(_gen.LocatorMatLabel("Descrição"), _data.AccountDescription, "Click on Account Type Select");
             await _util.Click(_el.Pattern(true), "Click on Active Account");
+        }
+
+        [AllureStep("Add Account")]
+        public async Task AddAccount()
+        {
             await _util.Click(_gen.AddButton, "Click on Add Button to add new account");
         }
+
         [AllureStep("Fill Representatives Data")]
         public async Task FillRepresentatives()
         {
@@ -178,107 +185,61 @@ namespace zCustodiaUi.pages.register
             await _util.Click(_el.AssignTerm(true), "Click on 'yes' to Assign Term");
             await _util.Click(_el.AssignByEndorsement(true), "Click on 'yes' to Assign By Endorsement");
             await _util.Click(_el.IssueDouble(true), "Click on 'yes' to Issue Double");
-            await _util.Click(_gen.AddButton, "Click on Add button to add new Assignor");
-
         }
+
+        [AllureStep("Add Representative")]
+        public async Task AddRepresentative()
+        {
+            await _util.Click(_gen.AddButton, "Click on Add button to add new Assignor");
+        }
+
         [AllureStep("Go To Form: {formName}")]
         public async Task GoToForm(string formName)
         {
             await _util.ClickMatTabAsync(_gen.TabAllForms(formName), $"Click on {formName} tab to fill data");
         }
+
         [AllureStep("Click on Save Button")]
         public async Task ClickOnSaveButton()
         {
             await _util.Click(_gen.SaveButton, "Click on Save button");
         }
 
+        [AllureStep("Validate Success Message")]
+        public async Task ValidateSuccessMessage()
+        {
+            await _util.ValidateTextIsVisibleOnScreen("Dados Salvos com Sucesso!", "Validate if success Message is visible on screen");
+        }
+
+        [AllureStep("Validate Save Button Disabled")]
+        public async Task ValidateSaveButtonDisabled()
+        {
+            await _util.ValidateElementIsDisabled(_gen.SaveButton, "Validate if Save Button is disabled");
+        }
+
+        [AllureStep("Validate Error Message")]
+        public async Task ValidateErrorMessage(string expectedMessage)
+        {
+            await _util.ValidateTextIsVisibleOnScreen(expectedMessage, $"Validate if error message '{expectedMessage}' is visible on screen");
+        }
+
+        public async Task ExecuteStandardFlow(bool personTypeCpf = false)
+        {
+            await ClickOnNewButtonAndRegisterByForm();
+            await FillGeneralData(personTypeCpf);
+            await GoToForm("Dados da Conta");
+            await FillAccountData();
+            await AddAccount();
+            await GoToForm("Representante");
+            await FillRepresentatives();
+            await AddRepresentative();
+        }
 
         public async Task RegisterAssignor()
         {
-            await ClickOnNewButtonAndRegisterByForm();
-            await FillGeneralData();
-            await GoToForm("Dados da Conta");
-            await FillAccountData();
-            await GoToForm("Representante");
-            await FillRepresentatives();
+            await ExecuteStandardFlow();
             await ClickOnSaveButton();
-            await _util.ValidateTextIsVisibleOnScreen("Dados Salvos com Sucesso!", "Validate if success Message is visible on screen after did register a new assignor");
-
+            await ValidateSuccessMessage();
         }
-        public async Task EmptyNameAssignor()
-        {
-            await ClickOnNewButtonAndRegisterByForm();
-            await FillGeneralData();
-            await GoToForm("Dados da Conta");
-            await FillAccountData();
-            await GoToForm("Representante");
-            await FillRepresentatives();
-            await _util.ValidateElementIsDisabled(_gen.SaveButton, "Validate if Save Button is disabled when Name Assignor is empty");
-        }
-        public async Task CNPJ13CharsAssignor()
-        {
-            await ClickOnNewButtonAndRegisterByForm();
-            await FillGeneralData();
-            await GoToForm("Dados da Conta");
-            await FillAccountData();
-            await GoToForm("Representante");
-            await FillRepresentatives();
-            await _util.ValidateElementIsDisabled(_gen.SaveButton, "Validate if Save Button is disabled when Name Assignor is empty");
-        }
-        public async Task CPF10CharsAssignor()
-        {
-            await ClickOnNewButtonAndRegisterByForm();
-            await FillGeneralData(true);
-            await GoToForm("Dados da Conta");
-            await FillAccountData();
-            await GoToForm("Representante");
-            await FillRepresentatives();
-            await _util.ValidateElementIsDisabled(_gen.SaveButton, "Validate if Save Button is disabled when Name Assignor is empty");
-        }
-        public async Task CNPJAlreadyRegistered()
-        {
-            await ClickOnNewButtonAndRegisterByForm();
-            await FillGeneralData();
-            await GoToForm("Dados da Conta");
-            await FillAccountData();
-            await GoToForm("Representante");
-            await FillRepresentatives();
-            await ClickOnSaveButton();
-            //Wait for error message to be fixed
-            //await _util.ValidateTextIsVisibleOnScreen("", "Validate if error Message is visible on screen after tried register with existing CNPJ");
-        }
-        public async Task InvalidEmailWhitoutAt()
-        {
-            await ClickOnNewButtonAndRegisterByForm();
-            await FillGeneralData();
-            await GoToForm("Dados da Conta");
-            await FillAccountData();
-            await GoToForm("Representante");
-            await FillRepresentatives();
-            await _util.ValidateElementIsDisabled(_gen.SaveButton, "Validate if Save Button is disabled when Email Assignor miss at");
-        }
-        public async Task InvalidEmailWhitoutDomain()
-        {
-            await ClickOnNewButtonAndRegisterByForm();
-            await FillGeneralData();
-            await GoToForm("Dados da Conta");
-            await FillAccountData();
-            await GoToForm("Representante");
-            await FillRepresentatives();
-            await _util.ValidateElementIsDisabled(_gen.SaveButton, "Validate if Save Button is disabled when Email Assignor miss at");
-        }
-        public async Task MinSignaturesApprovalIs0()
-        {
-            await ClickOnNewButtonAndRegisterByForm();
-            await FillGeneralData();
-            await GoToForm("Dados da Conta");
-            await FillAccountData();
-            await GoToForm("Representante");
-            await FillRepresentatives();
-            await _util.ValidateElementIsDisabled(_gen.SaveButton, "Validate if Save Button is disabled when Email Assignor miss at");
-        }
-
-
-
     }
 }

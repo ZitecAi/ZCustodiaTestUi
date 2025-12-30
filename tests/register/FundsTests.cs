@@ -1,6 +1,7 @@
 using Allure.Net.Commons;
 using Allure.NUnit;
 using Allure.NUnit.Attributes;
+using zCustodiaUi.builders.register;
 using zCustodiaUi.data.register;
 using zCustodiaUi.locators.modules;
 using zCustodiaUi.locators.register;
@@ -48,21 +49,12 @@ namespace zCustodiaUi.tests.register
 
         [Test, Order(1)]
         [AllureName("Should Register a New Fund")]
-        //[Ignore("Esse teste está em espera para fluxo de exclusão")]
+        [Ignore("ignored to not overload the system with new funds")]
         public async Task Should_Register_a_New_Fund()
         {
             var fundsPage = new FundsPage(_page);
-            await fundsPage.RegisterData();
-            await fundsPage.Rules();
-            await fundsPage.Representatives();
-            await fundsPage.Liquidation();
-            await fundsPage.Account();
-            await fundsPage.Slack();
-            await fundsPage.FileValidation();
-            await fundsPage.GoToForm("Prestadores de Serviços");
-            await fundsPage.RegisterPrestativeAdministrator();
-            await fundsPage.RegisterPrestativeManager();
-            await fundsPage.RegisterPrestativeConsultant(true);
+            await fundsPage.ExecuteStandardFlow();
+            await fundsPage.SaveFund();
         }
 
         [Test, Order(2)]
@@ -78,111 +70,188 @@ namespace zCustodiaUi.tests.register
         public async Task Shouldnt_Register_a_New_Fund_With_Empty_Fund_Name()
         {
             var testData = new FundsData { FundName = string.Empty };
-            var fundsPage = new FundsPage(_page, testData);
-            await fundsPage.NegativeScenario("Fund name empty");
+            await new FundsBuilder(_page, testData)
+                .WithRegisterData()
+                .WithRules()
+                .WithRepresentatives()
+                .WithLiquidation()
+                .WithAccount()
+                .AddAccount()
+                .WithSlack()
+                .WithFileValidation()
+                .GoToForm("Prestadores de Serviços")
+                .WithServiceProvider("Administrador", "ORIGINADOR QA")
+                .WithServiceProvider("Gestor", "ORIGINADOR QA", 2, 2)
+                .WithServiceProvider("Consultoria", "ID CORRETORA DE TITULOS E VALORES MOBILIARIOS SA", null, 3)
+                .ValidateSaveDisabled();
         }
+
         [Test, Order(4)]
         [AllureName("Should´t Register a New Fund With ISIN code empty")]
         public async Task Shouldnt_Register_a_New_Fund_With_ISIN_code_empty()
         {
             var testData = new FundsData { IsinCode = string.Empty };
-            var fundsPage = new FundsPage(_page, testData);
-            await fundsPage.NegativeScenario("ISIN code empty");
+            await new FundsBuilder(_page, testData)
+                .WithRegisterData()
+                .WithRules()
+                .WithRepresentatives()
+                .WithLiquidation()
+                .WithAccount()
+                .AddAccount()
+                .WithSlack()
+                .WithFileValidation()
+                .GoToForm("Prestadores de Serviços")
+                .WithServiceProvider("Administrador", "ORIGINADOR QA")
+                .WithServiceProvider("Gestor", "ORIGINADOR QA", 2, 2)
+                .WithServiceProvider("Consultoria", "ID CORRETORA DE TITULOS E VALORES MOBILIARIOS SA", null, 3)
+                .ValidateSaveDisabled();
         }
+
         [Test, Order(5)]
         [AllureName("Should´t Register a New Fund With Exist CNPJ")]
         public async Task Shouldnt_Register_a_New_Fund_With_Exist_CNPJ()
         {
             var testData = new FundsData { CnpjFund = "54.638.076/0001-76" };
-            var fundsPage = new FundsPage(_page, testData);
-            await fundsPage.NegativeScenario("CNPJ already exists");
+            await new FundsBuilder(_page, testData)
+                .WithRegisterData()
+                .WithRules()
+                .WithRepresentatives()
+                .WithLiquidation()
+                .WithAccount()
+                .AddAccount()
+                .WithSlack()
+                .WithFileValidation()
+                .GoToForm("Prestadores de Serviços")
+                .WithServiceProvider("Administrador", "ORIGINADOR QA")
+                .WithServiceProvider("Gestor", "ORIGINADOR QA", 2, 2)
+                .WithServiceProvider("Consultoria", "ID CORRETORA DE TITULOS E VALORES MOBILIARIOS SA", null, 3)
+                .ValidateErrorMessage("Fundo já existente para o CNPJ '54638076000176'.");
         }
+
         [Test, Order(6)]
         [AllureName("Should´t Register a New Fund With Empty CNPJ")]
         public async Task Shouldnt_Register_a_New_Fund_With_Empty_CNPJ()
         {
             var testData = new FundsData { CnpjFund = string.Empty };
-            var fundsPage = new FundsPage(_page, testData);
-            await fundsPage.NegativeScenario("CNPJ empty");
+            await new FundsBuilder(_page, testData)
+                .WithRegisterData()
+                .WithRules()
+                .WithRepresentatives()
+                .WithLiquidation()
+                .WithAccount()
+                .AddAccount()
+                .WithSlack()
+                .WithFileValidation()
+                .GoToForm("Prestadores de Serviços")
+                .WithServiceProvider("Administrador", "ORIGINADOR QA")
+                .WithServiceProvider("Gestor", "ORIGINADOR QA", 2, 2)
+                .WithServiceProvider("Consultoria", "ID CORRETORA DE TITULOS E VALORES MOBILIARIOS SA", null, 3)
+                .ValidateSaveDisabled();
         }
+
         [Test, Order(7)]
         [AllureName("Should´t Register a New Fund With Max Percent empty")]
         public async Task Shouldnt_Register_a_New_Fund_With_Max_Percent_Empty()
         {
             var testData = new FundsData { MaxPercent = string.Empty };
-            var fundsPage = new FundsPage(_page, testData);
-            await fundsPage.NegativeScenario("Max Percent empty");
+            await new FundsBuilder(_page, testData)
+                .WithRegisterData()
+                .WithRules()
+                .WithRepresentatives()
+                .WithLiquidation()
+                .WithAccount()
+                .AddAccount()
+                .WithSlack()
+                .WithFileValidation()
+                .GoToForm("Prestadores de Serviços")
+                .WithServiceProvider("Administrador", "ORIGINADOR QA")
+                .WithServiceProvider("Gestor", "ORIGINADOR QA", 2, 2)
+                .WithServiceProvider("Consultoria", "ID CORRETORA DE TITULOS E VALORES MOBILIARIOS SA", null, 3)
+                .ValidateSaveDisabled();
         }
+
         [Test, Order(8)]
         [AllureName("Should´t Register a New Fund With Agency Number empty")]
         public async Task Shouldnt_Register_a_New_Fund_With_Number_Agency_Empty()
         {
             var testData = new FundsData { AgencyNumber = string.Empty };
-            var fundsPage = new FundsPage(_page, testData);
-            await fundsPage.NegativeScenario("Agency Number empty");
+            await new FundsBuilder(_page, testData)
+                .WithRegisterData()
+                .WithRules()
+                .WithRepresentatives()
+                .WithLiquidation()
+                .WithAccount()
+                .ValidateAddAccountButtonDisabled();
         }
+
         [Test, Order(9)]
         [AllureName("Should´t Register a New Fund With Description account empty")]
         public async Task Shouldnt_Register_a_New_Fund_With_Description_Account_Empty()
         {
             var testData = new FundsData { Description = string.Empty };
-            var fundsPage = new FundsPage(_page, testData);
-            await fundsPage.NegativeScenario("Description account empty");
+            await new FundsBuilder(_page, testData)
+                .WithRegisterData()
+                .WithRules()
+                .WithRepresentatives()
+                .WithLiquidation()
+                .WithAccount()
+                .ValidateAddAccountButtonDisabled();
         }
+
         [Test, Order(10)]
         [AllureName("Should´t Register a New Fund Without type account ")]
         public async Task Shouldnt_Register_a_New_Fund_Without_Type_Account()
         {
-            var fundsPage = new FundsPage(_page);
-            await fundsPage.NegativeScenario("Without Type Account");
+            await new FundsBuilder(_page)
+                .WithRegisterData()
+                .WithRules()
+                .WithRepresentatives()
+                .WithLiquidation()
+                .WithAction(async () =>
+                {
+                    await new FundsPage(_page).FillAccountFormNotypeAccount();
+                })
+                .ValidateAddAccountButtonDisabled();
         }
+
         [Test, Order(11)]
         [AllureName("Should´t Register a New Fund Without Consultant ")]
         public async Task Shouldnt_Register_a_New_Fund_Without_Consultant()
         {
-            var fundsPage = new FundsPage(_page);
-            await fundsPage.NegativeScenario("Without Consultant");
+            await new FundsBuilder(_page)
+                .WithRegisterData()
+                .WithRules()
+                .WithRepresentatives()
+                .WithLiquidation()
+                .WithAccount()
+                .AddAccount()
+                .WithSlack()
+                .WithFileValidation()
+                .GoToForm("Prestadores de Serviços")
+                .WithServiceProvider("Administrador", "ORIGINADOR QA")
+                .WithServiceProvider("Gestor", "ORIGINADOR QA", 2, 2)
+                .ValidateErrorMessage("É obrigatório um 'Consultor' como prestador.");
         }
+
         [Test, Order(12)]
         [AllureName("Should´t Register a New Fund Without Manager ")]
         public async Task Shouldnt_Register_a_New_Fund_Without_Managers()
         {
-            var fundsPage = new FundsPage(_page);
-            await fundsPage.NegativeScenario("Without Manager");
+            var testData = new FundsData();
+            await new FundsBuilder(_page, testData)
+                .WithRegisterData()
+                .WithRules()
+                .WithRepresentatives()
+                .WithLiquidation()
+                .WithAccount()
+                .AddAccount()
+                .WithSlack()
+                .WithFileValidation()
+                .GoToForm("Prestadores de Serviços")
+                .WithServiceProvider("Administrador", "ORIGINADOR QA")
+                .WithServiceProvider("Consultoria", "ID CORRETORA DE TITULOS E VALORES MOBILIARIOS SA", null, 2)
+                .ValidateErrorMessage("É obrigatório um 'Gestor' como prestador.");
         }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
         //[Test, Order(4)]
         //[Ignore("Esse teste está em espera para fluxo de exclusão")]
@@ -193,10 +262,5 @@ namespace zCustodiaUi.tests.register
         //    await fundsPage.UpdateFund();
         //}
 
-
-
     }
 }
-
-
-

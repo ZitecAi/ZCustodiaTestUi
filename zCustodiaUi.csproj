@@ -35,6 +35,17 @@
 		</Content>
 	</ItemGroup>
 
+	<ItemGroup>
+	  <Compile Remove="models\**" />
+	  <Compile Remove="workflows\**" />
+	  <Content Remove="models\**" />
+	  <Content Remove="workflows\**" />
+	  <EmbeddedResource Remove="models\**" />
+	  <EmbeddedResource Remove="workflows\**" />
+	  <None Remove="models\**" />
+	  <None Remove="workflows\**" />
+	</ItemGroup>
+
 
 
 	<ItemGroup>
@@ -64,10 +75,6 @@
 	<ItemGroup>
 		<Using Include="Microsoft.Playwright.NUnit" />
 		<Using Include="NUnit.Framework" />
-	</ItemGroup>
-
-	<ItemGroup>
-	  <Folder Include="workflows\" />
 	</ItemGroup>
 
 	<Target Name="CleanAllureResults" BeforeTargets="VSTest">
