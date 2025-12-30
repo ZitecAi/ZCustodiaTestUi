@@ -52,6 +52,7 @@ namespace zCustodiaUi.tests.register
 
         [Test, Order(1)]
         [AllureName("Should Register Assignors")]
+        //[Ignore("ignored to not overload system with new assignors")]
         public async Task Should_Register_Assignor()
         {
             var assignorsPage = new AssignorsPage(_page);
@@ -196,7 +197,6 @@ namespace zCustodiaUi.tests.register
                 .AddRepresentative()
                 .ValidateSaveButtonDisabled();
         }
-
 
 
     }

@@ -1,18 +1,20 @@
-using Allure.NUnit.Attributes;
 using Microsoft.Playwright;
 using zCustodiaUi.data.register;
 using zCustodiaUi.pages.register;
+using zCustodiaUi.utils;
 
 namespace zCustodiaUi.builders.register
 {
     public class AssignorsBuilder
     {
         private readonly AssignorsPage _page;
+        private readonly Utils _util;
         private readonly List<Func<Task>> _steps = new();
 
         public AssignorsBuilder(IPage page, AssignorsData data = null)
         {
             _page = new AssignorsPage(page, data);
+            _util = new Utils(page);
         }
 
         public AssignorsBuilder ClickOnNewButtonAndRegisterByForm()
@@ -29,7 +31,7 @@ namespace zCustodiaUi.builders.register
 
         public AssignorsBuilder GoToAccountForm()
         {
-            _steps.Add(() => _page.GoToForm("Dados da Conta"));
+            _steps.Add(() => _util.GoToForm("Dados da Conta"));
             return this;
         }
 
@@ -47,7 +49,7 @@ namespace zCustodiaUi.builders.register
 
         public AssignorsBuilder GoToRepresentativeForm()
         {
-            _steps.Add(() => _page.GoToForm("Representante"));
+            _steps.Add(() => _util.GoToForm("Representante"));
             return this;
         }
 
@@ -91,6 +93,12 @@ namespace zCustodiaUi.builders.register
         {
             await Execute();
             await _page.ValidateSaveButtonDisabled();
+        }
+
+        public async Task ValidateAddAccountButtonDisabled()
+        {
+            await Execute();
+            await _page.ValidateAddAccountButtonDisabled();
         }
 
         public async Task ValidateErrorMessage(string expectedMessage)

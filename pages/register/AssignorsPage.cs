@@ -85,7 +85,7 @@ namespace zCustodiaUi.pages.register
             await _util.Click(_gen.ReceiveTypeOption(_data.FundAssignor), "Click on fund option");
             await Task.Delay(100);
             await _util.Write(_gen.LocatorMatLabel("Nome"), _data.NameAssignor, "Insert Name of Assignor to be Registered");
-            
+
             if (personTypeCpf is true)
             {
                 await _util.Click(_gen.RadioButtonOption("CPF"), "Click on CPF radio button");
@@ -95,7 +95,7 @@ namespace zCustodiaUi.pages.register
             {
                 await _util.Write(_gen.LocatorMatLabel("CNPJ"), _data.CnpjAssignor, "Insert CNPJ of Assignor to be Registered");
             }
-            
+
             await _util.Write(_gen.LocatorMatLabel("Inscrição Estadual"), _data.StateRegistration, "Insert State Registration of Assignor to be Registered");
             await _util.Write(_gen.LocatorMatLabel("Inscrição Municipal"), _data.MunicipalRegistration, "Insert Municipal Registration of Assignor to be Registered");
 
@@ -167,6 +167,22 @@ namespace zCustodiaUi.pages.register
             await _util.Click(_el.Pattern(true), "Click on Active Account");
         }
 
+        [AllureStep("Fill Account Form without type account")]
+        public async Task FillAccountFormNotypeAccount()
+        {
+            await _util.Click(_gen.ButtonNew, "Click in New to insert a New Account");
+            await Task.Delay(150);
+            await _util.Click(_gen.LocatorMatLabel("Banco"), "Insert Bank Number to be Registered");
+            await _util.Write(_gen.Filter, _data.Bank, "Insert Is Coobrigation to be Registered");
+            await _util.Click(_gen.ReceiveTypeOption(_data.Bank), "Click on Is Coobrigation option");
+
+            await _util.Write(_gen.LocatorMatLabel("Número Agência"), _data.AgencyNumber, "Insert Agency Number to be Registered");
+            await _util.Write(_gen.LocatorMatLabel("Conta Corrente"), _data.AccountNumber, "Insert Account Number to be Registered");
+            await _util.Write("(" + _gen.LocatorMatLabel("Dígito") + ")[2]", _data.AccountDigit, "Insert Account Digit to be Registered");
+            await _util.Write(_gen.LocatorMatLabel("Descrição"), _data.AccountDescription, "Click on Account Type Select");
+            await _util.Click(_el.Pattern(true), "Click on Active Account");
+        }
+
         [AllureStep("Add Account")]
         public async Task AddAccount()
         {
@@ -193,11 +209,7 @@ namespace zCustodiaUi.pages.register
             await _util.Click(_gen.AddButton, "Click on Add button to add new Assignor");
         }
 
-        [AllureStep("Go To Form: {formName}")]
-        public async Task GoToForm(string formName)
-        {
-            await _util.ClickMatTabAsync(_gen.TabAllForms(formName), $"Click on {formName} tab to fill data");
-        }
+
 
         [AllureStep("Click on Save Button")]
         public async Task ClickOnSaveButton()
@@ -217,6 +229,12 @@ namespace zCustodiaUi.pages.register
             await _util.ValidateElementIsDisabled(_gen.SaveButton, "Validate if Save Button is disabled");
         }
 
+        [AllureStep("Validate Add Account Button Disabled")]
+        public async Task ValidateAddAccountButtonDisabled()
+        {
+            await _util.ValidateElementIsDisabled(_gen.AddButton, "Validate if Add Button is disabled");
+        }
+
         [AllureStep("Validate Error Message")]
         public async Task ValidateErrorMessage(string expectedMessage)
         {
@@ -227,10 +245,10 @@ namespace zCustodiaUi.pages.register
         {
             await ClickOnNewButtonAndRegisterByForm();
             await FillGeneralData(personTypeCpf);
-            await GoToForm("Dados da Conta");
+            await _util.GoToForm("Dados da Conta");
             await FillAccountData();
             await AddAccount();
-            await GoToForm("Representante");
+            await _util.GoToForm("Representante");
             await FillRepresentatives();
             await AddRepresentative();
         }

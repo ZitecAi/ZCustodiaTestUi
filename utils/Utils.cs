@@ -1,5 +1,6 @@
 using Allure.NUnit.Attributes;
 using Microsoft.Playwright;
+using zCustodiaUi.locators;
 using static Microsoft.Playwright.Assertions;
 
 
@@ -12,6 +13,8 @@ namespace zCustodiaUi.utils
         {
             this._page = _page;
         }
+        GenericElements _gen = new GenericElements();
+
 
         [AllureStep("Write: '{text}' — on step: {step}")]
         public async Task Write(string locator, string text, string step)
@@ -432,9 +435,13 @@ namespace zCustodiaUi.utils
             {
                 throw new PlaywrightException($"Don´t possible validate/found the element on step: {step}. Details {ex.Message}");
             }
-
-
-
         }
+
+        [AllureStep("Go To Form: {formName}")]
+        public async Task GoToForm(string formName)
+        {
+            await ClickMatTabAsync(_gen.TabAllForms(formName), $"Click on {formName} tab to fill data");
+        }
+
     }
 }
