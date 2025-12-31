@@ -21,9 +21,13 @@ namespace zCustodiaUi.pages.register
             _util = new Utils(_page);
         }
 
-        public async Task ClickOnButtonNewEntity()
+        public async Task ClickOnButtonNew()
         {
-            await _util.Click(_gen.LocatorSpanText("Novo"), "Click on new entity to open form");
+            await _util.Click(_gen.LocatorSpanText("Novo"), "Click on new");
+        }
+        public async Task ClickOnButtonNewAccount()
+        {
+            await _util.Click(_gen.LocatorSpanText("Novo"), "Click on new to open form account consultant");
         }
 
         [AllureStep("Fill main data of entity")]
@@ -49,10 +53,10 @@ namespace zCustodiaUi.pages.register
         public async Task FillAccountData()
         {
             await _util.Click(_gen.LocatorMatLabel("Banco"), "Open filter Bank field with bank name");
-            await _util.Write(_gen.LocatorMatLabel("Banco"), _data.BankName, "Fill the Bank field with bank name");
+            await _util.Write(_gen.Filter, _data.BankName, "Fill the Bank field with bank name");
             await _util.Click(_gen.ReceiveTypeOption(_data.BankName), "Select the bank from the options");
-            await _util.Write(_gen.LocatorMatLabel("Agência"), _data.NumberAgency, "Fill the Agency field with agency number");
-            await _util.Write(_gen.LocatorMatLabel("Conta"), _data.NumberAccount, "Fill the Account field with account number");
+            await _util.Write(_gen.LocatorMatLabel("Nº Agência (Sem dígito)"), _data.NumberAgency, "Fill the Agency field with agency number");
+            await _util.Write(_gen.LocatorMatLabel("Conta Corrente"), _data.NumberAccount, "Fill the Account field with account number");
             await _util.Write(_gen.LocatorMatLabel("Descrição"), _data.Description, "Fill description");
         }
 
@@ -85,6 +89,14 @@ namespace zCustodiaUi.pages.register
         {
             await _util.Click(_gen.LocatorSpanText("Salvar"), "Click on save button");
         }
+        public async Task CLickOnAddButton()
+        {
+            await _util.Click(_gen.LocatorSpanText("Adicionar"), "Click on Add button");
+        }
 
+        public async Task ValidateSuccessMessage()
+        {
+            await _util.ValidateTextIsVisibleOnScreen(_data.SuccessMessageWhenRegisterEntity, "Validate success message of entity saved");
+        }
     }
 }

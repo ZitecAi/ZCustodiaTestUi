@@ -20,6 +20,9 @@
         public string RepresentativeCpf { get; set; } = utils.DataGenerator.Generate(utils.DocumentType.Cpf);
         public string RepresentativeTelNumber { get; set; } = "11934125767";
 
+        //Messages
+        public string SuccessMessageWhenRegisterEntity { get; } = "Dados Salvos com Sucesso!";
+
 
     }
 }
