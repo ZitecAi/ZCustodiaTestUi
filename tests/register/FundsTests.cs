@@ -47,7 +47,7 @@ namespace zCustodiaUi.tests.register
             await CloseBrowserAsync();
         }
 
-        [Test, Order(1)]
+        [Test(Description = "Register a new Fund with valid data"), Order(1)]
         [AllureName("Should Register a New Fund")]
         [Ignore("ignored to not overload the system with new funds")]
         public async Task Should_Register_a_New_Fund()

@@ -106,5 +106,7 @@ namespace zCustodiaUi.builders.register
             await Execute();
             await _page.ValidateErrorMessage(expectedMessage);
         }
+
+
     }
 }
