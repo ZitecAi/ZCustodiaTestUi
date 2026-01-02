@@ -1,6 +1,7 @@
 ﻿using Allure.Net.Commons;
 using Allure.NUnit;
 using Allure.NUnit.Attributes;
+using zCustodiaUi.builders.register;
 using zCustodiaUi.data.register;
 using zCustodiaUi.locators.modules;
 using zCustodiaUi.locators.register;
@@ -53,5 +54,36 @@ namespace zCustodiaUi.tests.register
             var entityPage = new EntitiesPage(_page);
             await entityPage.ExecuteStandardFlow();
         }
+        [Test(Description = "Test Validation of error message when user isert Entity with CPF alread exist´s")]
+        [AllureName("Should´t Register a new entity with CNPJ already exist´s")]
+        public async Task Shouldnt_Register_a_New_Entity_With_CNPJ_Already_Exists()
+        {
+            var dataTest = new EntitiesData { EntityCnpj = "52721175000191" };
+            await new EntitiesBuilder(_page, dataTest)
+            .ClickOnButtonNew().FillMainData()
+            .SetFunctionOfEntity().GoToForm("Conta Corrente Consultoria")
+            .ClickOnButtonNew().FillAccountData()
+            .CLickOnAddButton().GoToForm("Representantes")
+            .ClickOnButtonNew().FillRepresentativeData()
+            .SetAssign().CLickOnAddButton()
+            .CLickOnSaveButton()
+            .ValidateErrorMessage("Já existe uma entidade cadastrada com este CPF/CNPJ.");
+        }
+
+        [Test(Description = "Test Validation of error message when user isert Entity with empty CNPJ")]
+        [AllureName("Should´t Register a new entity with CNPJ already exist´s")]
+        public async Task Shouldnt_Register_a_New_Entity_With_Empty_CNPJ()
+        {
+            var dataTest = new EntitiesData { EntityCnpj = string.Empty };
+            await new EntitiesBuilder(_page, dataTest)
+            .ClickOnButtonNew().FillMainData()
+            .SetFunctionOfEntity().GoToForm("Conta Corrente Consultoria")
+            .ClickOnButtonNew().FillAccountData()
+            .CLickOnAddButton().GoToForm("Representantes")
+            .ClickOnButtonNew().FillRepresentativeData()
+            .SetAssign().CLickOnAddButton()
+            .ValidateButtonSaveDisable();
+        }
+
     }
 }

@@ -99,6 +99,14 @@ namespace zCustodiaUi.pages.register
         {
             await _util.ValidateTextIsVisibleOnScreen(_data.SuccessMessageWhenRegisterEntity, "Validate success message of entity saved");
         }
+        public async Task ValidateSaveButtonIsDisable()
+        {
+            await _util.ValidateElementIsDisabled(_gen.SaveButton, "Validate if Add Button is disabled");
+        }
+        public async Task ValidateErrorMessage(string expectedText)
+        {
+            await _util.ValidateTextIsVisibleOnScreen(expectedText, "Validate success message of entity saved");
+        }
 
         public async Task ExecuteStandardFlow()
         {

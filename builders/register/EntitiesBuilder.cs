@@ -109,6 +109,16 @@ namespace zCustodiaUi.builders.register
             await Execute();
             await _page.ValidateSuccessMessage();
         }
+        public async Task ValidateErrorMessage(string expectedText)
+        {
+            await Execute();
+            await _page.ValidateErrorMessage(expectedText);
+        }
+        public async Task ValidateButtonSaveDisable()
+        {
+            await Execute();
+            await _page.ValidateSaveButtonIsDisable();
+        }
 
 
 

@@ -52,7 +52,6 @@ namespace zCustodiaUi.tests.register
 
         [Test, Order(1)]
         [AllureName("Should Register Assignors")]
-        //[Ignore("ignored to not overload system with new assignors")]
         public async Task Should_Register_Assignor()
         {
             var assignorsPage = new AssignorsPage(_page);
@@ -127,8 +126,6 @@ namespace zCustodiaUi.tests.register
         }
 
         [Test, Order(7)]
-        [AllureName("Shouldn´t Register Assignor with CNPJ already Registered")]
-        [Ignore("Waiting for error message to be fixed")]
         public async Task Shouldnt_Register_Assignor_With_CNPJ_already_registered()
         {
             var dataTest = new AssignorsData { CnpjAssignor = "24537861000171" };
@@ -164,7 +161,6 @@ namespace zCustodiaUi.tests.register
 
         [Test, Order(9)]
         [AllureName("Shouldn´t Register Assignor with Invalid Email Whitout domain")]
-        [Ignore("Waiting for validation front-end")]
         public async Task Shouldnt_Register_Assignor_With_Invalid_Email_No_domain()
         {
             var dataTest = new AssignorsData { Email = "alveslevi@icloud" };
@@ -182,7 +178,7 @@ namespace zCustodiaUi.tests.register
 
         [Test, Order(10)]
         [AllureName("Shouldn´t Register Assignor with Invalid Email Whitout domain")]
-        [Ignore("Waiting for validation")]
+        //[Ignore("Waiting for validation")]
         public async Task Shouldnt_Register_Assignor_With_Num_Min_Sign_Approval_is_0()
         {
             var dataTest = new AssignorsData { MinSignaturesApproval = "0" };
