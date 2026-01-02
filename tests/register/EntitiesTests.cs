@@ -5,6 +5,7 @@ using zCustodiaUi.data.register;
 using zCustodiaUi.locators.modules;
 using zCustodiaUi.locators.register;
 using zCustodiaUi.pages.login;
+using zCustodiaUi.pages.register;
 using zCustodiaUi.runner;
 using zCustodiaUi.utils;
 
@@ -49,23 +50,8 @@ namespace zCustodiaUi.tests.register
         [AllureName("Should Register a new entity with valid data")]
         public async Task Should_Register_New_Entity_With_Valid_Data()
         {
-            var entityBuilder = new builders.register.EntitiesBuilder(_page);
-            await entityBuilder
-                .ClickOnButtonNew()
-                .FillMainData()
-                .SetFunctionOfEntity()
-                .GoToForm("Conta Corrente Consultoria")
-                .ClickOnButtonNew()
-                .FillAccountData()
-                .CLickOnAddButton()
-                .GoToForm("Representantes")
-                .ClickOnButtonNew()
-                .FillRepresentativeData()
-                .SetAssign()
-                .CLickOnAddButton()
-                .CLickOnSaveButton()
-                .Execute();
-            await _util.ValidateTextIsVisibleOnScreen(_data.SuccessMessageWhenRegisterEntity, "Validate success message is present, given that I registered a new entity with valid data");
+            var entityPage = new EntitiesPage(_page);
+            await entityPage.ExecuteStandardFlow();
         }
     }
 }

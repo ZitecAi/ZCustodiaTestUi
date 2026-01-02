@@ -38,6 +38,7 @@ namespace zCustodiaUi.pages.register
             await _util.Write(_gen.LocatorMatLabel("Email"), _data.EntityEmail, "Fill the Email field with entity email");
             await _util.Write(_gen.LocatorMatLabel("CEP"), _data.EntityPostalCode, "Fill the Postal code field with postal code test");
             await _util.Write(_gen.LocatorMatLabel("Número"), _data.NumberAdress, "Fill the Number field with number address test");
+            await _util.Write(_gen.LocatorMatLabel("Telefone"), _data.TelNumber, "Fill the telephone");
         }
         [AllureStep("Set Functon of entity")]
         public async Task SetFunctionOfEntity()
@@ -98,5 +99,24 @@ namespace zCustodiaUi.pages.register
         {
             await _util.ValidateTextIsVisibleOnScreen(_data.SuccessMessageWhenRegisterEntity, "Validate success message of entity saved");
         }
+
+        public async Task ExecuteStandardFlow()
+        {
+            await ClickOnButtonNew();
+            await FillMainData();
+            await SetFunctionOfEntity();
+            await GoToForm("Conta Corrente Consultoria");
+            await ClickOnButtonNew();
+            await FillAccountData();
+            await CLickOnAddButton();
+            await GoToForm("Representantes");
+            await ClickOnButtonNew();
+            await FillRepresentativeData();
+            await SetAssign();
+            await CLickOnAddButton();
+            await CLickOnSaveButton();
+            await _util.ValidateTextIsVisibleOnScreen(_data.SuccessMessageWhenRegisterEntity, "Validate success message is present, given that I registered a new entity with valid data");
+        }
+
     }
 }

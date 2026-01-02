@@ -7,6 +7,8 @@
         public string EntityEmail { get; set; } = "52721175000191";
         public string EntityPostalCode { get; set; } = "06240090";
         public string NumberAdress { get; set; } = "127";
+        public string TelNumber { get; set; } = "11934125767";
+
 
         //Bank Account Data         
         public string BankName { get; set; } = "439 - ID CTVM";
