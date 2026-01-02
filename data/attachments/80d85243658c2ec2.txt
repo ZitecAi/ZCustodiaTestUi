@@ -1,0 +1,22 @@
+File FundoQA_20260102_5c0352b4.txt Sent successfull.
+The element: (//span[contains(text(),'FundoQA_20260102_5c0352b4.txt')]/ancestor::tr//td)[2]//span have value! value is: 0
+ Text found: 	
+0
+	
+54.638.076/0001-76
+	
+FundoQA_20260102_5c0352b4.txt
+	
+02/01/2026
+	
+	
+	
+	
+Não
+	
+download
+task_alt
+code_blocks
+picture_as_pdf
+delete
+Caminho de vídeo inválido: /home/runner/work/ZCustodiaTestUi/ZCustodiaTestUi/bin/Debug/net8.0/videos/1ec46e069567d5ae686bb6e2264c2e24.webm

@@ -1,0 +1,3 @@
+The element: (//td//app-table-cell//div//span)[1] have value! value is: 58531025
+{"message":"Cedente deletado com sucesso."}
+Vídeo anexado: zCustodiaUi_tests_register_AssignorsTests_Should_Consult_And_Delete_Assignor_Passed_20260102_113317.webm (2064026 bytes)
