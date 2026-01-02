@@ -70,19 +70,7 @@ namespace zCustodiaUi.tests.register
         public async Task Shouldnt_Register_a_New_Fund_With_Empty_Fund_Name()
         {
             var testData = new FundsData { FundName = string.Empty };
-            await new FundsBuilder(_page, testData)
-                .WithRegisterData()
-                .WithRules()
-                .WithRepresentatives()
-                .WithLiquidation()
-                .WithAccount()
-                .AddAccount()
-                .WithSlack()
-                .WithFileValidation()
-                .GoToForm("Prestadores de Serviços")
-                .WithServiceProvider("Administrador", "ORIGINADOR QA")
-                .WithServiceProvider("Gestor", "ORIGINADOR QA", 2, 2)
-                .WithServiceProvider("Consultoria", "ID CORRETORA DE TITULOS E VALORES MOBILIARIOS SA", null, 3)
+            await FundsBuilder.CreateForValidation(_page, testData)
                 .ValidateSaveDisabled();
         }
 
@@ -91,19 +79,7 @@ namespace zCustodiaUi.tests.register
         public async Task Shouldnt_Register_a_New_Fund_With_ISIN_code_empty()
         {
             var testData = new FundsData { IsinCode = string.Empty };
-            await new FundsBuilder(_page, testData)
-                .WithRegisterData()
-                .WithRules()
-                .WithRepresentatives()
-                .WithLiquidation()
-                .WithAccount()
-                .AddAccount()
-                .WithSlack()
-                .WithFileValidation()
-                .GoToForm("Prestadores de Serviços")
-                .WithServiceProvider("Administrador", "ORIGINADOR QA")
-                .WithServiceProvider("Gestor", "ORIGINADOR QA", 2, 2)
-                .WithServiceProvider("Consultoria", "ID CORRETORA DE TITULOS E VALORES MOBILIARIOS SA", null, 3)
+            await FundsBuilder.CreateForValidation(_page, testData)
                 .ValidateSaveDisabled();
         }
 
@@ -112,19 +88,7 @@ namespace zCustodiaUi.tests.register
         public async Task Shouldnt_Register_a_New_Fund_With_Exist_CNPJ()
         {
             var testData = new FundsData { CnpjFund = "54.638.076/0001-76" };
-            await new FundsBuilder(_page, testData)
-                .WithRegisterData()
-                .WithRules()
-                .WithRepresentatives()
-                .WithLiquidation()
-                .WithAccount()
-                .AddAccount()
-                .WithSlack()
-                .WithFileValidation()
-                .GoToForm("Prestadores de Serviços")
-                .WithServiceProvider("Administrador", "ORIGINADOR QA")
-                .WithServiceProvider("Gestor", "ORIGINADOR QA", 2, 2)
-                .WithServiceProvider("Consultoria", "ID CORRETORA DE TITULOS E VALORES MOBILIARIOS SA", null, 3)
+            await FundsBuilder.CreateForValidation(_page, testData)
                 .ValidateErrorMessage("Fundo já existente para o CNPJ '54638076000176'.");
         }
 
@@ -133,19 +97,7 @@ namespace zCustodiaUi.tests.register
         public async Task Shouldnt_Register_a_New_Fund_With_Empty_CNPJ()
         {
             var testData = new FundsData { CnpjFund = string.Empty };
-            await new FundsBuilder(_page, testData)
-                .WithRegisterData()
-                .WithRules()
-                .WithRepresentatives()
-                .WithLiquidation()
-                .WithAccount()
-                .AddAccount()
-                .WithSlack()
-                .WithFileValidation()
-                .GoToForm("Prestadores de Serviços")
-                .WithServiceProvider("Administrador", "ORIGINADOR QA")
-                .WithServiceProvider("Gestor", "ORIGINADOR QA", 2, 2)
-                .WithServiceProvider("Consultoria", "ID CORRETORA DE TITULOS E VALORES MOBILIARIOS SA", null, 3)
+            await FundsBuilder.CreateForValidation(_page, testData)
                 .ValidateSaveDisabled();
         }
 
@@ -154,19 +106,7 @@ namespace zCustodiaUi.tests.register
         public async Task Shouldnt_Register_a_New_Fund_With_Max_Percent_Empty()
         {
             var testData = new FundsData { MaxPercent = string.Empty };
-            await new FundsBuilder(_page, testData)
-                .WithRegisterData()
-                .WithRules()
-                .WithRepresentatives()
-                .WithLiquidation()
-                .WithAccount()
-                .AddAccount()
-                .WithSlack()
-                .WithFileValidation()
-                .GoToForm("Prestadores de Serviços")
-                .WithServiceProvider("Administrador", "ORIGINADOR QA")
-                .WithServiceProvider("Gestor", "ORIGINADOR QA", 2, 2)
-                .WithServiceProvider("Consultoria", "ID CORRETORA DE TITULOS E VALORES MOBILIARIOS SA", null, 3)
+            await FundsBuilder.CreateForValidation(_page, testData)
                 .ValidateSaveDisabled();
         }
 
@@ -175,12 +115,7 @@ namespace zCustodiaUi.tests.register
         public async Task Shouldnt_Register_a_New_Fund_With_Number_Agency_Empty()
         {
             var testData = new FundsData { AgencyNumber = string.Empty };
-            await new FundsBuilder(_page, testData)
-                .WithRegisterData()
-                .WithRules()
-                .WithRepresentatives()
-                .WithLiquidation()
-                .WithAccount()
+            await FundsBuilder.CreateForAccountValidation(_page, testData)
                 .ValidateAddAccountButtonDisabled();
         }
 
@@ -189,12 +124,7 @@ namespace zCustodiaUi.tests.register
         public async Task Shouldnt_Register_a_New_Fund_With_Description_Account_Empty()
         {
             var testData = new FundsData { Description = string.Empty };
-            await new FundsBuilder(_page, testData)
-                .WithRegisterData()
-                .WithRules()
-                .WithRepresentatives()
-                .WithLiquidation()
-                .WithAccount()
+            await FundsBuilder.CreateForAccountValidation(_page, testData)
                 .ValidateAddAccountButtonDisabled();
         }
 
@@ -202,11 +132,7 @@ namespace zCustodiaUi.tests.register
         [AllureName("Should´t Register a New Fund Without type account ")]
         public async Task Shouldnt_Register_a_New_Fund_Without_Type_Account()
         {
-            await new FundsBuilder(_page)
-                .WithRegisterData()
-                .WithRules()
-                .WithRepresentatives()
-                .WithLiquidation()
+            await FundsBuilder.CreateForAccountValidation(_page)
                 .WithAction(async () =>
                 {
                     await new FundsPage(_page).FillAccountFormNotypeAccount();
@@ -218,16 +144,7 @@ namespace zCustodiaUi.tests.register
         [AllureName("Should´t Register a New Fund Without Consultant ")]
         public async Task Shouldnt_Register_a_New_Fund_Without_Consultant()
         {
-            await new FundsBuilder(_page)
-                .WithRegisterData()
-                .WithRules()
-                .WithRepresentatives()
-                .WithLiquidation()
-                .WithAccount()
-                .AddAccount()
-                .WithSlack()
-                .WithFileValidation()
-                .GoToForm("Prestadores de Serviços")
+            await FundsBuilder.CreateForServiceProviderValidation(_page)
                 .WithServiceProvider("Administrador", "ORIGINADOR QA")
                 .WithServiceProvider("Gestor", "ORIGINADOR QA", 2, 2)
                 .ValidateErrorMessage("É obrigatório um 'Consultor' como prestador.");
@@ -238,16 +155,7 @@ namespace zCustodiaUi.tests.register
         public async Task Shouldnt_Register_a_New_Fund_Without_Managers()
         {
             var testData = new FundsData();
-            await new FundsBuilder(_page, testData)
-                .WithRegisterData()
-                .WithRules()
-                .WithRepresentatives()
-                .WithLiquidation()
-                .WithAccount()
-                .AddAccount()
-                .WithSlack()
-                .WithFileValidation()
-                .GoToForm("Prestadores de Serviços")
+            await FundsBuilder.CreateForServiceProviderValidation(_page, testData)
                 .WithServiceProvider("Administrador", "ORIGINADOR QA")
                 .WithServiceProvider("Consultoria", "ID CORRETORA DE TITULOS E VALORES MOBILIARIOS SA", null, 2)
                 .ValidateErrorMessage("É obrigatório um 'Gestor' como prestador.");

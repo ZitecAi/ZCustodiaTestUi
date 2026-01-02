@@ -1,4 +1,4 @@
-﻿using Microsoft.Playwright;
+using Microsoft.Playwright;
 using zCustodiaUi.data.register;
 using zCustodiaUi.pages.register;
 using zCustodiaUi.utils;
@@ -120,7 +120,33 @@ namespace zCustodiaUi.builders.register
             await _page.ValidateSaveButtonIsDisable();
         }
 
+        public static EntitiesBuilder CreateFullRegistration(IPage page, EntitiesData data = null)
+        {
+            return new EntitiesBuilder(page, data)
+                .ClickOnButtonNew()
+                .FillMainData()
+                .SetFunctionOfEntity()
+                .GoToForm("Conta Corrente Consultoria")
+                .ClickOnButtonNew()
+                .FillAccountData()
+                .CLickOnAddButton()
+                .GoToForm("Representantes")
+                .ClickOnButtonNew()
+                .FillRepresentativeData()
+                .SetAssign()
+                .CLickOnAddButton();
+        }
 
+        public static EntitiesBuilder CreateForValidation(IPage page, EntitiesData data = null)
+        {
+            return CreateFullRegistration(page, data);
+        }
+
+        public static EntitiesBuilder CreateForSave(IPage page, EntitiesData data = null)
+        {
+            return CreateFullRegistration(page, data)
+                .CLickOnSaveButton();
+        }
 
     }
 }

@@ -107,6 +107,29 @@ namespace zCustodiaUi.builders.register
             await _page.ValidateErrorMessage(expectedMessage);
         }
 
+        public static AssignorsBuilder CreateFullRegistration(IPage page, AssignorsData data = null, bool personTypeCpf = false)
+        {
+            return new AssignorsBuilder(page, data)
+                .ClickOnNewButtonAndRegisterByForm()
+                .FillGeneralData(personTypeCpf)
+                .GoToAccountForm()
+                .FillAccountData()
+                .AddAccount()
+                .GoToRepresentativeForm()
+                .FillRepresentatives()
+                .AddRepresentative();
+        }
+
+        public static AssignorsBuilder CreateForValidation(IPage page, AssignorsData data = null, bool personTypeCpf = false)
+        {
+            return CreateFullRegistration(page, data, personTypeCpf);
+        }
+
+        public static AssignorsBuilder CreateForSave(IPage page, AssignorsData data = null, bool personTypeCpf = false)
+        {
+            return CreateFullRegistration(page, data, personTypeCpf)
+                .ClickOnSaveButton();
+        }
 
     }
 }

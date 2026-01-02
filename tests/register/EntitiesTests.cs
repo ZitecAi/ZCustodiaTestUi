@@ -1,4 +1,4 @@
-﻿using Allure.Net.Commons;
+using Allure.Net.Commons;
 using Allure.NUnit;
 using Allure.NUnit.Attributes;
 using zCustodiaUi.builders.register;
@@ -59,15 +59,8 @@ namespace zCustodiaUi.tests.register
         public async Task Shouldnt_Register_a_New_Entity_With_CNPJ_Already_Exists()
         {
             var dataTest = new EntitiesData { EntityCnpj = "52721175000191" };
-            await new EntitiesBuilder(_page, dataTest)
-            .ClickOnButtonNew().FillMainData()
-            .SetFunctionOfEntity().GoToForm("Conta Corrente Consultoria")
-            .ClickOnButtonNew().FillAccountData()
-            .CLickOnAddButton().GoToForm("Representantes")
-            .ClickOnButtonNew().FillRepresentativeData()
-            .SetAssign().CLickOnAddButton()
-            .CLickOnSaveButton()
-            .ValidateErrorMessage("Já existe uma entidade cadastrada com este CPF/CNPJ.");
+            await EntitiesBuilder.CreateForSave(_page, dataTest)
+                .ValidateErrorMessage("Já existe uma entidade cadastrada com este CPF/CNPJ.");
         }
 
         [Test(Description = "Test Validation of error message when user isert Entity with empty CNPJ")]
@@ -75,14 +68,8 @@ namespace zCustodiaUi.tests.register
         public async Task Shouldnt_Register_a_New_Entity_With_Empty_CNPJ()
         {
             var dataTest = new EntitiesData { EntityCnpj = string.Empty };
-            await new EntitiesBuilder(_page, dataTest)
-            .ClickOnButtonNew().FillMainData()
-            .SetFunctionOfEntity().GoToForm("Conta Corrente Consultoria")
-            .ClickOnButtonNew().FillAccountData()
-            .CLickOnAddButton().GoToForm("Representantes")
-            .ClickOnButtonNew().FillRepresentativeData()
-            .SetAssign().CLickOnAddButton()
-            .ValidateButtonSaveDisable();
+            await EntitiesBuilder.CreateForValidation(_page, dataTest)
+                .ValidateButtonSaveDisable();
         }
 
     }

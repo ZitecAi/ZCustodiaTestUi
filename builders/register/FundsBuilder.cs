@@ -112,5 +112,57 @@ namespace zCustodiaUi.builders.register
             await Execute();
             await _page.SaveFund();
         }
+
+        public static FundsBuilder CreateFullRegistration(IPage page, FundsData data = null)
+        {
+            return new FundsBuilder(page, data)
+                .WithRegisterData()
+                .WithRules()
+                .WithRepresentatives()
+                .WithLiquidation()
+                .WithAccount()
+                .AddAccount()
+                .WithSlack()
+                .WithFileValidation()
+                .GoToForm("Prestadores de Serviços")
+                .WithServiceProvider("Administrador", "ORIGINADOR QA")
+                .WithServiceProvider("Gestor", "ORIGINADOR QA", 2, 2)
+                .WithServiceProvider("Consultoria", "ID CORRETORA DE TITULOS E VALORES MOBILIARIOS SA", null, 3);
+        }
+
+        public static FundsBuilder CreateForValidation(IPage page, FundsData data = null)
+        {
+            return CreateFullRegistration(page, data);
+        }
+
+        public static FundsBuilder CreateForAccountValidation(IPage page, FundsData data = null)
+        {
+            return new FundsBuilder(page, data)
+                .WithRegisterData()
+                .WithRules()
+                .WithRepresentatives()
+                .WithLiquidation()
+                .WithAccount();
+        }
+
+        public static FundsBuilder CreateForServiceProviderValidation(IPage page, FundsData data = null)
+        {
+            return new FundsBuilder(page, data)
+                .WithRegisterData()
+                .WithRules()
+                .WithRepresentatives()
+                .WithLiquidation()
+                .WithAccount()
+                .AddAccount()
+                .WithSlack()
+                .WithFileValidation()
+                .GoToForm("Prestadores de Serviços");
+        }
+
+        public static FundsBuilder CreateForSave(IPage page, FundsData data = null)
+        {
+            return CreateFullRegistration(page, data);
+        }
+
     }
 }
