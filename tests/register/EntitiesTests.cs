@@ -87,7 +87,7 @@ namespace zCustodiaUi.tests.register
             await entityPage.ExecuteWithoutPermissionAndClickSave();
             await entityPage.ValidateErrorMessage(_data.ErrorMessageWhitoutFunction);
         }
-        [Test, Order(5)]
+        [Test, Order(6)]
         [AllureName("Should´t Register a new entity without Account")]
         public async Task Shouldnt_Register_a_New_Entity_Without_Account()
         {
@@ -96,21 +96,68 @@ namespace zCustodiaUi.tests.register
             await entityPage.CLickOnSaveButton();
             await entityPage.ValidateErrorMessage(_data.ErrorMessageWhitoutAccount);
         }
-        [Test, Order(6)]
+        [Test, Order(7)]
         [AllureName("Should´t Register a new entity with Bank field empty")]
         public async Task Shouldnt_Register_a_New_Entity_With_Bank_Field_Empty()
         {
             var dataTest = new EntitiesData { BankName = string.Empty };
             var entityPage = new EntitiesPage(_page, dataTest);
-            await entityPage.ExecuteStandardFlowAndValidateAddButtonDisabled();
+            await entityPage.ExecuteWithBankFieldEmpty();
         }
-        [Test, Order(7)]
+        [Test, Order(8)]
         [AllureName("Should´t Register a new entity with Agency field empty")]
         public async Task Shouldnt_Register_a_New_Entity_With_Agency_Field_Empty()
         {
             var dataTest = new EntitiesData { NumberAgency = string.Empty };
             var entityPage = new EntitiesPage(_page, dataTest);
-            await entityPage.ExecuteStandardNoAgencyFlowAndValidateAddButtonDisabled();
+            await entityPage.ExecuteNegativeAccount();
+        }
+        [Test, Order(9)]
+        [AllureName("Should´t Register a new entity with Number Account empty")]
+        public async Task Shouldnt_Register_a_New_Entity_With_Number_Account_Empty()
+        {
+            var dataTest = new EntitiesData { NumberAccount = string.Empty };
+            var entityPage = new EntitiesPage(_page, dataTest);
+            await entityPage.ExecuteNegativeAccount();
+        }
+        [Test, Order(10)]
+        [AllureName("Should´t Register a new entity with Number Account empty")]
+        public async Task Shouldnt_Register_a_New_Entity_With_Description_Of_Account_Empty()
+        {
+            var dataTest = new EntitiesData { Description = string.Empty };
+            var entityPage = new EntitiesPage(_page, dataTest);
+            await entityPage.ExecuteNegativeAccount();
+        }
+        [Test, Order(11)]
+        [AllureName("Should´t Register a new entity without Representative")]
+        public async Task Shouldnt_Register_a_New_Entity_Without_Representative()
+        {
+            var entityPage = new EntitiesPage(_page);
+            await entityPage.ExecuteNoRepresentative();
+        }
+        [Test, Order(12)]
+        [AllureName("Should´t Register a new entity without Name of Representative")]
+        public async Task Shouldnt_Register_a_New_Entity_Without_Name_Representative()
+        {
+            var dataTest = new EntitiesData { RepresentativeName = string.Empty };
+            var entityPage = new EntitiesPage(_page, dataTest);
+            await entityPage.ExecuteNegativeRepresentative();
+        }
+        [Test, Order(13)]
+        [AllureName("Should´t Register a new entity without CPF of Representative")]
+        public async Task Shouldnt_Register_a_New_Entity_Without_CPF_Representative()
+        {
+            var dataTest = new EntitiesData { RepresentativeCpf = string.Empty };
+            var entityPage = new EntitiesPage(_page, dataTest);
+            await entityPage.ExecuteNegativeRepresentative();
+        }
+        [Test, Order(14)]
+        [AllureName("Should´t Register a new entity without Email of Representative")]
+        public async Task Shouldnt_Register_a_New_Entity_Without_Email_Representative()
+        {
+            var dataTest = new EntitiesData { RepresentativeEmail = string.Empty };
+            var entityPage = new EntitiesPage(_page, dataTest);
+            await entityPage.ExecuteNegativeRepresentative();
         }
 
     }

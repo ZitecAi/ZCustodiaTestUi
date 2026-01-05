@@ -26,6 +26,8 @@
         public string SuccessMessageWhenRegisterEntity { get; } = "Dados Salvos com Sucesso!";
         public string ErrorMessageWhitoutFunction { get; } = "É necessário selecionar pelo menos um papel desempenhado.";
         public string ErrorMessageWhitoutAccount { get; } = "A entidade deve possuir ao menos uma conta corrente vinculada.";
+        public string ErrorMessageWhitoutRepresentative { get; } = "A entidade deve possuir ao menos um representante vinculado.";
+        public string ErrorMessageWhitoutCPFRepresentative { get; } = "A entidade deve possuir ao menos um representante vinculado.";
 
 
     }

@@ -169,7 +169,7 @@ namespace zCustodiaUi.pages.register
             await ValidateSaveButtonIsDisable();
         }
 
-        public async Task ExecuteStandardFlowAndValidateAddButtonDisabled()
+        public async Task ExecuteWithBankFieldEmpty()
         {
             await ClickOnButtonNew();
             await FillMainData();
@@ -186,7 +186,7 @@ namespace zCustodiaUi.pages.register
             });
             await ValidateAddButtonIsDisable();
         }
-        public async Task ExecuteStandardNoAgencyFlowAndValidateAddButtonDisabled()
+        public async Task ExecuteNegativeAccount()
         {
             await ClickOnButtonNew();
             await FillMainData();
@@ -233,6 +233,40 @@ namespace zCustodiaUi.pages.register
             await CLickOnAddButton();
             await CLickOnSaveButton();
         }
+
+        public async Task ExecuteNoRepresentative()
+        {
+            await ClickOnButtonNew();
+            await FillMainData();
+            await SetFunctionOfEntity();
+            await GoToForm("Conta Corrente Consultoria");
+            await ClickOnButtonNew();
+            await FillAccountData();
+            await CLickOnAddButton();
+            await CLickOnSaveButton();
+            await _util.ValidateTextIsVisibleOnScreen(_data.ErrorMessageWhitoutRepresentative, "Validate error message is present, given that I registered a new entity without representative.");
+
+        }
+
+        public async Task ExecuteNegativeRepresentative()
+        {
+            await Action(async () =>
+            {
+                await ClickOnButtonNew();
+                await FillMainData();
+                await SetFunctionOfEntity();
+                await GoToForm("Conta Corrente Consultoria");
+                await ClickOnButtonNew();
+                await FillAccountData();
+                await CLickOnAddButton();
+                await GoToForm("Representantes");
+                await ClickOnButtonNew();
+                await FillRepresentativeData();
+                await SetAssign();
+                await ValidateAddButtonIsDisable();
+            });
+        }
+
 
     }
 }
