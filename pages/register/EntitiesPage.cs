@@ -186,6 +186,24 @@ namespace zCustodiaUi.pages.register
             });
             await ValidateAddButtonIsDisable();
         }
+        public async Task ExecuteStandardNoAgencyFlowAndValidateAddButtonDisabled()
+        {
+            await ClickOnButtonNew();
+            await FillMainData();
+            await SetFunctionOfEntity();
+            await GoToForm("Conta Corrente Consultoria");
+            await ClickOnButtonNew();
+            await Action(async () =>
+            {
+                await _util.Click(_gen.LocatorMatLabel("Banco"), "Open filter Bank field with bank name");
+                await _util.Write(_gen.Filter, _data.BankName, "Fill the Bank field with bank name");
+                await _util.Click(_gen.ReceiveTypeOption(_data.BankName), "Select the bank from the options");
+                await _util.Write(_gen.LocatorMatLabel("Nº Agência (Sem dígito)"), _data.NumberAgency, "Fill the Agency field with agency number");
+                await _util.Write(_gen.LocatorMatLabel("Conta Corrente"), _data.NumberAccount, "Fill the Account field with account number");
+                await _util.Write(_gen.LocatorMatLabel("Descrição"), _data.Description, "Fill description");
+            });
+            await ValidateAddButtonIsDisable();
+        }
 
         public async Task ExecuteWithoutAccount()
         {
