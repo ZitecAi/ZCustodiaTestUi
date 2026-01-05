@@ -101,7 +101,11 @@ namespace zCustodiaUi.pages.register
         }
         public async Task ValidateSaveButtonIsDisable()
         {
-            await _util.ValidateElementIsDisabled(_gen.SaveButton, "Validate if Add Button is disabled");
+            await _util.ValidateElementIsDisabled(_gen.SaveButton, "Validate if Save Button is disabled");
+        }
+        public async Task ValidateAddButtonIsDisable()
+        {
+            await _util.ValidateElementIsDisabled(_gen.AddButton, "Validate if Add Button is disabled");
         }
         public async Task ValidateErrorMessage(string expectedText)
         {

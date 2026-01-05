@@ -79,6 +79,28 @@ namespace zCustodiaUi.tests.register
             await EntitiesBuilder.CreateForValidation(_page, dataTest)
                 .ValidateButtonSaveDisable();
         }
+        [Test, Order(5)]
+        [AllureName("Should´t Register a new entity without Function")]
+        public async Task Shouldnt_Register_a_New_Entity_Without_Function()
+        {
+            await EntitiesBuilder.WhitoutPermission(_page)
+                .CLickOnSaveButton()
+                .ValidateErrorMessage(_data.ErrorMessageWhitoutFunction);
+        }
+        [Test, Order(5)]
+        [AllureName("Should´t Register a new entity without Account")]
+        public async Task Shouldnt_Register_a_New_Entity_Without_Account()
+        {
+            await EntitiesBuilder.WhitoutAccount(_page)
+                .CLickOnSaveButton()
+                .ValidateErrorMessage(_data.ErrorMessageWhitoutAccount);
+        }
+        [Test, Order(5)]
+        [AllureName("Should´t Register a new entity with Bank field empty")]
+        public async Task Shouldnt_Register_a_New_Entity_With_Bank_Field_Empty()
+        {
+            var dataTest = new EntitiesData { BankName = string.Empty };
+        }
 
     }
 }

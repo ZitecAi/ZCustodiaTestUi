@@ -119,6 +119,23 @@ namespace zCustodiaUi.builders.register
             await Execute();
             await _page.ValidateSaveButtonIsDisable();
         }
+        public async Task ValidateButtonAddDisable()
+        {
+            await Execute();
+            await _page.ValidateAddButtonIsDisable();
+        }
+
+        public static EntitiesBuilder CreateForValidation(IPage page, EntitiesData data = null)
+        {
+            return CreateFullRegistration(page, data);
+        }
+
+        public static EntitiesBuilder CreateForSave(IPage page, EntitiesData data = null)
+        {
+            return CreateFullRegistration(page, data)
+                .CLickOnSaveButton();
+        }
+
 
         public static EntitiesBuilder CreateFullRegistration(IPage page, EntitiesData data = null)
         {
@@ -137,15 +154,37 @@ namespace zCustodiaUi.builders.register
                 .CLickOnAddButton();
         }
 
-        public static EntitiesBuilder CreateForValidation(IPage page, EntitiesData data = null)
+        public static EntitiesBuilder WhitoutAccount(IPage page, EntitiesData data = null)
         {
-            return CreateFullRegistration(page, data);
+            return new EntitiesBuilder(page, data)
+                .ClickOnButtonNew()
+                .FillMainData()
+                .SetFunctionOfEntity()
+                .GoToForm("Conta Corrente Consultoria")
+                .GoToForm("Representantes")
+                .ClickOnButtonNew()
+                .FillRepresentativeData()
+                .SetAssign()
+                .CLickOnAddButton();
         }
 
-        public static EntitiesBuilder CreateForSave(IPage page, EntitiesData data = null)
+
+
+        public static EntitiesBuilder WhitoutPermission(IPage page, EntitiesData data = null)
         {
-            return CreateFullRegistration(page, data)
-                .CLickOnSaveButton();
+            return new EntitiesBuilder(page, data)
+                .ClickOnButtonNew()
+                .FillMainData()
+                .GoToForm("Conta Corrente Consultoria")
+                .ClickOnButtonNew()
+                .FillAccountData()
+                .CLickOnAddButton()
+                .GoToForm("Representantes")
+                .ClickOnButtonNew()
+                .FillRepresentativeData()
+                .SetAssign()
+                .CLickOnAddButton();
+
         }
 
     }
