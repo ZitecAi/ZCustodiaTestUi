@@ -54,7 +54,7 @@ namespace zCustodiaUi.tests.register
             var entityPage = new EntitiesPage(_page);
             await entityPage.ExecuteStandardFlow();
         }
-        [Test(Description = "Test Validation of error message when user isert Entity with CPF alread exist´s")]
+        [Test, Order(2)]
         [AllureName("Should´t Register a new entity with CNPJ already exist´s")]
         public async Task Shouldnt_Register_a_New_Entity_With_CNPJ_Already_Exists()
         {
@@ -63,11 +63,19 @@ namespace zCustodiaUi.tests.register
                 .ValidateErrorMessage("Já existe uma entidade cadastrada com este CPF/CNPJ.");
         }
 
-        [Test(Description = "Test Validation of error message when user isert Entity with empty CNPJ")]
+        [Test, Order(3)]
         [AllureName("Should´t Register a new entity with CNPJ already exist´s")]
         public async Task Shouldnt_Register_a_New_Entity_With_Empty_CNPJ()
         {
             var dataTest = new EntitiesData { EntityCnpj = string.Empty };
+            await EntitiesBuilder.CreateForValidation(_page, dataTest)
+                .ValidateButtonSaveDisable();
+        }
+        [Test, Order(4)]
+        [AllureName("Should´t Register a new entity with Empty Name")]
+        public async Task Shouldnt_Register_a_New_Entity_With_Empty_Name()
+        {
+            var dataTest = new EntitiesData { EntityName = string.Empty };
             await EntitiesBuilder.CreateForValidation(_page, dataTest)
                 .ValidateButtonSaveDisable();
         }

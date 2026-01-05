@@ -11,7 +11,7 @@ namespace zCustodiaUi.data.register
             config.AddJsonFile("appsettings.Development.json", optional: true, reloadOnChange: true);
 
             var tokenEnv = Environment.GetEnvironmentVariable("ZCUSTODIA_TOKEN");
-            var apiEnv = Environment.GetEnvironmentVariable("ZCUSTODIA_ROUTE");
+            var apiEnv = Environment.GetEnvironmentVariable("ZCUSTODIA_API");
             var tokenConfig = config["Credentials:Token"];
             var apiConfig = config["Credentials:Api"];
 
