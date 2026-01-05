@@ -63,8 +63,8 @@ namespace zCustodiaUi.pages.register
         public async Task DeleteAssignorByApi(string idAssignor)
         {
             HttpClient httpClient = new HttpClient();
-            httpClient.DefaultRequestHeaders.Add("Token", "DHQzckJ0TGWHiFxaVuUlmrBLWXwuejrtSAT0Mf47gvclZ5GKY543iYKNeLfqlzngXH0YcKGLe4qyv0avru3xeVGBp9yUQKKKlSyJ");
-            var request = await httpClient.DeleteAsync($"https://custodiabackend-prod.idsf.com.br/api/Cedente/QATESTE/{idAssignor}");
+            httpClient.DefaultRequestHeaders.Add("Token", AssignorsData.Token);
+            var request = await httpClient.DeleteAsync(AssignorsData.Api + idAssignor);
             string response = await request.Content.ReadAsStringAsync();
             Console.WriteLine(response);
         }

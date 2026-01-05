@@ -1,9 +1,33 @@
+using Microsoft.Extensions.Configuration;
 using zCustodiaUi.utils;
 
 namespace zCustodiaUi.data.register
 {
     public class AssignorsData
     {
+        public static string Config(bool isToken)
+        {
+            var config = new ConfigurationManager();
+            config.AddJsonFile("appsettings.Development.json", optional: true, reloadOnChange: true);
+
+            var tokenEnv = Environment.GetEnvironmentVariable("ZCUSTODIA_TOKEN");
+            var apiEnv = Environment.GetEnvironmentVariable("ZCUSTODIA_ROUTE");
+            var tokenConfig = config["Credentials:Token"];
+            var apiConfig = config["Credentials:Api"];
+
+            var token = tokenConfig ?? tokenEnv;
+            var api = apiConfig ?? apiEnv;
+
+            return isToken ? $"{token}" : $"{api}";
+        }
+
+        public AssignorsData()
+        {
+            Token = Config(true);
+            Api = Config(false);
+        }
+        public static string Token { get; set; }
+        public static string Api { get; set; }
 
         public static string uniqueNumber = new Random().Next(1000, 9999).ToString();
 
