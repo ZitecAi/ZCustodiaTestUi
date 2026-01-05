@@ -3,7 +3,6 @@
 using Allure.Net.Commons;
 using Allure.NUnit;
 using Allure.NUnit.Attributes;
-using zCustodiaUi.builders.register;
 using zCustodiaUi.data.register;
 using zCustodiaUi.locators.modules;
 using zCustodiaUi.locators.register;
@@ -79,16 +78,8 @@ namespace zCustodiaUi.tests.register
         public async Task Shouldnt_Register_Assignor_With_empty_Name()
         {
             var dataTest = new AssignorsData { NameAssignor = string.Empty };
-            await new AssignorsBuilder(_page, dataTest)
-                .ClickOnNewButtonAndRegisterByForm()
-                .FillGeneralData()
-                .GoToAccountForm()
-                .FillAccountData()
-                .AddAccount()
-                .GoToRepresentativeForm()
-                .FillRepresentatives()
-                .AddRepresentative()
-                .ValidateSaveButtonDisabled();
+            var assignorsPage = new AssignorsPage(_page, dataTest);
+            await assignorsPage.ExecuteStandardFlowAndValidateSaveButtonDisabled();
         }
 
         [Test, Order(5)]
@@ -96,16 +87,8 @@ namespace zCustodiaUi.tests.register
         public async Task Shouldnt_Register_Assignor_With_CPF_10_Chars()
         {
             var dataTest = new AssignorsData { CpfAssignor = "4095611480" };
-            await new AssignorsBuilder(_page, dataTest)
-                .ClickOnNewButtonAndRegisterByForm()
-                .FillGeneralData(true)
-                .GoToAccountForm()
-                .FillAccountData()
-                .AddAccount()
-                .GoToRepresentativeForm()
-                .FillRepresentatives()
-                .AddRepresentative()
-                .ValidateSaveButtonDisabled();
+            var assignorsPage = new AssignorsPage(_page, dataTest);
+            await assignorsPage.ExecuteStandardFlowAndValidateSaveButtonDisabled(true);
         }
 
         [Test, Order(6)]
@@ -113,33 +96,16 @@ namespace zCustodiaUi.tests.register
         public async Task Shouldnt_Register_Assignor_With_CNPJ_13_Chars()
         {
             var dataTest = new AssignorsData { CnpjAssignor = "5272117500019" };
-            await new AssignorsBuilder(_page, dataTest)
-                .ClickOnNewButtonAndRegisterByForm()
-                .FillGeneralData()
-                .GoToAccountForm()
-                .FillAccountData()
-                .AddAccount()
-                .GoToRepresentativeForm()
-                .FillRepresentatives()
-                .AddRepresentative()
-                .ValidateSaveButtonDisabled();
+            var assignorsPage = new AssignorsPage(_page, dataTest);
+            await assignorsPage.ExecuteStandardFlowAndValidateSaveButtonDisabled();
         }
 
         [Test, Order(7)]
         public async Task Shouldnt_Register_Assignor_With_CNPJ_already_registered()
         {
             var dataTest = new AssignorsData { CnpjAssignor = "24537861000171" };
-            await new AssignorsBuilder(_page, dataTest)
-                .ClickOnNewButtonAndRegisterByForm()
-                .FillGeneralData()
-                .GoToAccountForm()
-                .FillAccountData()
-                .AddAccount()
-                .GoToRepresentativeForm()
-                .FillRepresentatives()
-                .AddRepresentative()
-                .ClickOnSaveButton()
-                .Execute();
+            var assignorsPage = new AssignorsPage(_page, dataTest);
+            await assignorsPage.ExecuteStandardFlowAndClickSave();
         }
 
         [Test, Order(8)]
@@ -147,16 +113,8 @@ namespace zCustodiaUi.tests.register
         public async Task Shouldnt_Register_Assignor_With_Invalid_Email()
         {
             var dataTest = new AssignorsData { Email = "alvesleviicloud.com" };
-            await new AssignorsBuilder(_page, dataTest)
-                .ClickOnNewButtonAndRegisterByForm()
-                .FillGeneralData()
-                .GoToAccountForm()
-                .FillAccountData()
-                .AddAccount()
-                .GoToRepresentativeForm()
-                .FillRepresentatives()
-                .AddRepresentative()
-                .ValidateSaveButtonDisabled();
+            var assignorsPage = new AssignorsPage(_page, dataTest);
+            await assignorsPage.ExecuteStandardFlowAndValidateSaveButtonDisabled();
         }
 
         [Test, Order(9)]
@@ -164,16 +122,8 @@ namespace zCustodiaUi.tests.register
         public async Task Shouldnt_Register_Assignor_With_Invalid_Email_No_domain()
         {
             var dataTest = new AssignorsData { Email = "alveslevi@icloud" };
-            await new AssignorsBuilder(_page, dataTest)
-                .ClickOnNewButtonAndRegisterByForm()
-                .FillGeneralData()
-                .GoToAccountForm()
-                .FillAccountData()
-                .AddAccount()
-                .GoToRepresentativeForm()
-                .FillRepresentatives()
-                .AddRepresentative()
-                .ValidateSaveButtonDisabled();
+            var assignorsPage = new AssignorsPage(_page, dataTest);
+            await assignorsPage.ExecuteStandardFlowAndValidateSaveButtonDisabled();
         }
 
         [Test, Order(10)]
@@ -182,16 +132,8 @@ namespace zCustodiaUi.tests.register
         public async Task Shouldnt_Register_Assignor_With_Num_Min_Sign_Approval_is_0()
         {
             var dataTest = new AssignorsData { MinSignaturesApproval = "0" };
-            await new AssignorsBuilder(_page, dataTest)
-                .ClickOnNewButtonAndRegisterByForm()
-                .FillGeneralData()
-                .GoToAccountForm()
-                .FillAccountData()
-                .AddAccount()
-                .GoToRepresentativeForm()
-                .FillRepresentatives()
-                .AddRepresentative()
-                .ValidateSaveButtonDisabled();
+            var assignorsPage = new AssignorsPage(_page, dataTest);
+            await assignorsPage.ExecuteStandardFlowAndValidateSaveButtonDisabled();
         }
 
 
