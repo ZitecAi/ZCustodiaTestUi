@@ -1,7 +1,6 @@
 using Allure.Net.Commons;
 using Allure.NUnit;
 using Allure.NUnit.Attributes;
-using zCustodiaUi.builders.register;
 using zCustodiaUi.data.register;
 using zCustodiaUi.locators.modules;
 using zCustodiaUi.locators.register;
@@ -70,8 +69,9 @@ namespace zCustodiaUi.tests.register
         public async Task Shouldnt_Register_a_New_Fund_With_Empty_Fund_Name()
         {
             var testData = new FundsData { FundName = string.Empty };
-            await FundsBuilder.CreateForValidation(_page, testData)
-                .ValidateSaveDisabled();
+            var fundsPage = new FundsPage(_page, testData);
+            await fundsPage.ExecuteForValidation();
+            await fundsPage.ValidateSaveButtonDisabled();
         }
 
         [Test, Order(4)]
@@ -79,8 +79,9 @@ namespace zCustodiaUi.tests.register
         public async Task Shouldnt_Register_a_New_Fund_With_ISIN_code_empty()
         {
             var testData = new FundsData { IsinCode = string.Empty };
-            await FundsBuilder.CreateForValidation(_page, testData)
-                .ValidateSaveDisabled();
+            var fundsPage = new FundsPage(_page, testData);
+            await fundsPage.ExecuteForValidation();
+            await fundsPage.ValidateSaveButtonDisabled();
         }
 
         [Test, Order(5)]
@@ -88,8 +89,9 @@ namespace zCustodiaUi.tests.register
         public async Task Shouldnt_Register_a_New_Fund_With_Exist_CNPJ()
         {
             var testData = new FundsData { CnpjFund = "54.638.076/0001-76" };
-            await FundsBuilder.CreateForValidation(_page, testData)
-                .ValidateErrorMessage("Fundo já existente para o CNPJ '54638076000176'.");
+            var fundsPage = new FundsPage(_page, testData);
+            await fundsPage.ExecuteForValidation();
+            await fundsPage.SaveFundNegative("Fundo já existente para o CNPJ '54638076000176'.");
         }
 
         [Test, Order(6)]
@@ -97,8 +99,9 @@ namespace zCustodiaUi.tests.register
         public async Task Shouldnt_Register_a_New_Fund_With_Empty_CNPJ()
         {
             var testData = new FundsData { CnpjFund = string.Empty };
-            await FundsBuilder.CreateForValidation(_page, testData)
-                .ValidateSaveDisabled();
+            var fundsPage = new FundsPage(_page, testData);
+            await fundsPage.ExecuteForValidation();
+            await fundsPage.ValidateSaveButtonDisabled();
         }
 
         [Test, Order(7)]
@@ -106,8 +109,9 @@ namespace zCustodiaUi.tests.register
         public async Task Shouldnt_Register_a_New_Fund_With_Max_Percent_Empty()
         {
             var testData = new FundsData { MaxPercent = string.Empty };
-            await FundsBuilder.CreateForValidation(_page, testData)
-                .ValidateSaveDisabled();
+            var fundsPage = new FundsPage(_page, testData);
+            await fundsPage.ExecuteForValidation();
+            await fundsPage.ValidateSaveButtonDisabled();
         }
 
         [Test, Order(8)]
@@ -115,8 +119,9 @@ namespace zCustodiaUi.tests.register
         public async Task Shouldnt_Register_a_New_Fund_With_Number_Agency_Empty()
         {
             var testData = new FundsData { AgencyNumber = string.Empty };
-            await FundsBuilder.CreateForAccountValidation(_page, testData)
-                .ValidateAddAccountButtonDisabled();
+            var fundsPage = new FundsPage(_page, testData);
+            await fundsPage.ExecuteForAccountValidation();
+            await fundsPage.ValidateAddAccountButtonDisabled();
         }
 
         [Test, Order(9)]
@@ -124,30 +129,30 @@ namespace zCustodiaUi.tests.register
         public async Task Shouldnt_Register_a_New_Fund_With_Description_Account_Empty()
         {
             var testData = new FundsData { Description = string.Empty };
-            await FundsBuilder.CreateForAccountValidation(_page, testData)
-                .ValidateAddAccountButtonDisabled();
+            var fundsPage = new FundsPage(_page, testData);
+            await fundsPage.ExecuteForAccountValidation();
+            await fundsPage.ValidateAddAccountButtonDisabled();
         }
 
         [Test, Order(10)]
         [AllureName("Should´t Register a New Fund Without type account ")]
         public async Task Shouldnt_Register_a_New_Fund_Without_Type_Account()
         {
-            await FundsBuilder.CreateForAccountValidation(_page)
-                .WithAction(async () =>
-                {
-                    await new FundsPage(_page).FillAccountFormNotypeAccount();
-                })
-                .ValidateAddAccountButtonDisabled();
+            var fundsPage = new FundsPage(_page);
+            await fundsPage.ExecuteForAccountValidation();
+            await fundsPage.FillAccountFormNotypeAccount();
+            await fundsPage.ValidateAddAccountButtonDisabled();
         }
 
         [Test, Order(11)]
         [AllureName("Should´t Register a New Fund Without Consultant ")]
         public async Task Shouldnt_Register_a_New_Fund_Without_Consultant()
         {
-            await FundsBuilder.CreateForServiceProviderValidation(_page)
-                .WithServiceProvider("Administrador", "ORIGINADOR QA")
-                .WithServiceProvider("Gestor", "ORIGINADOR QA", 2, 2)
-                .ValidateErrorMessage("É obrigatório um 'Consultor' como prestador.");
+            var fundsPage = new FundsPage(_page);
+            await fundsPage.ExecuteForServiceProviderValidation();
+            await fundsPage.RegisterServiceProvider("Administrador", "ORIGINADOR QA");
+            await fundsPage.RegisterServiceProvider("Gestor", "ORIGINADOR QA", 2, 2);
+            await fundsPage.SaveFundNegative("É obrigatório um 'Consultor' como prestador.");
         }
 
         [Test, Order(12)]
@@ -155,10 +160,11 @@ namespace zCustodiaUi.tests.register
         public async Task Shouldnt_Register_a_New_Fund_Without_Managers()
         {
             var testData = new FundsData();
-            await FundsBuilder.CreateForServiceProviderValidation(_page, testData)
-                .WithServiceProvider("Administrador", "ORIGINADOR QA")
-                .WithServiceProvider("Consultoria", "ID CORRETORA DE TITULOS E VALORES MOBILIARIOS SA", null, 2)
-                .ValidateErrorMessage("É obrigatório um 'Gestor' como prestador.");
+            var fundsPage = new FundsPage(_page, testData);
+            await fundsPage.ExecuteForServiceProviderValidation();
+            await fundsPage.RegisterServiceProvider("Administrador", "ORIGINADOR QA");
+            await fundsPage.RegisterServiceProvider("Consultoria", "ID CORRETORA DE TITULOS E VALORES MOBILIARIOS SA", null, 2);
+            await fundsPage.SaveFundNegative("É obrigatório um 'Gestor' como prestador.");
         }
 
         //[Test, Order(4)]

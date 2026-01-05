@@ -259,5 +259,26 @@ namespace zCustodiaUi.pages.register
             await ClickOnSaveButton();
             await ValidateSuccessMessage();
         }
+
+        public async Task ExecuteStandardFlowAndClickSave(bool personTypeCpf = false)
+        {
+            await ExecuteStandardFlow(personTypeCpf);
+            await ClickOnSaveButton();
+        }
+
+        public async Task ExecuteStandardFlowAndValidateSaveButtonDisabled(bool personTypeCpf = false)
+        {
+            await ExecuteStandardFlow(personTypeCpf);
+            await ValidateSaveButtonDisabled();
+        }
+
+        public async Task ExecuteStandardFlowAndValidateAddAccountButtonDisabled(bool personTypeCpf = false)
+        {
+            await ClickOnNewButtonAndRegisterByForm();
+            await FillGeneralData(personTypeCpf);
+            await _util.GoToForm("Dados da Conta");
+            await FillAccountData();
+            await ValidateAddAccountButtonDisabled();
+        }
     }
 }

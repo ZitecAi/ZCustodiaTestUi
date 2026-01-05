@@ -1,7 +1,6 @@
 using Allure.Net.Commons;
 using Allure.NUnit;
 using Allure.NUnit.Attributes;
-using zCustodiaUi.builders.register;
 using zCustodiaUi.data.register;
 using zCustodiaUi.locators.modules;
 using zCustodiaUi.locators.register;
@@ -59,8 +58,9 @@ namespace zCustodiaUi.tests.register
         public async Task Shouldnt_Register_a_New_Entity_With_CNPJ_Already_Exists()
         {
             var dataTest = new EntitiesData { EntityCnpj = "52721175000191" };
-            await EntitiesBuilder.CreateForSave(_page, dataTest)
-                .ValidateErrorMessage("Já existe uma entidade cadastrada com este CPF/CNPJ.");
+            var entityPage = new EntitiesPage(_page, dataTest);
+            await entityPage.ExecuteStandardFlowAndClickSave();
+            await entityPage.ValidateErrorMessage("Já existe uma entidade cadastrada com este CPF/CNPJ.");
         }
 
         [Test, Order(3)]
@@ -68,38 +68,41 @@ namespace zCustodiaUi.tests.register
         public async Task Shouldnt_Register_a_New_Entity_With_Empty_CNPJ()
         {
             var dataTest = new EntitiesData { EntityCnpj = string.Empty };
-            await EntitiesBuilder.CreateForValidation(_page, dataTest)
-                .ValidateButtonSaveDisable();
+            var entityPage = new EntitiesPage(_page, dataTest);
+            await entityPage.ExecuteStandardFlowAndValidateSaveButtonDisabled();
         }
         [Test, Order(4)]
         [AllureName("Should´t Register a new entity with Empty Name")]
         public async Task Shouldnt_Register_a_New_Entity_With_Empty_Name()
         {
             var dataTest = new EntitiesData { EntityName = string.Empty };
-            await EntitiesBuilder.CreateForValidation(_page, dataTest)
-                .ValidateButtonSaveDisable();
+            var entityPage = new EntitiesPage(_page, dataTest);
+            await entityPage.ExecuteStandardFlowAndValidateSaveButtonDisabled();
         }
         [Test, Order(5)]
         [AllureName("Should´t Register a new entity without Function")]
         public async Task Shouldnt_Register_a_New_Entity_Without_Function()
         {
-            await EntitiesBuilder.WhitoutPermission(_page)
-                .CLickOnSaveButton()
-                .ValidateErrorMessage(_data.ErrorMessageWhitoutFunction);
+            var entityPage = new EntitiesPage(_page);
+            await entityPage.ExecuteWithoutPermissionAndClickSave();
+            await entityPage.ValidateErrorMessage(_data.ErrorMessageWhitoutFunction);
         }
         [Test, Order(5)]
         [AllureName("Should´t Register a new entity without Account")]
         public async Task Shouldnt_Register_a_New_Entity_Without_Account()
         {
-            await EntitiesBuilder.WhitoutAccount(_page)
-                .CLickOnSaveButton()
-                .ValidateErrorMessage(_data.ErrorMessageWhitoutAccount);
+            var entityPage = new EntitiesPage(_page);
+            await entityPage.ExecuteWithoutAccount();
+            await entityPage.CLickOnSaveButton();
+            await entityPage.ValidateErrorMessage(_data.ErrorMessageWhitoutAccount);
         }
         [Test, Order(5)]
         [AllureName("Should´t Register a new entity with Bank field empty")]
         public async Task Shouldnt_Register_a_New_Entity_With_Bank_Field_Empty()
         {
             var dataTest = new EntitiesData { BankName = string.Empty };
+            var entityPage = new EntitiesPage(_page, dataTest);
+            await entityPage.ExecuteStandardFlowAndValidateAddButtonDisabled();
         }
 
     }

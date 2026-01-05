@@ -1,4 +1,4 @@
-﻿using Allure.NUnit.Attributes;
+using Allure.NUnit.Attributes;
 using Microsoft.Playwright;
 using zCustodiaUi.data.register;
 using zCustodiaUi.locators;
@@ -112,6 +112,11 @@ namespace zCustodiaUi.pages.register
             await _util.ValidateTextIsVisibleOnScreen(expectedText, "Validate success message of entity saved");
         }
 
+        public async Task Action(Func<Task> action)
+        {
+            await action();
+        }
+
         public async Task ExecuteStandardFlow()
         {
             await ClickOnButtonNew();
@@ -128,6 +133,87 @@ namespace zCustodiaUi.pages.register
             await CLickOnAddButton();
             await CLickOnSaveButton();
             await _util.ValidateTextIsVisibleOnScreen(_data.SuccessMessageWhenRegisterEntity, "Validate success message is present, given that I registered a new entity with valid data");
+        }
+
+        public async Task ExecuteStandardFlowAndClickSave()
+        {
+            await ClickOnButtonNew();
+            await FillMainData();
+            await SetFunctionOfEntity();
+            await GoToForm("Conta Corrente Consultoria");
+            await ClickOnButtonNew();
+            await FillAccountData();
+            await CLickOnAddButton();
+            await GoToForm("Representantes");
+            await ClickOnButtonNew();
+            await FillRepresentativeData();
+            await SetAssign();
+            await CLickOnAddButton();
+            await CLickOnSaveButton();
+        }
+
+        public async Task ExecuteStandardFlowAndValidateSaveButtonDisabled()
+        {
+            await ClickOnButtonNew();
+            await FillMainData();
+            await SetFunctionOfEntity();
+            await GoToForm("Conta Corrente Consultoria");
+            await ClickOnButtonNew();
+            await FillAccountData();
+            await CLickOnAddButton();
+            await GoToForm("Representantes");
+            await ClickOnButtonNew();
+            await FillRepresentativeData();
+            await SetAssign();
+            await CLickOnAddButton();
+            await ValidateSaveButtonIsDisable();
+        }
+
+        public async Task ExecuteStandardFlowAndValidateAddButtonDisabled()
+        {
+            await ClickOnButtonNew();
+            await FillMainData();
+            await SetFunctionOfEntity();
+            await GoToForm("Conta Corrente Consultoria");
+            await ClickOnButtonNew();
+            await Action(async () =>
+            {
+                await _util.Click(_gen.LocatorMatLabel("Banco"), "Open filter Bank field with bank name");
+                await _util.Write(_gen.Filter, _data.BankName, "Fill the Bank field with bank name");
+                await _util.Write(_gen.LocatorMatLabel("Nº Agência (Sem dígito)"), _data.NumberAgency, "Fill the Agency field with agency number");
+                await _util.Write(_gen.LocatorMatLabel("Conta Corrente"), _data.NumberAccount, "Fill the Account field with account number");
+                await _util.Write(_gen.LocatorMatLabel("Descrição"), _data.Description, "Fill description");
+            });
+            await ValidateAddButtonIsDisable();
+        }
+
+        public async Task ExecuteWithoutAccount()
+        {
+            await ClickOnButtonNew();
+            await FillMainData();
+            await SetFunctionOfEntity();
+            await GoToForm("Conta Corrente Consultoria");
+            await GoToForm("Representantes");
+            await ClickOnButtonNew();
+            await FillRepresentativeData();
+            await SetAssign();
+            await CLickOnAddButton();
+        }
+
+        public async Task ExecuteWithoutPermissionAndClickSave()
+        {
+            await ClickOnButtonNew();
+            await FillMainData();
+            await GoToForm("Conta Corrente Consultoria");
+            await ClickOnButtonNew();
+            await FillAccountData();
+            await CLickOnAddButton();
+            await GoToForm("Representantes");
+            await ClickOnButtonNew();
+            await FillRepresentativeData();
+            await SetAssign();
+            await CLickOnAddButton();
+            await CLickOnSaveButton();
         }
 
     }
