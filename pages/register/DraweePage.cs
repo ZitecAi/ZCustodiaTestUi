@@ -178,24 +178,5 @@ namespace zCustodiaUi.Pages.register
             await FilterAndValidateDrawee(draweeName);
         }
 
-        public async Task ExecuteStandardFlow(string draweeName = null)
-        {
-            draweeName = draweeName ?? $"Sacado Test {new Random().Next(0, 9999)}";
-
-            await ClickOnNewDraweeButton();
-            await FillFund();
-            await FillDraweeName(draweeName);
-            await FillEmail();
-            await FillCPF();
-            await FillRelationshipDates();
-            await FillAnnualRevenue();
-            await FillEconomicConglomerate();
-            await FillSize();
-            await FillRiskClassification();
-            await FillSocietyType();
-            await FillStateRegistration();
-            await FillAddress();
-            await ClickOnSaveButton();
-        }
     }
 }

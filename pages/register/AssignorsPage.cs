@@ -241,44 +241,10 @@ namespace zCustodiaUi.pages.register
             await _util.ValidateTextIsVisibleOnScreen(expectedMessage, $"Validate if error message '{expectedMessage}' is visible on screen");
         }
 
-        public async Task ExecuteStandardFlow(bool personTypeCpf = false)
+        public async Task GoToForm(string formName)
         {
-            await ClickOnNewButtonAndRegisterByForm();
-            await FillGeneralData(personTypeCpf);
-            await _util.GoToForm("Dados da Conta");
-            await FillAccountData();
-            await AddAccount();
-            await _util.GoToForm("Representante");
-            await FillRepresentatives();
-            await AddRepresentative();
+            await _util.GoToForm(formName);
         }
 
-        public async Task RegisterAssignor()
-        {
-            await ExecuteStandardFlow();
-            await ClickOnSaveButton();
-            await ValidateSuccessMessage();
-        }
-
-        public async Task ExecuteStandardFlowAndClickSave(bool personTypeCpf = false)
-        {
-            await ExecuteStandardFlow(personTypeCpf);
-            await ClickOnSaveButton();
-        }
-
-        public async Task ExecuteStandardFlowAndValidateSaveButtonDisabled(bool personTypeCpf = false)
-        {
-            await ExecuteStandardFlow(personTypeCpf);
-            await ValidateSaveButtonDisabled();
-        }
-
-        public async Task ExecuteStandardFlowAndValidateAddAccountButtonDisabled(bool personTypeCpf = false)
-        {
-            await ClickOnNewButtonAndRegisterByForm();
-            await FillGeneralData(personTypeCpf);
-            await _util.GoToForm("Dados da Conta");
-            await FillAccountData();
-            await ValidateAddAccountButtonDisabled();
-        }
     }
 }

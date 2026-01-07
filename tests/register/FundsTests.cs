@@ -8,6 +8,7 @@ using zCustodiaUi.pages.login;
 using zCustodiaUi.pages.register;
 using zCustodiaUi.runner;
 using zCustodiaUi.utils;
+using zCustodiaUi.workflows.register;
 
 namespace zCustodiaUi.tests.register
 {
@@ -52,7 +53,8 @@ namespace zCustodiaUi.tests.register
         public async Task Should_Register_a_New_Fund()
         {
             var fundsPage = new FundsPage(_page);
-            await fundsPage.ExecuteStandardFlow();
+            var fundsWorkflow = new FundsWorkflow(fundsPage, new FundsData());
+            await fundsWorkflow.ExecuteStandardFlow();
             await fundsPage.SaveFund();
         }
 
@@ -70,7 +72,8 @@ namespace zCustodiaUi.tests.register
         {
             var testData = new FundsData { FundName = string.Empty };
             var fundsPage = new FundsPage(_page, testData);
-            await fundsPage.ExecuteForValidation();
+            var fundsWorkflow = new FundsWorkflow(fundsPage);
+            await fundsWorkflow.ExecuteForValidation();
             await fundsPage.ValidateSaveButtonDisabled();
         }
 
@@ -80,7 +83,8 @@ namespace zCustodiaUi.tests.register
         {
             var testData = new FundsData { IsinCode = string.Empty };
             var fundsPage = new FundsPage(_page, testData);
-            await fundsPage.ExecuteForValidation();
+            var fundsWorkflow = new FundsWorkflow(fundsPage);
+            await fundsWorkflow.ExecuteForValidation();
             await fundsPage.ValidateSaveButtonDisabled();
         }
 
@@ -90,7 +94,8 @@ namespace zCustodiaUi.tests.register
         {
             var testData = new FundsData { CnpjFund = "54.638.076/0001-76" };
             var fundsPage = new FundsPage(_page, testData);
-            await fundsPage.ExecuteForValidation();
+            var fundsWorkflow = new FundsWorkflow(fundsPage);
+            await fundsWorkflow.ExecuteForValidation();
             await fundsPage.SaveFundNegative("Fundo já existente para o CNPJ '54638076000176'.");
         }
 
@@ -100,7 +105,8 @@ namespace zCustodiaUi.tests.register
         {
             var testData = new FundsData { CnpjFund = string.Empty };
             var fundsPage = new FundsPage(_page, testData);
-            await fundsPage.ExecuteForValidation();
+            var fundsWorkflow = new FundsWorkflow(fundsPage);
+            await fundsWorkflow.ExecuteForValidation();
             await fundsPage.ValidateSaveButtonDisabled();
         }
 
@@ -110,7 +116,8 @@ namespace zCustodiaUi.tests.register
         {
             var testData = new FundsData { MaxPercent = string.Empty };
             var fundsPage = new FundsPage(_page, testData);
-            await fundsPage.ExecuteForValidation();
+            var fundsWorkflow = new FundsWorkflow(fundsPage);
+            await fundsWorkflow.ExecuteForValidation();
             await fundsPage.ValidateSaveButtonDisabled();
         }
 
@@ -120,7 +127,8 @@ namespace zCustodiaUi.tests.register
         {
             var testData = new FundsData { AgencyNumber = string.Empty };
             var fundsPage = new FundsPage(_page, testData);
-            await fundsPage.ExecuteForAccountValidation();
+            var fundsWorkflow = new FundsWorkflow(fundsPage);
+            await fundsWorkflow.ExecuteForAccountValidation();
             await fundsPage.ValidateAddAccountButtonDisabled();
         }
 
@@ -130,7 +138,8 @@ namespace zCustodiaUi.tests.register
         {
             var testData = new FundsData { Description = string.Empty };
             var fundsPage = new FundsPage(_page, testData);
-            await fundsPage.ExecuteForAccountValidation();
+            var fundsWorkflow = new FundsWorkflow(fundsPage);
+            await fundsWorkflow.ExecuteForAccountValidation();
             await fundsPage.ValidateAddAccountButtonDisabled();
         }
 
@@ -139,7 +148,8 @@ namespace zCustodiaUi.tests.register
         public async Task Shouldnt_Register_a_New_Fund_Without_Type_Account()
         {
             var fundsPage = new FundsPage(_page);
-            await fundsPage.ExecuteForAccountValidation();
+            var fundsWorkflow = new FundsWorkflow(fundsPage);
+            await fundsWorkflow.ExecuteForAccountValidation();
             await fundsPage.FillAccountFormNotypeAccount();
             await fundsPage.ValidateAddAccountButtonDisabled();
         }
@@ -149,7 +159,8 @@ namespace zCustodiaUi.tests.register
         public async Task Shouldnt_Register_a_New_Fund_Without_Consultant()
         {
             var fundsPage = new FundsPage(_page);
-            await fundsPage.ExecuteForServiceProviderValidation();
+            var fundsWorkflow = new FundsWorkflow(fundsPage);
+            await fundsWorkflow.ExecuteForServiceProviderValidation();
             await fundsPage.RegisterServiceProvider("Administrador", "ORIGINADOR QA");
             await fundsPage.RegisterServiceProvider("Gestor", "ORIGINADOR QA", 2, 2);
             await fundsPage.SaveFundNegative("É obrigatório um 'Consultor' como prestador.");
@@ -161,7 +172,8 @@ namespace zCustodiaUi.tests.register
         {
             var testData = new FundsData();
             var fundsPage = new FundsPage(_page, testData);
-            await fundsPage.ExecuteForServiceProviderValidation();
+            var fundsWorkflow = new FundsWorkflow(fundsPage);
+            await fundsWorkflow.ExecuteForServiceProviderValidation();
             await fundsPage.RegisterServiceProvider("Administrador", "ORIGINADOR QA");
             await fundsPage.RegisterServiceProvider("Consultoria", "ID CORRETORA DE TITULOS E VALORES MOBILIARIOS SA", null, 2);
             await fundsPage.SaveFundNegative("É obrigatório um 'Gestor' como prestador.");

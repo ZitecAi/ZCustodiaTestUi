@@ -7,6 +7,7 @@ using zCustodiaUi.pages.login;
 using zCustodiaUi.pages.processing;
 using zCustodiaUi.runner;
 using zCustodiaUi.utils;
+using zCustodiaUi.workflows.processing;
 
 namespace zCustodiaUi.tests.processing
 {
@@ -49,14 +50,16 @@ namespace zCustodiaUi.tests.processing
         public async Task Should_Process_Receivable()
         {
             var receivablesPage = new ReceivablesPage(_page);
-            await receivablesPage.ProcessReceivable();
+            var receivablesWorkflow = new ReceivablesWorkflow(receivablesPage);
+            await receivablesWorkflow.ProcessReceivable();
         }
         [Test, Order(2)]
         [AllureName("Should Process Receivable Partial")]
         public async Task Should_Process_Receivable_Partial()
         {
             var receivablesPage = new ReceivablesPage(_page);
-            await receivablesPage.ProcessReceivablePartial();
+            var receivablesWorkflow = new ReceivablesWorkflow(receivablesPage);
+            await receivablesWorkflow.ProcessReceivablePartial();
         }
         [Test, Order(3)]
         [AllureName("Should Process Receivable Prorrogation")]
@@ -64,7 +67,8 @@ namespace zCustodiaUi.tests.processing
         public async Task Should_Process_Receivable_Prorrogation()
         {
             var receivablesPage = new ReceivablesPage(_page);
-            await receivablesPage.ProcessProrrogation();
+            var receivablesWorkflow = new ReceivablesWorkflow(receivablesPage);
+            await receivablesWorkflow.ProcessProrrogation();
         }
 
     }

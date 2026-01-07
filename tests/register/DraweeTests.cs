@@ -7,6 +7,7 @@ using zCustodiaUi.pages.login;
 using zCustodiaUi.Pages.register;
 using zCustodiaUi.runner;
 using zCustodiaUi.utils;
+using zCustodiaUi.workflows.register;
 
 namespace zCustodiaUi.tests.register
 {
@@ -47,8 +48,9 @@ namespace zCustodiaUi.tests.register
         [AllureName("Should Register New Drawee")]
         public async Task Should_Register_New_Drawee()
         {
-            var drawee = new DraweePage(_page);
-            await drawee.Register_Drawee();
+            var draweePage = new DraweePage(_page);
+            var draweeWorkflow = new DraweeWorkflow(draweePage);
+            await draweeWorkflow.RegisterDrawee();
         }
 
 

@@ -10,6 +10,7 @@ using zCustodiaUi.pages.login;
 using zCustodiaUi.pages.register;
 using zCustodiaUi.runner;
 using zCustodiaUi.utils;
+using zCustodiaUi.workflows.register;
 
 namespace zCustodiaUi.tests.register
 {
@@ -54,7 +55,8 @@ namespace zCustodiaUi.tests.register
         public async Task Should_Register_Assignor()
         {
             var assignorsPage = new AssignorsPage(_page);
-            await assignorsPage.RegisterAssignor();
+            var assignorsWorkflow = new AssignorsWorkflow(assignorsPage);
+            await assignorsWorkflow.RegisterAssignor();
         }
 
         [Test, Order(2)]
@@ -79,7 +81,8 @@ namespace zCustodiaUi.tests.register
         {
             var dataTest = new AssignorsData { NameAssignor = string.Empty };
             var assignorsPage = new AssignorsPage(_page, dataTest);
-            await assignorsPage.ExecuteStandardFlowAndValidateSaveButtonDisabled();
+            var assignorsWorkflow = new AssignorsWorkflow(assignorsPage);
+            await assignorsWorkflow.ExecuteStandardFlowAndValidateSaveButtonDisabled();
         }
 
         [Test, Order(5)]
@@ -88,7 +91,8 @@ namespace zCustodiaUi.tests.register
         {
             var dataTest = new AssignorsData { CpfAssignor = "4095611480" };
             var assignorsPage = new AssignorsPage(_page, dataTest);
-            await assignorsPage.ExecuteStandardFlowAndValidateSaveButtonDisabled(true);
+            var assignorsWorkflow = new AssignorsWorkflow(assignorsPage);
+            await assignorsWorkflow.ExecuteStandardFlowAndValidateSaveButtonDisabled(true);
         }
 
         [Test, Order(6)]
@@ -97,7 +101,8 @@ namespace zCustodiaUi.tests.register
         {
             var dataTest = new AssignorsData { CnpjAssignor = "5272117500019" };
             var assignorsPage = new AssignorsPage(_page, dataTest);
-            await assignorsPage.ExecuteStandardFlowAndValidateSaveButtonDisabled();
+            var assignorsWorkflow = new AssignorsWorkflow(assignorsPage);
+            await assignorsWorkflow.ExecuteStandardFlowAndValidateSaveButtonDisabled();
         }
 
         [Test, Order(7)]
@@ -105,7 +110,8 @@ namespace zCustodiaUi.tests.register
         {
             var dataTest = new AssignorsData { CnpjAssignor = "24537861000171" };
             var assignorsPage = new AssignorsPage(_page, dataTest);
-            await assignorsPage.ExecuteStandardFlowAndClickSave();
+            var assignorsWorkflow = new AssignorsWorkflow(assignorsPage);
+            await assignorsWorkflow.ExecuteStandardFlowAndClickSave();
         }
 
         [Test, Order(8)]
@@ -114,7 +120,8 @@ namespace zCustodiaUi.tests.register
         {
             var dataTest = new AssignorsData { Email = "alvesleviicloud.com" };
             var assignorsPage = new AssignorsPage(_page, dataTest);
-            await assignorsPage.ExecuteStandardFlowAndValidateSaveButtonDisabled();
+            var assignorsWorkflow = new AssignorsWorkflow(assignorsPage);
+            await assignorsWorkflow.ExecuteStandardFlowAndValidateSaveButtonDisabled();
         }
 
         [Test, Order(9)]
@@ -123,7 +130,8 @@ namespace zCustodiaUi.tests.register
         {
             var dataTest = new AssignorsData { Email = "alveslevi@icloud" };
             var assignorsPage = new AssignorsPage(_page, dataTest);
-            await assignorsPage.ExecuteStandardFlowAndValidateSaveButtonDisabled();
+            var assignorsWorkflow = new AssignorsWorkflow(assignorsPage);
+            await assignorsWorkflow.ExecuteStandardFlowAndValidateSaveButtonDisabled();
         }
 
         [Test, Order(10)]
@@ -133,7 +141,8 @@ namespace zCustodiaUi.tests.register
         {
             var dataTest = new AssignorsData { MinSignaturesApproval = "0" };
             var assignorsPage = new AssignorsPage(_page, dataTest);
-            await assignorsPage.ExecuteStandardFlowAndValidateSaveButtonDisabled();
+            var assignorsWorkflow = new AssignorsWorkflow(assignorsPage);
+            await assignorsWorkflow.ExecuteStandardFlowAndValidateSaveButtonDisabled();
         }
 
 

@@ -61,6 +61,22 @@ namespace zCustodiaUi.pages.register
             await _util.Write(_gen.LocatorMatLabel("Descrição"), _data.Description, "Fill description");
         }
 
+        public async Task FillAccountDataWithoutSelectingBank()
+        {
+            await _util.Click(_gen.LocatorMatLabel("Banco"), "Open filter Bank field with bank name");
+            await _util.Write(_gen.Filter, _data.BankName, "Fill the Bank field with bank name");
+            await _util.Write(_gen.LocatorMatLabel("Nº Agência (Sem dígito)"), _data.NumberAgency, "Fill the Agency field with agency number");
+            await _util.Write(_gen.LocatorMatLabel("Conta Corrente"), _data.NumberAccount, "Fill the Account field with account number");
+            await _util.Write(_gen.LocatorMatLabel("Descrição"), _data.Description, "Fill description");
+        }
+
+        public async Task FillAccountDataFields()
+        {
+            await _util.Write(_gen.LocatorMatLabel("Nº Agência (Sem dígito)"), _data.NumberAgency, "Fill the Agency field with agency number");
+            await _util.Write(_gen.LocatorMatLabel("Conta Corrente"), _data.NumberAccount, "Fill the Account field with account number");
+            await _util.Write(_gen.LocatorMatLabel("Descrição"), _data.Description, "Fill description");
+        }
+
         public async Task FillRepresentativeData()
         {
             await _util.Write(_gen.LocatorMatLabel("Nome"), _data.RepresentativeName, "Fill Representative name");
@@ -112,160 +128,7 @@ namespace zCustodiaUi.pages.register
             await _util.ValidateTextIsVisibleOnScreen(expectedText, "Validate success message of entity saved");
         }
 
-        public async Task Action(Func<Task> action)
-        {
-            await action();
-        }
 
-        public async Task ExecuteStandardFlow()
-        {
-            await ClickOnButtonNew();
-            await FillMainData();
-            await SetFunctionOfEntity();
-            await GoToForm("Conta Corrente Consultoria");
-            await ClickOnButtonNew();
-            await FillAccountData();
-            await CLickOnAddButton();
-            await GoToForm("Representantes");
-            await ClickOnButtonNew();
-            await FillRepresentativeData();
-            await SetAssign();
-            await CLickOnAddButton();
-            await CLickOnSaveButton();
-            await _util.ValidateTextIsVisibleOnScreen(_data.SuccessMessageWhenRegisterEntity, "Validate success message is present, given that I registered a new entity with valid data");
-        }
-
-        public async Task ExecuteStandardFlowAndClickSave()
-        {
-            await ClickOnButtonNew();
-            await FillMainData();
-            await SetFunctionOfEntity();
-            await GoToForm("Conta Corrente Consultoria");
-            await ClickOnButtonNew();
-            await FillAccountData();
-            await CLickOnAddButton();
-            await GoToForm("Representantes");
-            await ClickOnButtonNew();
-            await FillRepresentativeData();
-            await SetAssign();
-            await CLickOnAddButton();
-            await CLickOnSaveButton();
-        }
-
-        public async Task ExecuteStandardFlowAndValidateSaveButtonDisabled()
-        {
-            await ClickOnButtonNew();
-            await FillMainData();
-            await SetFunctionOfEntity();
-            await GoToForm("Conta Corrente Consultoria");
-            await ClickOnButtonNew();
-            await FillAccountData();
-            await CLickOnAddButton();
-            await GoToForm("Representantes");
-            await ClickOnButtonNew();
-            await FillRepresentativeData();
-            await SetAssign();
-            await CLickOnAddButton();
-            await ValidateSaveButtonIsDisable();
-        }
-
-        public async Task ExecuteWithBankFieldEmpty()
-        {
-            await ClickOnButtonNew();
-            await FillMainData();
-            await SetFunctionOfEntity();
-            await GoToForm("Conta Corrente Consultoria");
-            await ClickOnButtonNew();
-            await Action(async () =>
-            {
-                await _util.Click(_gen.LocatorMatLabel("Banco"), "Open filter Bank field with bank name");
-                await _util.Write(_gen.Filter, _data.BankName, "Fill the Bank field with bank name");
-                await _util.Write(_gen.LocatorMatLabel("Nº Agência (Sem dígito)"), _data.NumberAgency, "Fill the Agency field with agency number");
-                await _util.Write(_gen.LocatorMatLabel("Conta Corrente"), _data.NumberAccount, "Fill the Account field with account number");
-                await _util.Write(_gen.LocatorMatLabel("Descrição"), _data.Description, "Fill description");
-            });
-            await ValidateAddButtonIsDisable();
-        }
-        public async Task ExecuteNegativeAccount()
-        {
-            await ClickOnButtonNew();
-            await FillMainData();
-            await SetFunctionOfEntity();
-            await GoToForm("Conta Corrente Consultoria");
-            await ClickOnButtonNew();
-            await Action(async () =>
-            {
-                await _util.Click(_gen.LocatorMatLabel("Banco"), "Open filter Bank field with bank name");
-                await _util.Write(_gen.Filter, _data.BankName, "Fill the Bank field with bank name");
-                await _util.Click(_gen.ReceiveTypeOption(_data.BankName), "Select the bank from the options");
-                await _util.Write(_gen.LocatorMatLabel("Nº Agência (Sem dígito)"), _data.NumberAgency, "Fill the Agency field with agency number");
-                await _util.Write(_gen.LocatorMatLabel("Conta Corrente"), _data.NumberAccount, "Fill the Account field with account number");
-                await _util.Write(_gen.LocatorMatLabel("Descrição"), _data.Description, "Fill description");
-            });
-            await ValidateAddButtonIsDisable();
-        }
-
-        public async Task ExecuteWithoutAccount()
-        {
-            await ClickOnButtonNew();
-            await FillMainData();
-            await SetFunctionOfEntity();
-            await GoToForm("Conta Corrente Consultoria");
-            await GoToForm("Representantes");
-            await ClickOnButtonNew();
-            await FillRepresentativeData();
-            await SetAssign();
-            await CLickOnAddButton();
-        }
-
-        public async Task ExecuteWithoutPermissionAndClickSave()
-        {
-            await ClickOnButtonNew();
-            await FillMainData();
-            await GoToForm("Conta Corrente Consultoria");
-            await ClickOnButtonNew();
-            await FillAccountData();
-            await CLickOnAddButton();
-            await GoToForm("Representantes");
-            await ClickOnButtonNew();
-            await FillRepresentativeData();
-            await SetAssign();
-            await CLickOnAddButton();
-            await CLickOnSaveButton();
-        }
-
-        public async Task ExecuteNoRepresentative()
-        {
-            await ClickOnButtonNew();
-            await FillMainData();
-            await SetFunctionOfEntity();
-            await GoToForm("Conta Corrente Consultoria");
-            await ClickOnButtonNew();
-            await FillAccountData();
-            await CLickOnAddButton();
-            await CLickOnSaveButton();
-            await _util.ValidateTextIsVisibleOnScreen(_data.ErrorMessageWhitoutRepresentative, "Validate error message is present, given that I registered a new entity without representative.");
-
-        }
-
-        public async Task ExecuteNegativeRepresentative()
-        {
-            await Action(async () =>
-            {
-                await ClickOnButtonNew();
-                await FillMainData();
-                await SetFunctionOfEntity();
-                await GoToForm("Conta Corrente Consultoria");
-                await ClickOnButtonNew();
-                await FillAccountData();
-                await CLickOnAddButton();
-                await GoToForm("Representantes");
-                await ClickOnButtonNew();
-                await FillRepresentativeData();
-                await SetAssign();
-                await ValidateAddButtonIsDisable();
-            });
-        }
 
 
     }

@@ -7,6 +7,7 @@ using zCustodiaUi.pages.importation;
 using zCustodiaUi.pages.login;
 using zCustodiaUi.runner;
 using zCustodiaUi.utils;
+using zCustodiaUi.workflows.importation;
 
 namespace zCustodiaUi.tests.importation
 {
@@ -49,8 +50,9 @@ namespace zCustodiaUi.tests.importation
         [AllureName("Should Import a New Shipping File")]
         public async Task Should_Import_a_New_Shipping_File()
         {
-            var shippingFile = new ShippingFilePage(_page);
-            await shippingFile.SendShippingFile();
+            var shippingFilePage = new ShippingFilePage(_page);
+            var shippingFileWorkflow = new ShippingFileWorkflow(shippingFilePage);
+            await shippingFileWorkflow.SendShippingFile();
         }
 
 

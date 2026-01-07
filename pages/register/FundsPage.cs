@@ -284,63 +284,7 @@ namespace zCustodiaUi.pages.register
             await _util.ValidateElementIsDisabled(_el.AddButton, "Validate if Add Button is disabled");
         }
 
-        public async Task ExecuteStandardFlow(bool skipServiceProvider = false)
-        {
-            await RegisterData();
-            await Rules();
-            await Representatives();
-            await Liquidation();
-            await FillAccountForm();
-            await AddAccount();
-            await Slack();
-            await FileValidation();
 
-            if (!skipServiceProvider)
-            {
-                await GoToForm("Prestadores de Serviços");
-                await RegisterServiceProvider(_data.ProviderTypeAdministrator, _data.PersonTypeAdministrator);
-                await RegisterServiceProvider(_data.ProviderTypeManager, _data.PersonTypeManager, 2, 2);
-                await RegisterServiceProvider(_data.ProviderTypeConsultant, _data.PersonTypeConsultant, null, 3);
-            }
-        }
-
-        public async Task ExecuteForValidation()
-        {
-            await RegisterData();
-            await Rules();
-            await Representatives();
-            await Liquidation();
-            await FillAccountForm();
-            await AddAccount();
-            await Slack();
-            await FileValidation();
-            await GoToForm("Prestadores de Serviços");
-            await RegisterServiceProvider(_data.ProviderTypeAdministrator, _data.PersonTypeAdministrator);
-            await RegisterServiceProvider(_data.ProviderTypeManager, _data.PersonTypeManager, 2, 2);
-            await RegisterServiceProvider(_data.ProviderTypeConsultant, _data.PersonTypeConsultant, null, 3);
-        }
-
-        public async Task ExecuteForAccountValidation()
-        {
-            await RegisterData();
-            await Rules();
-            await Representatives();
-            await Liquidation();
-            await FillAccountForm();
-        }
-
-        public async Task ExecuteForServiceProviderValidation()
-        {
-            await RegisterData();
-            await Rules();
-            await Representatives();
-            await Liquidation();
-            await FillAccountForm();
-            await AddAccount();
-            await Slack();
-            await FileValidation();
-            await GoToForm("Prestadores de Serviços");
-        }
 
         public async Task ConsultFund()
         {

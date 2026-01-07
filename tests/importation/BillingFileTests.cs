@@ -7,6 +7,7 @@ using zCustodiaUi.pages.importation;
 using zCustodiaUi.pages.login;
 using zCustodiaUi.runner;
 using zCustodiaUi.utils;
+using zCustodiaUi.workflows.importation;
 
 namespace zCustodiaUi.tests.importation
 {
@@ -49,8 +50,9 @@ namespace zCustodiaUi.tests.importation
         [AllureName("Should Import a New Billing File")]
         public async Task Should_Import_a_New_Billing_File()
         {
-            var billingFile = new BillingFilePage(_page);
-            await billingFile.SendBillingFile();
+            var billingFilePage = new BillingFilePage(_page);
+            var billingFileWorkflow = new BillingFileWorkflow(billingFilePage);
+            await billingFileWorkflow.SendBillingFile();
         }
 
     }
