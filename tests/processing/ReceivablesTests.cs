@@ -1,13 +1,13 @@
 using Allure.Net.Commons;
 using Allure.NUnit;
 using Allure.NUnit.Attributes;
+using zCustodiaUi.builders.processing;
 using zCustodiaUi.locators.modules;
 using zCustodiaUi.locators.processing;
 using zCustodiaUi.pages.login;
 using zCustodiaUi.pages.processing;
 using zCustodiaUi.runner;
 using zCustodiaUi.utils;
-using zCustodiaUi.workflows.processing;
 
 namespace zCustodiaUi.tests.processing
 {
@@ -50,16 +50,18 @@ namespace zCustodiaUi.tests.processing
         public async Task Should_Process_Receivable()
         {
             var receivablesPage = new ReceivablesPage(_page);
-            var receivablesWorkflow = new ReceivablesWorkflow(receivablesPage);
-            await receivablesWorkflow.ProcessReceivable();
+            await new ReceivablesBuilder(receivablesPage)
+                .ProcessReceivable()
+                .Execute();
         }
         [Test, Order(2)]
         [AllureName("Should Process Receivable Partial")]
         public async Task Should_Process_Receivable_Partial()
         {
             var receivablesPage = new ReceivablesPage(_page);
-            var receivablesWorkflow = new ReceivablesWorkflow(receivablesPage);
-            await receivablesWorkflow.ProcessReceivablePartial();
+            await new ReceivablesBuilder(receivablesPage)
+                .ProcessReceivablePartial()
+                .Execute();
         }
         [Test, Order(3)]
         [AllureName("Should Process Receivable Prorrogation")]
@@ -67,8 +69,9 @@ namespace zCustodiaUi.tests.processing
         public async Task Should_Process_Receivable_Prorrogation()
         {
             var receivablesPage = new ReceivablesPage(_page);
-            var receivablesWorkflow = new ReceivablesWorkflow(receivablesPage);
-            await receivablesWorkflow.ProcessProrrogation();
+            await new ReceivablesBuilder(receivablesPage)
+                .ProcessProrrogation()
+                .Execute();
         }
 
     }

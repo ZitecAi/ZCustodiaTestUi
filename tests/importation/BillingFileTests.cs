@@ -1,13 +1,13 @@
 using Allure.Net.Commons;
 using Allure.NUnit;
 using Allure.NUnit.Attributes;
+using zCustodiaUi.builders.importation;
 using zCustodiaUi.locators.Importation;
 using zCustodiaUi.locators.modules;
 using zCustodiaUi.pages.importation;
 using zCustodiaUi.pages.login;
 using zCustodiaUi.runner;
 using zCustodiaUi.utils;
-using zCustodiaUi.workflows.importation;
 
 namespace zCustodiaUi.tests.importation
 {
@@ -51,8 +51,23 @@ namespace zCustodiaUi.tests.importation
         public async Task Should_Import_a_New_Billing_File()
         {
             var billingFilePage = new BillingFilePage(_page);
-            var billingFileWorkflow = new BillingFileWorkflow(billingFilePage);
-            await billingFileWorkflow.SendBillingFile();
+            await new BillingFileBuilder(billingFilePage)
+                .ClickImportButton()
+                .SelectFund()
+                .AttachFile()
+                .ClickProcessButton()
+                .ValidateSuccessImport()
+                .SearchFund()
+                .ClickSearchButton()
+                .ValidateFilePresentOnTable()
+                .DeleteFile()
+                .ConfirmDelete()
+                .ValidateSuccessDelete()
+                .ReloadPage()
+                .SearchFund()
+                .ClickSearchButton()
+                .ValidateFileNotPresentOnTable()
+                .Execute();
         }
 
     }

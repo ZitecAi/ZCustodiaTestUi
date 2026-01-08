@@ -1,13 +1,13 @@
 using Allure.Net.Commons;
 using Allure.NUnit;
 using Allure.NUnit.Attributes;
+using zCustodiaUi.builders.register;
 using zCustodiaUi.locators.modules;
 using zCustodiaUi.locators.register;
 using zCustodiaUi.pages.login;
 using zCustodiaUi.Pages.register;
 using zCustodiaUi.runner;
 using zCustodiaUi.utils;
-using zCustodiaUi.workflows.register;
 
 namespace zCustodiaUi.tests.register
 {
@@ -49,8 +49,28 @@ namespace zCustodiaUi.tests.register
         public async Task Should_Register_New_Drawee()
         {
             var draweePage = new DraweePage(_page);
-            var draweeWorkflow = new DraweeWorkflow(draweePage);
-            await draweeWorkflow.RegisterDrawee();
+            var random = new Random();
+            int uniqueNumber = random.Next(0, 9999);
+            string draweeName = $"Sacado Test {uniqueNumber}";
+
+            await new DraweeBuilder(draweePage)
+                .ClickOnNewDraweeButton()
+                .FillFund()
+                .FillDraweeName(draweeName)
+                .FillEmail()
+                .FillCPF()
+                .FillRelationshipDates()
+                .FillAnnualRevenue()
+                .FillEconomicConglomerate()
+                .FillSize()
+                .FillRiskClassification()
+                .FillSocietyType()
+                .FillStateRegistration()
+                .FillAddress()
+                .ClickOnSaveButton()
+                .ValidateSuccessMessage()
+                .FilterAndValidateDrawee(draweeName)
+                .Execute();
         }
 
 

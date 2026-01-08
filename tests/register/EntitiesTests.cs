@@ -1,6 +1,7 @@
 using Allure.Net.Commons;
 using Allure.NUnit;
 using Allure.NUnit.Attributes;
+using zCustodiaUi.builders.register;
 using zCustodiaUi.data.register;
 using zCustodiaUi.locators.modules;
 using zCustodiaUi.locators.register;
@@ -8,7 +9,6 @@ using zCustodiaUi.pages.login;
 using zCustodiaUi.pages.register;
 using zCustodiaUi.runner;
 using zCustodiaUi.utils;
-using zCustodiaUi.workflows.register;
 
 namespace zCustodiaUi.tests.register
 {
@@ -52,8 +52,22 @@ namespace zCustodiaUi.tests.register
         public async Task Should_Register_New_Entity_With_Valid_Data()
         {
             var entityPage = new EntitiesPage(_page);
-            var entityWorkflow = new EntitiesWorkflow(entityPage);
-            await entityWorkflow.ExecuteStandardFlow();
+            await new EntitiesBuilder(entityPage)
+                .ClickOnButtonNew()
+                .FillMainData()
+                .SetFunctionOfEntity()
+                .GoToForm("Conta Corrente Consultoria")
+                .ClickOnButtonNew()
+                .FillAccountData()
+                .CLickOnAddButton()
+                .GoToForm("Representantes")
+                .ClickOnButtonNew()
+                .FillRepresentativeData()
+                .SetAssign()
+                .CLickOnAddButton()
+                .CLickOnSaveButton()
+                .ValidateSuccessMessage()
+                .Execute();
         }
         [Test, Order(2)]
         [AllureName("Should´t Register a new entity with CNPJ already exist´s")]
@@ -61,9 +75,22 @@ namespace zCustodiaUi.tests.register
         {
             var dataTest = new EntitiesData { EntityCnpj = "52721175000191" };
             var entityPage = new EntitiesPage(_page, dataTest);
-            var entityWorkflow = new EntitiesWorkflow(entityPage);
-            await entityWorkflow.ExecuteStandardFlowAndClickSave();
-            await entityPage.ValidateErrorMessage("Já existe uma entidade cadastrada com este CPF/CNPJ.");
+            await new EntitiesBuilder(entityPage)
+                .ClickOnButtonNew()
+                .FillMainData()
+                .SetFunctionOfEntity()
+                .GoToForm("Conta Corrente Consultoria")
+                .ClickOnButtonNew()
+                .FillAccountData()
+                .CLickOnAddButton()
+                .GoToForm("Representantes")
+                .ClickOnButtonNew()
+                .FillRepresentativeData()
+                .SetAssign()
+                .CLickOnAddButton()
+                .CLickOnSaveButton()
+                .ValidateErrorMessage("Já existe uma entidade cadastrada com este CPF/CNPJ.")
+                .Execute();
         }
 
         [Test, Order(3)]
@@ -72,8 +99,21 @@ namespace zCustodiaUi.tests.register
         {
             var dataTest = new EntitiesData { EntityCnpj = string.Empty };
             var entityPage = new EntitiesPage(_page, dataTest);
-            var entityWorkflow = new EntitiesWorkflow(entityPage);
-            await entityWorkflow.ExecuteStandardFlowAndValidateSaveButtonDisabled();
+            await new EntitiesBuilder(entityPage)
+                .ClickOnButtonNew()
+                .FillMainData()
+                .SetFunctionOfEntity()
+                .GoToForm("Conta Corrente Consultoria")
+                .ClickOnButtonNew()
+                .FillAccountData()
+                .CLickOnAddButton()
+                .GoToForm("Representantes")
+                .ClickOnButtonNew()
+                .FillRepresentativeData()
+                .SetAssign()
+                .CLickOnAddButton()
+                .ValidateSaveButtonIsDisable()
+                .Execute();
         }
         [Test, Order(4)]
         [AllureName("Should´t Register a new entity with Empty Name")]
@@ -81,27 +121,61 @@ namespace zCustodiaUi.tests.register
         {
             var dataTest = new EntitiesData { EntityName = string.Empty };
             var entityPage = new EntitiesPage(_page, dataTest);
-            var entityWorkflow = new EntitiesWorkflow(entityPage);
-            await entityWorkflow.ExecuteStandardFlowAndValidateSaveButtonDisabled();
+            await new EntitiesBuilder(entityPage)
+                .ClickOnButtonNew()
+                .FillMainData()
+                .SetFunctionOfEntity()
+                .GoToForm("Conta Corrente Consultoria")
+                .ClickOnButtonNew()
+                .FillAccountData()
+                .CLickOnAddButton()
+                .GoToForm("Representantes")
+                .ClickOnButtonNew()
+                .FillRepresentativeData()
+                .SetAssign()
+                .CLickOnAddButton()
+                .ValidateSaveButtonIsDisable()
+                .Execute();
         }
         [Test, Order(5)]
         [AllureName("Should´t Register a new entity without Function")]
         public async Task Shouldnt_Register_a_New_Entity_Without_Function()
         {
             var entityPage = new EntitiesPage(_page);
-            var entityWorkflow = new EntitiesWorkflow(entityPage);
-            await entityWorkflow.ExecuteWithoutPermissionAndClickSave();
-            await entityPage.ValidateErrorMessage(_data.ErrorMessageWhitoutFunction);
+            await new EntitiesBuilder(entityPage)
+                .ClickOnButtonNew()
+                .FillMainData()
+                .GoToForm("Conta Corrente Consultoria")
+                .ClickOnButtonNew()
+                .FillAccountData()
+                .CLickOnAddButton()
+                .GoToForm("Representantes")
+                .ClickOnButtonNew()
+                .FillRepresentativeData()
+                .SetAssign()
+                .CLickOnAddButton()
+                .CLickOnSaveButton()
+                .ValidateErrorMessage(_data.ErrorMessageWhitoutFunction)
+                .Execute();
         }
         [Test, Order(6)]
         [AllureName("Should´t Register a new entity without Account")]
         public async Task Shouldnt_Register_a_New_Entity_Without_Account()
         {
             var entityPage = new EntitiesPage(_page);
-            var entityWorkflow = new EntitiesWorkflow(entityPage);
-            await entityWorkflow.ExecuteWithoutAccount();
-            await entityPage.CLickOnSaveButton();
-            await entityPage.ValidateErrorMessage(_data.ErrorMessageWhitoutAccount);
+            await new EntitiesBuilder(entityPage)
+                .ClickOnButtonNew()
+                .FillMainData()
+                .SetFunctionOfEntity()
+                .GoToForm("Conta Corrente Consultoria")
+                .GoToForm("Representantes")
+                .ClickOnButtonNew()
+                .FillRepresentativeData()
+                .SetAssign()
+                .CLickOnAddButton()
+                .CLickOnSaveButton()
+                .ValidateErrorMessage(_data.ErrorMessageWhitoutAccount)
+                .Execute();
         }
         [Test, Order(7)]
         [AllureName("Should´t Register a new entity with Bank field empty")]
@@ -109,8 +183,15 @@ namespace zCustodiaUi.tests.register
         {
             var dataTest = new EntitiesData { BankName = string.Empty };
             var entityPage = new EntitiesPage(_page, dataTest);
-            var entityWorkflow = new EntitiesWorkflow(entityPage);
-            await entityWorkflow.ExecuteWithBankFieldEmpty();
+            await new EntitiesBuilder(entityPage)
+                .ClickOnButtonNew()
+                .FillMainData()
+                .SetFunctionOfEntity()
+                .GoToForm("Conta Corrente Consultoria")
+                .ClickOnButtonNew()
+                .FillAccountDataWithoutSelectingBank()
+                .ValidateAddButtonIsDisable()
+                .Execute();
         }
         [Test, Order(8)]
         [AllureName("Should´t Register a new entity with Agency field empty")]
@@ -118,8 +199,15 @@ namespace zCustodiaUi.tests.register
         {
             var dataTest = new EntitiesData { NumberAgency = string.Empty };
             var entityPage = new EntitiesPage(_page, dataTest);
-            var entityWorkflow = new EntitiesWorkflow(entityPage);
-            await entityWorkflow.ExecuteNegativeAccount();
+            await new EntitiesBuilder(entityPage)
+                .ClickOnButtonNew()
+                .FillMainData()
+                .SetFunctionOfEntity()
+                .GoToForm("Conta Corrente Consultoria")
+                .ClickOnButtonNew()
+                .FillAccountDataFields()
+                .ValidateAddButtonIsDisable()
+                .Execute();
         }
         [Test, Order(9)]
         [AllureName("Should´t Register a new entity with Number Account empty")]
@@ -127,8 +215,15 @@ namespace zCustodiaUi.tests.register
         {
             var dataTest = new EntitiesData { NumberAccount = string.Empty };
             var entityPage = new EntitiesPage(_page, dataTest);
-            var entityWorkflow = new EntitiesWorkflow(entityPage);
-            await entityWorkflow.ExecuteNegativeAccount();
+            await new EntitiesBuilder(entityPage)
+                .ClickOnButtonNew()
+                .FillMainData()
+                .SetFunctionOfEntity()
+                .GoToForm("Conta Corrente Consultoria")
+                .ClickOnButtonNew()
+                .FillAccountDataFields()
+                .ValidateAddButtonIsDisable()
+                .Execute();
         }
         [Test, Order(10)]
         [AllureName("Should´t Register a new entity with Number Account empty")]
@@ -136,16 +231,32 @@ namespace zCustodiaUi.tests.register
         {
             var dataTest = new EntitiesData { Description = string.Empty };
             var entityPage = new EntitiesPage(_page, dataTest);
-            var entityWorkflow = new EntitiesWorkflow(entityPage);
-            await entityWorkflow.ExecuteNegativeAccount();
+            await new EntitiesBuilder(entityPage)
+                .ClickOnButtonNew()
+                .FillMainData()
+                .SetFunctionOfEntity()
+                .GoToForm("Conta Corrente Consultoria")
+                .ClickOnButtonNew()
+                .FillAccountDataFields()
+                .ValidateAddButtonIsDisable()
+                .Execute();
         }
         [Test, Order(11)]
         [AllureName("Should´t Register a new entity without Representative")]
         public async Task Shouldnt_Register_a_New_Entity_Without_Representative()
         {
             var entityPage = new EntitiesPage(_page);
-            var entityWorkflow = new EntitiesWorkflow(entityPage);
-            await entityWorkflow.ExecuteNoRepresentativeAndValidateErrorMessage(_data.ErrorMessageWhitoutRepresentative);
+            await new EntitiesBuilder(entityPage)
+                .ClickOnButtonNew()
+                .FillMainData()
+                .SetFunctionOfEntity()
+                .GoToForm("Conta Corrente Consultoria")
+                .ClickOnButtonNew()
+                .FillAccountData()
+                .CLickOnAddButton()
+                .CLickOnSaveButton()
+                .ValidateErrorMessage(_data.ErrorMessageWhitoutRepresentative)
+                .Execute();
         }
         [Test, Order(12)]
         [AllureName("Should´t Register a new entity without Name of Representative")]
@@ -153,8 +264,20 @@ namespace zCustodiaUi.tests.register
         {
             var dataTest = new EntitiesData { RepresentativeName = string.Empty };
             var entityPage = new EntitiesPage(_page, dataTest);
-            var entityWorkflow = new EntitiesWorkflow(entityPage);
-            await entityWorkflow.ExecuteNegativeRepresentative();
+            await new EntitiesBuilder(entityPage)
+                .ClickOnButtonNew()
+                .FillMainData()
+                .SetFunctionOfEntity()
+                .GoToForm("Conta Corrente Consultoria")
+                .ClickOnButtonNew()
+                .FillAccountData()
+                .CLickOnAddButton()
+                .GoToForm("Representantes")
+                .ClickOnButtonNew()
+                .FillRepresentativeData()
+                .SetAssign()
+                .ValidateAddButtonIsDisable()
+                .Execute();
         }
         [Test, Order(13)]
         [AllureName("Should´t Register a new entity without CPF of Representative")]
@@ -162,8 +285,20 @@ namespace zCustodiaUi.tests.register
         {
             var dataTest = new EntitiesData { RepresentativeCpf = string.Empty };
             var entityPage = new EntitiesPage(_page, dataTest);
-            var entityWorkflow = new EntitiesWorkflow(entityPage);
-            await entityWorkflow.ExecuteNegativeRepresentative();
+            await new EntitiesBuilder(entityPage)
+                .ClickOnButtonNew()
+                .FillMainData()
+                .SetFunctionOfEntity()
+                .GoToForm("Conta Corrente Consultoria")
+                .ClickOnButtonNew()
+                .FillAccountData()
+                .CLickOnAddButton()
+                .GoToForm("Representantes")
+                .ClickOnButtonNew()
+                .FillRepresentativeData()
+                .SetAssign()
+                .ValidateAddButtonIsDisable()
+                .Execute();
         }
         [Test, Order(14)]
         [AllureName("Should´t Register a new entity without Email of Representative")]
@@ -171,8 +306,20 @@ namespace zCustodiaUi.tests.register
         {
             var dataTest = new EntitiesData { RepresentativeEmail = string.Empty };
             var entityPage = new EntitiesPage(_page, dataTest);
-            var entityWorkflow = new EntitiesWorkflow(entityPage);
-            await entityWorkflow.ExecuteNegativeRepresentative();
+            await new EntitiesBuilder(entityPage)
+                .ClickOnButtonNew()
+                .FillMainData()
+                .SetFunctionOfEntity()
+                .GoToForm("Conta Corrente Consultoria")
+                .ClickOnButtonNew()
+                .FillAccountData()
+                .CLickOnAddButton()
+                .GoToForm("Representantes")
+                .ClickOnButtonNew()
+                .FillRepresentativeData()
+                .SetAssign()
+                .ValidateAddButtonIsDisable()
+                .Execute();
         }
 
     }

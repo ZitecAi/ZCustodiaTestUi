@@ -1,9 +1,9 @@
 using Allure.Net.Commons;
 using Allure.NUnit;
 using Allure.NUnit.Attributes;
+using zCustodiaUi.builders.login;
 using zCustodiaUi.pages.login;
 using zCustodiaUi.runner;
-using zCustodiaUi.workflows.login;
 
 namespace zCustodiaUi.tests.login
 {
@@ -37,24 +37,27 @@ namespace zCustodiaUi.tests.login
         public async Task Should_Do_Login_With_Valid_Credentials()
         {
             var loginPage = new LoginPage(_page);
-            var loginWorkflow = new LoginWorkflow(loginPage);
-            await loginWorkflow.DoLogin();
+            await new LoginBuilder(loginPage)
+                .DoLogin()
+                .Execute();
         }
         [Test, Order(2)]
         [AllureName("Do Not Should Do Login With Invalid Email")]
         public async Task Do_Not_Should_Do_Login_With_Invalid_Email()
         {
             var loginPage = new LoginPage(_page);
-            var loginWorkflow = new LoginWorkflow(loginPage);
-            await loginWorkflow.NegativeLogin("invalid email");
+            await new LoginBuilder(loginPage)
+                .NegativeLogin("invalid email")
+                .Execute();
         }
         [Test, Order(3)]
         [AllureName("Do Not Should Do Login With Invalid Password")]
         public async Task Do_Not_Should_Do_Login_With_Invalid_Password()
         {
             var loginPage = new LoginPage(_page);
-            var loginWorkflow = new LoginWorkflow(loginPage);
-            await loginWorkflow.NegativeLogin("invalid password");
+            await new LoginBuilder(loginPage)
+                .NegativeLogin("invalid password")
+                .Execute();
         }
 
     }

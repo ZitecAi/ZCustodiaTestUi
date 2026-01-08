@@ -1,6 +1,7 @@
 using Allure.Net.Commons;
 using Allure.NUnit;
 using Allure.NUnit.Attributes;
+using zCustodiaUi.builders.register;
 using zCustodiaUi.data.register;
 using zCustodiaUi.locators.modules;
 using zCustodiaUi.locators.register;
@@ -8,7 +9,6 @@ using zCustodiaUi.pages.login;
 using zCustodiaUi.pages.register;
 using zCustodiaUi.runner;
 using zCustodiaUi.utils;
-using zCustodiaUi.workflows.register;
 
 namespace zCustodiaUi.tests.register
 {
@@ -25,6 +25,7 @@ namespace zCustodiaUi.tests.register
         private Utils _util;
         private readonly ModulesElements _mod = new ModulesElements();
         private readonly FundsElements _el = new FundsElements();
+        private readonly FundsData _data = new FundsData();
 
 
         [SetUp]
@@ -53,9 +54,21 @@ namespace zCustodiaUi.tests.register
         public async Task Should_Register_a_New_Fund()
         {
             var fundsPage = new FundsPage(_page);
-            var fundsWorkflow = new FundsWorkflow(fundsPage, new FundsData());
-            await fundsWorkflow.ExecuteStandardFlow();
-            await fundsPage.SaveFund();
+            await new FundsBuilder(fundsPage)
+                .RegisterData()
+                .Rules()
+                .Representatives()
+                .Liquidation()
+                .FillAccountForm()
+                .AddAccount()
+                .Slack()
+                .FileValidation()
+                .GoToForm("Prestadores de Serviços")
+                .RegisterServiceProvider(_data.ProviderTypeAdministrator, _data.PersonTypeAdministrator)
+                .RegisterServiceProvider(_data.ProviderTypeManager, _data.PersonTypeManager, 2, 2)
+                .RegisterServiceProvider(_data.ProviderTypeConsultant, _data.PersonTypeConsultant, null, 3)
+                .SaveFund()
+                .Execute();
         }
 
         [Test, Order(2)]
@@ -63,7 +76,9 @@ namespace zCustodiaUi.tests.register
         public async Task Should_Consult_a_Fund()
         {
             var fundsPage = new FundsPage(_page);
-            await fundsPage.ConsultFund();
+            await new FundsBuilder(fundsPage)
+                .ConsultFund()
+                .Execute();
         }
 
         [Test, Order(3)]
@@ -72,9 +87,21 @@ namespace zCustodiaUi.tests.register
         {
             var testData = new FundsData { FundName = string.Empty };
             var fundsPage = new FundsPage(_page, testData);
-            var fundsWorkflow = new FundsWorkflow(fundsPage);
-            await fundsWorkflow.ExecuteForValidation();
-            await fundsPage.ValidateSaveButtonDisabled();
+            await new FundsBuilder(fundsPage)
+                .RegisterData()
+                .Rules()
+                .Representatives()
+                .Liquidation()
+                .FillAccountForm()
+                .AddAccount()
+                .Slack()
+                .FileValidation()
+                .GoToForm("Prestadores de Serviços")
+                .RegisterServiceProvider(_data.ProviderTypeAdministrator, _data.PersonTypeAdministrator)
+                .RegisterServiceProvider(_data.ProviderTypeManager, _data.PersonTypeManager, 2, 2)
+                .RegisterServiceProvider(_data.ProviderTypeConsultant, _data.PersonTypeConsultant, null, 3)
+                .ValidateSaveButtonDisabled()
+                .Execute();
         }
 
         [Test, Order(4)]
@@ -83,9 +110,21 @@ namespace zCustodiaUi.tests.register
         {
             var testData = new FundsData { IsinCode = string.Empty };
             var fundsPage = new FundsPage(_page, testData);
-            var fundsWorkflow = new FundsWorkflow(fundsPage);
-            await fundsWorkflow.ExecuteForValidation();
-            await fundsPage.ValidateSaveButtonDisabled();
+            await new FundsBuilder(fundsPage)
+                .RegisterData()
+                .Rules()
+                .Representatives()
+                .Liquidation()
+                .FillAccountForm()
+                .AddAccount()
+                .Slack()
+                .FileValidation()
+                .GoToForm("Prestadores de Serviços")
+                .RegisterServiceProvider(_data.ProviderTypeAdministrator, _data.PersonTypeAdministrator)
+                .RegisterServiceProvider(_data.ProviderTypeManager, _data.PersonTypeManager, 2, 2)
+                .RegisterServiceProvider(_data.ProviderTypeConsultant, _data.PersonTypeConsultant, null, 3)
+                .ValidateSaveButtonDisabled()
+                .Execute();
         }
 
         [Test, Order(5)]
@@ -94,9 +133,21 @@ namespace zCustodiaUi.tests.register
         {
             var testData = new FundsData { CnpjFund = "54.638.076/0001-76" };
             var fundsPage = new FundsPage(_page, testData);
-            var fundsWorkflow = new FundsWorkflow(fundsPage);
-            await fundsWorkflow.ExecuteForValidation();
-            await fundsPage.SaveFundNegative("Fundo já existente para o CNPJ '54638076000176'.");
+            await new FundsBuilder(fundsPage)
+                .RegisterData()
+                .Rules()
+                .Representatives()
+                .Liquidation()
+                .FillAccountForm()
+                .AddAccount()
+                .Slack()
+                .FileValidation()
+                .GoToForm("Prestadores de Serviços")
+                .RegisterServiceProvider(_data.ProviderTypeAdministrator, _data.PersonTypeAdministrator)
+                .RegisterServiceProvider(_data.ProviderTypeManager, _data.PersonTypeManager, 2, 2)
+                .RegisterServiceProvider(_data.ProviderTypeConsultant, _data.PersonTypeConsultant, null, 3)
+                .SaveFundNegative("Fundo já existente para o CNPJ '54638076000176'.")
+                .Execute();
         }
 
         [Test, Order(6)]
@@ -105,9 +156,21 @@ namespace zCustodiaUi.tests.register
         {
             var testData = new FundsData { CnpjFund = string.Empty };
             var fundsPage = new FundsPage(_page, testData);
-            var fundsWorkflow = new FundsWorkflow(fundsPage);
-            await fundsWorkflow.ExecuteForValidation();
-            await fundsPage.ValidateSaveButtonDisabled();
+            await new FundsBuilder(fundsPage)
+                .RegisterData()
+                .Rules()
+                .Representatives()
+                .Liquidation()
+                .FillAccountForm()
+                .AddAccount()
+                .Slack()
+                .FileValidation()
+                .GoToForm("Prestadores de Serviços")
+                .RegisterServiceProvider(_data.ProviderTypeAdministrator, _data.PersonTypeAdministrator)
+                .RegisterServiceProvider(_data.ProviderTypeManager, _data.PersonTypeManager, 2, 2)
+                .RegisterServiceProvider(_data.ProviderTypeConsultant, _data.PersonTypeConsultant, null, 3)
+                .ValidateSaveButtonDisabled()
+                .Execute();
         }
 
         [Test, Order(7)]
@@ -116,9 +179,21 @@ namespace zCustodiaUi.tests.register
         {
             var testData = new FundsData { MaxPercent = string.Empty };
             var fundsPage = new FundsPage(_page, testData);
-            var fundsWorkflow = new FundsWorkflow(fundsPage);
-            await fundsWorkflow.ExecuteForValidation();
-            await fundsPage.ValidateSaveButtonDisabled();
+            await new FundsBuilder(fundsPage)
+                .RegisterData()
+                .Rules()
+                .Representatives()
+                .Liquidation()
+                .FillAccountForm()
+                .AddAccount()
+                .Slack()
+                .FileValidation()
+                .GoToForm("Prestadores de Serviços")
+                .RegisterServiceProvider(_data.ProviderTypeAdministrator, _data.PersonTypeAdministrator)
+                .RegisterServiceProvider(_data.ProviderTypeManager, _data.PersonTypeManager, 2, 2)
+                .RegisterServiceProvider(_data.ProviderTypeConsultant, _data.PersonTypeConsultant, null, 3)
+                .ValidateSaveButtonDisabled()
+                .Execute();
         }
 
         [Test, Order(8)]
@@ -127,9 +202,14 @@ namespace zCustodiaUi.tests.register
         {
             var testData = new FundsData { AgencyNumber = string.Empty };
             var fundsPage = new FundsPage(_page, testData);
-            var fundsWorkflow = new FundsWorkflow(fundsPage);
-            await fundsWorkflow.ExecuteForAccountValidation();
-            await fundsPage.ValidateAddAccountButtonDisabled();
+            await new FundsBuilder(fundsPage)
+                .RegisterData()
+                .Rules()
+                .Representatives()
+                .Liquidation()
+                .FillAccountForm()
+                .ValidateAddAccountButtonDisabled()
+                .Execute();
         }
 
         [Test, Order(9)]
@@ -138,9 +218,14 @@ namespace zCustodiaUi.tests.register
         {
             var testData = new FundsData { Description = string.Empty };
             var fundsPage = new FundsPage(_page, testData);
-            var fundsWorkflow = new FundsWorkflow(fundsPage);
-            await fundsWorkflow.ExecuteForAccountValidation();
-            await fundsPage.ValidateAddAccountButtonDisabled();
+            await new FundsBuilder(fundsPage)
+                .RegisterData()
+                .Rules()
+                .Representatives()
+                .Liquidation()
+                .FillAccountForm()
+                .ValidateAddAccountButtonDisabled()
+                .Execute();
         }
 
         [Test, Order(10)]
@@ -148,10 +233,14 @@ namespace zCustodiaUi.tests.register
         public async Task Shouldnt_Register_a_New_Fund_Without_Type_Account()
         {
             var fundsPage = new FundsPage(_page);
-            var fundsWorkflow = new FundsWorkflow(fundsPage);
-            await fundsWorkflow.ExecuteForAccountValidation();
-            await fundsPage.FillAccountFormNotypeAccount();
-            await fundsPage.ValidateAddAccountButtonDisabled();
+            await new FundsBuilder(fundsPage)
+                .RegisterData()
+                .Rules()
+                .Representatives()
+                .Liquidation()
+                .FillAccountFormNotypeAccount()
+                .ValidateAddAccountButtonDisabled()
+                .Execute();
         }
 
         [Test, Order(11)]
@@ -159,11 +248,20 @@ namespace zCustodiaUi.tests.register
         public async Task Shouldnt_Register_a_New_Fund_Without_Consultant()
         {
             var fundsPage = new FundsPage(_page);
-            var fundsWorkflow = new FundsWorkflow(fundsPage);
-            await fundsWorkflow.ExecuteForServiceProviderValidation();
-            await fundsPage.RegisterServiceProvider("Administrador", "ORIGINADOR QA");
-            await fundsPage.RegisterServiceProvider("Gestor", "ORIGINADOR QA", 2, 2);
-            await fundsPage.SaveFundNegative("É obrigatório um 'Consultor' como prestador.");
+            await new FundsBuilder(fundsPage)
+                .RegisterData()
+                .Rules()
+                .Representatives()
+                .Liquidation()
+                .FillAccountForm()
+                .AddAccount()
+                .Slack()
+                .FileValidation()
+                .GoToForm("Prestadores de Serviços")
+                .RegisterServiceProvider("Administrador", "ORIGINADOR QA")
+                .RegisterServiceProvider("Gestor", "ORIGINADOR QA", 2, 2)
+                .SaveFundNegative("É obrigatório um 'Consultor' como prestador.")
+                .Execute();
         }
 
         [Test, Order(12)]
@@ -172,11 +270,20 @@ namespace zCustodiaUi.tests.register
         {
             var testData = new FundsData();
             var fundsPage = new FundsPage(_page, testData);
-            var fundsWorkflow = new FundsWorkflow(fundsPage);
-            await fundsWorkflow.ExecuteForServiceProviderValidation();
-            await fundsPage.RegisterServiceProvider("Administrador", "ORIGINADOR QA");
-            await fundsPage.RegisterServiceProvider("Consultoria", "ID CORRETORA DE TITULOS E VALORES MOBILIARIOS SA", null, 2);
-            await fundsPage.SaveFundNegative("É obrigatório um 'Gestor' como prestador.");
+            await new FundsBuilder(fundsPage)
+                .RegisterData()
+                .Rules()
+                .Representatives()
+                .Liquidation()
+                .FillAccountForm()
+                .AddAccount()
+                .Slack()
+                .FileValidation()
+                .GoToForm("Prestadores de Serviços")
+                .RegisterServiceProvider("Administrador", "ORIGINADOR QA")
+                .RegisterServiceProvider("Consultoria", "ID CORRETORA DE TITULOS E VALORES MOBILIARIOS SA", null, 2)
+                .SaveFundNegative("É obrigatório um 'Gestor' como prestador.")
+                .Execute();
         }
 
         //[Test, Order(4)]
