@@ -56,7 +56,8 @@ namespace zCustodiaUi.runner
             };
             var config = new ConfigurationManager();
             var envStg = Environment.GetEnvironmentVariable("ZCUSTODIA_LINK");
-            config.AddJsonFile("appsettings.Development.json", optional: true, reloadOnChange: true); var linkCustodia = config["Links:Custodia"];
+            config.AddJsonFile("appsettings.Development.json", optional: true, reloadOnChange: true);
+            var linkCustodia = config["Links:Custodia"] ?? envStg;
             _page.DOMContentLoaded += async (sender, e) =>
             {
                 // Injeta o estilo CSS para aplicar o zoom de 75%
