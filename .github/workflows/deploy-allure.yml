@@ -60,6 +60,8 @@ jobs:
         ZCUSTODIA_PASS: ${{ secrets.ZCUSTODIA_PASS }}
         ZCUSTODIA_LINK: ${{ secrets.ZCUSTODIA_LINK }}
         ZCUSTODIA_PATHS: ${{ secrets.ZCUSTODIA_PATHS }}
+        ZCUSTODIA_API: ${{ secrets.ZCUSTODIA_API }}
+        ZCUSTODIA_TOKEN: ${{ secrets.ZCUSTODIA_TOKEN }}
       run: |
         if [ -d "allure-results" ]; then
           rm -rf allure-results
