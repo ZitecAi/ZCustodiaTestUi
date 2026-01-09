@@ -449,7 +449,7 @@ namespace zCustodiaUi.utils
             var envPath = Environment.GetEnvironmentVariable("ZCUSTODIA_PATH");
             ConfigurationManager config = new ConfigurationManager();
             config.AddJsonFile("appsettings.Development.json", optional: true, reloadOnChange: true);
-            string path = config["Paths:Arquivo"].ToString() ?? envPath;
+            string path = config["Paths:Arquivo"] ?? envPath;
             return path;
         }
 
