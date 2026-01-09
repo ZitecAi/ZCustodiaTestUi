@@ -11,17 +11,12 @@
 	</ItemGroup>
 	<ItemGroup>
 	  <None Remove="allureConfig.json" />
-
-	  <None Remove="appsettings.json" />
 	</ItemGroup>
 	<ItemGroup>
 	  <Content Include="allureConfig.json">
 	    <CopyToOutputDirectory>Always</CopyToOutputDirectory>
 	  </Content>
 	  <Content Include="appsettings.Development.json" Condition="Exists('appsettings.Development.json')">
-	    <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-	  </Content>
-	  <Content Include="appsettings.json">
 	    <CopyToOutputDirectory>Always</CopyToOutputDirectory>
 	  </Content>
 	  <Content Include="models\files\54638076000176_52721175000191_N.zip" />
