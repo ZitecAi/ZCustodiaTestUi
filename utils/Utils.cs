@@ -1,4 +1,5 @@
 using Allure.NUnit.Attributes;
+using Microsoft.Extensions.Configuration;
 using Microsoft.Playwright;
 using zCustodiaUi.locators;
 using static Microsoft.Playwright.Assertions;
@@ -442,6 +443,16 @@ namespace zCustodiaUi.utils
         {
             await ClickMatTabAsync(_gen.TabAllForms(formName), $"Click on {formName} tab to fill data");
         }
+
+        public static string GetPath()
+        {
+            var envPath = Environment.GetEnvironmentVariable("ZCUSTODIA_PATH");
+            ConfigurationManager config = new ConfigurationManager();
+            config.AddJsonFile("appsettings.Development.json", optional: true, reloadOnChange: true);
+            string path = config["Paths:Arquivo"].ToString() ?? envPath;
+            return path;
+        }
+
 
     }
 }

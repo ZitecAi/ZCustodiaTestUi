@@ -1,4 +1,3 @@
-using Microsoft.Extensions.Configuration;
 using Microsoft.Playwright;
 using zCustodiaUi.data.importation;
 using zCustodiaUi.locators;
@@ -23,13 +22,6 @@ namespace zCustodiaUi.pages.importation
             _util = new Utils(_page);
         }
 
-        public static string GetPath()
-        {
-            ConfigurationManager config = new ConfigurationManager();
-            config.AddJsonFile("appsettings.json", optional: false, reloadOnChange: true);
-            string path = config["Paths:Arquivo"].ToString();
-            return path;
-        }
 
         public async Task ClickImportButton()
         {
@@ -45,7 +37,7 @@ namespace zCustodiaUi.pages.importation
 
         public async Task AttachFile()
         {
-            nameNewFile = await _util.UpdateDateAndSentFile(GetPath() + _data.FileName, _gen.AttachFileInput, "Attaching a new shipping file");
+            nameNewFile = await _util.UpdateDateAndSentFile(Utils.GetPath() + _data.FileName, _gen.AttachFileInput, "Attaching a new shipping file");
         }
 
         public async Task ClickProcessButton()
