@@ -1,0 +1,2 @@
+ Text found: Sacado Test 1196
+Caminho de vídeo inválido: /home/runner/work/ZCustodiaTestUi/ZCustodiaTestUi/bin/Debug/net8.0/videos/a6e4c864ba738a7b2b4ca187a6d2241d.webm

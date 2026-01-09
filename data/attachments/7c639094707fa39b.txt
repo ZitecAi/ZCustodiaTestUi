@@ -1,0 +1,53 @@
+ Text found: 	ID	Nome	Cnpj	Status	Gestora	Ações
+
+
+	
+11893
+	
+ZitecQa
+	
+56.162.720/0001-08
+	
+Processado
+	
+ORIGINADOR QA
+	
+face
+money
+people
+edit_note
+
+
+	
+11894
+	
+ZitecQa
+	
+85.984.331/0001-66
+	
+Processado
+	
+ORIGINADOR QA
+	
+face
+money
+people
+edit_note
+
+
+	
+11916
+	
+ZitecQa
+	
+27.099.271/0001-00
+	
+Processado
+	
+ORIGINADOR QA
+	
+face
+money
+people
+edit_note
+Vídeo anexado: zCustodiaUi_tests_register_FundsTests_Should_Consult_a_Fund_Passed_20260109_224608.webm (853341 bytes)

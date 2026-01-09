@@ -1,0 +1,3 @@
+The element: (//td//app-table-cell//div//span)[1] have value! value is: 58531152
+{"message":"Erro: Execution Timeout Expired.  The timeout period elapsed prior to completion of the operation or the server is not responding."}
+Vídeo anexado: zCustodiaUi_tests_register_AssignorsTests_Should_Consult_And_Delete_Assignor_Passed_20260109_224731.webm (3189430 bytes)
