@@ -58,6 +58,8 @@ jobs:
       env:
         ZCUSTODIA_EMAIL: ${{ secrets.ZCUSTODIA_EMAIL }}
         ZCUSTODIA_PASS: ${{ secrets.ZCUSTODIA_PASS }}
+        ZCUSTODIA_LINK: ${{ secrets.ZCUSTODIA_LINK }}
+        ZCUSTODIA_PATHS: ${{ secrets.ZCUSTODIA_PATHS }}
       run: |
         if [ -d "allure-results" ]; then
           rm -rf allure-results
