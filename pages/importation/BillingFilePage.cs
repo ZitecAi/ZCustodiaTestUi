@@ -65,7 +65,7 @@ namespace zCustodiaUi.pages.importation
         public async Task ValidateFilePresentOnTable()
         {
             await Task.Delay(150);
-            var getId = await _util.ValidateIfElementHaveValue(_el.IdPositionOnTheTable(nameNewFile), "Validate if file ID have vaue on table");
+            var getId = await _util.ValidateIfElementHaveValue(_el.IdPositionOnTheTable(nameNewFile), "Validate if file ID have value on table");
             await _util.ValidateElementPresentOnTheTable(_page, _el.Table, nameNewFile, "Validate if file name is correct in grid");
         }
 
