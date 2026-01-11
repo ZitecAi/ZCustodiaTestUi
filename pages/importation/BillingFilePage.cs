@@ -37,7 +37,8 @@ namespace zCustodiaUi.pages.importation
 
         public async Task AttachFile()
         {
-            nameNewFile = await _util.UpdateDateAndSentFile(Utils.GetPath() + _data.FileName, _gen.AttachFileInput, "Attaching a new shipping file");
+            string fullPath = Path.Combine(Utils.GetPath(), _data.FileName);
+            nameNewFile = await _util.UpdateDateAndSentFile(fullPath, _gen.AttachFileInput, "Attaching a new shipping file");
         }
 
         public async Task ClickProcessButton()
