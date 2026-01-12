@@ -76,7 +76,7 @@ namespace zCustodiaUi.pages.processing
             await _util.Write(_gen.Filter, _data.OccurrenceDeleteMovement, "Write on filter field to search Zitec FIDC");
             await _util.Click(_gen.ReceiveTypeOption(_data.OccurrenceDeleteMovement), "Click on low to select low option");
             await _util.Click(_gen.LocatorSpanText("Processar"), "Click on Process to do low");
-            await _util.ValidateTextIsVisibleOnScreen("Dados Processados com Sucesso!", "Validate if success text is visible on screen to user");
+            await _util.ValidateTextIsVisibleInElement(_el.StatusPositionOnTheTable, "Ativo", "Validate if status of Receivable is Ativo after did excludeed last movement");
             Console.WriteLine("Exclusão do Ultimo movimento efetuada com sucesso!!");
         }
         //PENDING PRORROGATION FLOW
