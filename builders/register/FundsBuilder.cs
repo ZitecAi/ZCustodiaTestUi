@@ -53,11 +53,6 @@ namespace zCustodiaUi.builders.register
             return this;
         }
 
-        public FundsBuilder Slack()
-        {
-            AddStep(async () => await _fundsPage.Slack());
-            return this;
-        }
 
         public FundsBuilder FileValidation()
         {

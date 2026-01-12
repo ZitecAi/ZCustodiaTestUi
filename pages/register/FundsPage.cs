@@ -182,21 +182,7 @@ namespace zCustodiaUi.pages.register
             await _util.Click(_el.AddButton, "Click on Add Button to add a new account");
         }
 
-        [AllureStep("Fill Slack Data")]
-        public async Task Slack()
-        {
-            await _util.ClickMatTabAsync(_gen.TabAllForms("Slack"), "Click belt to change slack form");
-            await _util.Click(_gen.ButtonNew, "Click on button new to insert a new Slack Channel");
 
-            await _util.Write(_gen.LocatorMatLabel("SlackWebhook Operações:"), _data.OperationsWebhook, "Insert name of operations webhook");
-            await _util.Write(_gen.LocatorMatLabel("Nome Canal Operações:"), _data.OperationsChannelName, "Insert Name Of Channel Operations");
-            await _util.Write(_gen.LocatorMatLabel("ID Canal Operações:"), _data.OperationsChannelId, "Insert ID of Channel Operations");
-
-            await _util.Write(_gen.LocatorMatLabel("SlackWebhook Lastros:"), _data.BallastWebhook, "Insert name of operations webhook");
-            await _util.Write(_gen.LocatorMatLabel("Nome Canal Lastros:"), _data.BallastChannelName, "Insert Name Of Channel Operations");
-            await _util.Write(_gen.LocatorMatLabel("ID Canal Lastros:"), _data.BallastChannelId, "Insert ID of Channel Operations");
-            await _util.Click(_el.AddButton, "Click on Add Button to add a new account");
-        }
 
         [AllureStep("Fill File Validation")]
         public async Task FileValidation()
