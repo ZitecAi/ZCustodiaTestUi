@@ -15,10 +15,10 @@ namespace zCustodiaUi.pages.register
         private readonly FundsData _data;
         private readonly IPage _page;
 
-        public FundsPage(IPage _page, FundsData _data = null)
+        public FundsPage(IPage page, FundsData data = null)
         {
-            this._page = _page;
-            this._data = _data ?? new FundsData();
+            this._page = page;
+            this._data = data ?? new FundsData();
             _util = new Utils(_page);
         }
 
