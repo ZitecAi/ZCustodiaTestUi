@@ -1,0 +1,3 @@
+⚠ Console Error Ignored: Failed to load resource: the server responded with a status of 400 ()
+⚠ Console Error Ignored: ERROR hn
+Vídeo anexado: zCustodiaUi_tests_register_FundsTests_Shouldnt_Register_a_New_Fund_Without_Managers_Passed_20260116_183300.webm (3484402 bytes)

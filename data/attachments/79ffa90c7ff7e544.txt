@@ -1,0 +1,2 @@
+⚠ Console Error Ignored: Failed to load resource: the server responded with a status of 400 ()
+Caminho de vídeo inválido: /home/runner/work/ZCustodiaTestUi/ZCustodiaTestUi/bin/Debug/net8.0/videos/81fec56f53ab03fcb66936ae7579d1d0.webm

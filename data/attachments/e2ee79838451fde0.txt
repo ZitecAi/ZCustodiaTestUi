@@ -1,0 +1,12 @@
+⚠ Console Error Ignored: ERROR TypeError: Cannot read properties of undefined (reading 'value')
+    at Object.next (https://custodia-staging.idsf.com.br/5835.925a5d6e1f33f75b.js:1:13333)
+    at Q.next (https://custodia-staging.idsf.com.br/main.ff3ff86700ff845c.js:1:800335)
+    at pe._next (https://custodia-staging.idsf.com.br/main.ff3ff86700ff845c.js:1:800019)
+    at pe.next (https://custodia-staging.idsf.com.br/main.ff3ff86700ff845c.js:1:799712)
+    at https://custodia-staging.idsf.com.br/main.ff3ff86700ff845c.js:1:812285
+    at c._next (https://custodia-staging.idsf.com.br/main.ff3ff86700ff845c.js:1:810171)
+    at c.next (https://custodia-staging.idsf.com.br/main.ff3ff86700ff845c.js:1:799712)
+    at Q.next (https://custodia-staging.idsf.com.br/main.ff3ff86700ff845c.js:1:800335)
+    at pe._next (https://custodia-staging.idsf.com.br/main.ff3ff86700ff845c.js:1:800019)
+    at pe.next (https://custodia-staging.idsf.com.br/main.ff3ff86700ff845c.js:1:799712)
+Vídeo anexado: zCustodiaUi_tests_processing_ReceivablesTests_Should_Process_Receivable_Partial_Passed_20260116_182605.webm (1038052 bytes)

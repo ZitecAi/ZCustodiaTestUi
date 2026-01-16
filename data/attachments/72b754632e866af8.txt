@@ -1,0 +1,2 @@
+⚠ Console Error Ignored: Failed to load resource: the server responded with a status of 400 ()
+Vídeo anexado: zCustodiaUi_tests_login_LoginTests_Do_Not_Should_Do_Login_With_Invalid_Email_Passed_20260116_182544.webm (67889 bytes)

@@ -1,0 +1,12 @@
+⚠ Console Error Ignored: ERROR TypeError: Cannot read properties of undefined (reading 'map')
+    at VI.effectFn (https://custodia-staging.idsf.com.br/main.ff3ff86700ff845c.js:1:202797)
+    at VI.runEffect (https://custodia-staging.idsf.com.br/main.ff3ff86700ff845c.js:1:1141957)
+    at Object.fn (https://custodia-staging.idsf.com.br/main.ff3ff86700ff845c.js:1:1141841)
+    at Object.run (https://custodia-staging.idsf.com.br/main.ff3ff86700ff845c.js:1:1141618)
+    at VI.run (https://custodia-staging.idsf.com.br/main.ff3ff86700ff845c.js:1:1142055)
+    at jI.flushQueue (https://custodia-staging.idsf.com.br/main.ff3ff86700ff845c.js:1:1141093)
+    at https://custodia-staging.idsf.com.br/main.ff3ff86700ff845c.js:1:1141008
+    at u.invoke (https://custodia-staging.idsf.com.br/polyfills.9369af2e4b1f9a75.js:1:19157)
+    at Object.onInvoke (https://custodia-staging.idsf.com.br/main.ff3ff86700ff845c.js:1:1035308)
+    at u.invoke (https://custodia-staging.idsf.com.br/polyfills.9369af2e4b1f9a75.js:1:19097)
+Vídeo anexado: zCustodiaUi_tests_register_FundsTests_Should_Consult_a_Fund_Failed_20260116_182621.webm (773643 bytes)

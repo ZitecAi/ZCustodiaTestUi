@@ -1,0 +1,2 @@
+ Text found: Sacado Test 4003
+Caminho de vídeo inválido: /home/runner/work/ZCustodiaTestUi/ZCustodiaTestUi/bin/Debug/net8.0/videos/fd4f14c541a9bb03d97d04ba9c582990.webm
