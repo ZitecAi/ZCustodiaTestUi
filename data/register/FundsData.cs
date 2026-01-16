@@ -6,6 +6,9 @@ namespace zCustodiaUi.data.register
     {
 
         public string FundName { get; set; } = "ZitecQa";
+        public string FundNameZitecFIDC { get; set; } = "Zitec FIDC";
+        public string FundCNPJZitecFIDC { get; set; } = "54.638.076/0001-76";
+        public string ManagerNameZitecFIDC { get; set; } = "ORIGINADOR QA";
         public string CnpjFund { get; set; } = DataGenerator.Generate(DocumentType.Cnpj);
         public string CetipNumber { get; set; } = "12345678";
         public string SelicNumber { get; set; } = "123456789";

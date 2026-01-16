@@ -274,9 +274,11 @@ namespace zCustodiaUi.pages.register
 
         public async Task ConsultFund()
         {
-            await _util.Write(_el.SearchBar, _data.FundName, "Write on filter input to find the fund created");
+            await _util.Write(_el.SearchBar, _data.FundNameZitecFIDC, "Write on filter input to find the fund created");
             await Task.Delay(1000);
-            await _util.ValidateElementPresentOnTheTable(_page, _el.FundTable, _data.FundName, "Validate if Text is present on table to consult a existing fund");
+            await _util.ValidateElementPresentOnTheTable(_page, _el.FundTable, _data.FundNameZitecFIDC, "Validate if Name fund is present on table");
+            await _util.ValidateElementPresentOnTheTable(_page, _el.FundTable, _data.ManagerNameZitecFIDC, "Validate if manager name is present on table");
+            await _util.ValidateElementPresentOnTheTable(_page, _el.FundTable, _data.FundCNPJZitecFIDC, "Validate if CNPJ fund is present on table");
         }
 
         public async Task UpdateFund()
