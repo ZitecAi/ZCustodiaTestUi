@@ -47,8 +47,9 @@ namespace zCustodiaUi.tests.register
             await CloseBrowserAsync();
         }
 
-        [Test(Description = "Register a new offer successfully")]
+        [Test(Description = "Register a new offer successfully"), Order(1)]
         [AllureName("Should Register a new offer successfully")]
+        [Ignore("Test be Waiting Delete API method")]
         public async Task Shoud_Register_A_New_Offer_Succesfully()
         {
             var offersPage = new OffersPage(_page);
@@ -58,6 +59,19 @@ namespace zCustodiaUi.tests.register
                 .ClickOnSaveButton()
                 .Execute();
         }
+
+        [Test, Order(2)]
+        [AllureName("Should consult a Offer on table")]
+        public async Task Should_Consult_Offer_On_Table()
+        {
+            var offersPage = new OffersPage(_page);
+            await new OffersBuilder(offersPage)
+                .ConsultFundOnFilter()
+                .ClickOnFilterButton()
+                .ValidateOfferPresentInTable()
+                .Execute();
+        }
+
 
 
 

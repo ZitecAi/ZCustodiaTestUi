@@ -28,7 +28,23 @@ namespace zCustodiaUi.builders.register
             AddStep(async () => await _page.ClickOnSaveButton());
             return this;
         }
+        public OffersBuilder ClickOnFilterButton()
+        {
+            AddStep(async () => await _page.ClickOnFilterButton());
+            return this;
+        }
 
+        public OffersBuilder ValidateOfferPresentInTable()
+        {
+            AddStep(async () => await _page.ValidateOfferPresentInTable());
+            return this;
+        }
+
+        public OffersBuilder ConsultFundOnFilter()
+        {
+            AddStep(async () => await _page.ConsultFundOnFilter());
+            return this;
+        }
 
 
 

@@ -295,6 +295,20 @@ namespace zCustodiaUi.utils
             }
 
         }
+        [AllureStep("Validate text is visible - on step: {step}")]
+        public async Task ValidateContainTextInElement(string locator, string expectedText, string step)
+        {
+            try
+            {
+                ILocator element = _page.Locator(locator);
+                await Expect(element).ToContainTextAsync(expectedText);
+            }
+            catch (Exception ex)
+            {
+                throw new PlaywrightException($"Don´t possible validate/found the element on {step}. Details {ex.Message}");
+            }
+
+        }
         [AllureStep("Validate text is visible on screen - on step: {step}")]
         public async Task ValidateTextIsVisibleOnScreen(string expectedText, string step)
         {

@@ -20,22 +20,22 @@ namespace zCustodiaUi.pages.register
         private readonly OffersData _data;
 
         public OffersPage(IPage page, OffersData data = null)
-            {
+        {
             this._page = page;
             _data = data ?? new OffersData();
-            _util = new Utils(_page);            
+            _util = new Utils(_page);
         }
 
         public async Task ClickOnNewButton()
         {
-            await _util.Click(_gen.LocatorSpanText("Novo"), "Click on new offer button to register a new offer");        
+            await _util.Click(_gen.LocatorSpanText("Novo"), "Click on new offer button to register a new offer");
         }
 
         public async Task FillFormNewOffer()
         {
             var today = DateTime.Now.Day.ToString();
 
-            await _util.Click("("+_gen.LocatorMatLabel(_el.SelectFund)+")[2]", "Click on select fund to expand list of funds");
+            await _util.Click("(" + _gen.LocatorMatLabel(_el.SelectFund) + ")[2]", "Click on select fund to expand list of funds");
             await _util.Write(_gen.Filter, _data.FundName, "Select fund to choose fund name");
             await _util.Click(_gen.ReceiveTypeOption(_data.FundName), $"Select fund {_data.FundName} from the options");
             await _util.Click(_gen.LocatorMatLabel(_el.SelectPortfolio), "Click on select portfolio to expand list of portfolios");
@@ -54,7 +54,42 @@ namespace zCustodiaUi.pages.register
         {
             await _util.Click(_gen.SaveButton, "Click on save button to save the new offer");
         }
+        public async Task ClickOnFilterButton()
+        {
+            await _util.Click(_gen.LocatorSpanText(_el.FilterButton), "Click on Filter button to Apply filter data");
+        }
 
+        public async Task ConsultFundOnFilter()
+        {
+            await _util.Click(_gen.LocatorMatLabel(_el.SelectFund), "Click on filter input to search for Fund");
+            await _util.Write(_gen.Filter, _data.FundName, $"Type fund name {_data.FundName} on filter input to search for Fund");
+            await _util.Click(_gen.LocatorSpanText(" " + _data.FundName + " "), $"Click on Fund: {_data.FundName} on Options of filter");
+
+        }
+
+        public async Task ValidateOfferPresentInTable()
+        {
+            await _util.ValidateTextIsVisibleInElement
+                (_el.FundAndPortfolioInTable,
+                _data.ExpectedFundPortfolioInTable,
+                "Validate if name Fund and ID portoflio is correct in table");
+            await _util.ValidateTextIsVisibleInElement
+                (_el.QuantityOfQuotasInTable,
+                _data.ExpectedQuantityOfQuotasInTable,
+                "Validate if Quantity of quotas is correct in table");
+            await _util.ValidateTextIsVisibleInElement
+                (_el.StatusOfferInTable,
+                _data.ExpectedStatusOfferInTable,
+                "Validate if Status is Open in table");
+            await _util.ValidateContainTextInElement
+                (_el.InitialValueInTable,
+                _data.ExpectedInitialValueInTable,
+                "Validate if Initial value is correct in table");
+            await _util.ValidateContainTextInElement
+                (_el.OfferValueInTable,
+                _data.ExpectedOfferValueInTable,
+                "Validate if Offer Value is correct in table");
+        }
 
 
     }
